@@ -1,5 +1,5 @@
 ---
-theme: default
+theme: '@ktym4a/slidev-theme-ktym4a'
 title: Agentic Image Generation
 info: |
   Jamund Ferguson, CityJS Athens 2026
@@ -8,6 +8,9 @@ drawings:
   persist: false
 transition: slide-left
 mdc: true
+themeConfig:
+  baseColor: lavender
+  colorPattern: rotation
 ---
 
 # Agentic Image Generation
@@ -17,8 +20,7 @@ From prompt to production workflow
 Jamund Ferguson · CityJS Athens 2026
 
 <!--
-Hi, I'm Jamund Ferguson. I'm currently at Axle Energy, but I spent the last two years at Stability AI leading the front-end team and building interfaces for image generation.
-
+Hi, I'm Jamund Ferguson. I'm currently at Axle Energy, but I spent the last two years at Stability AI leading the front-end team and building UIs for image generation.
 -->
 
 ---
@@ -39,7 +41,7 @@ Hi, I'm Jamund Ferguson. I'm currently at Axle Energy, but I spent the last two 
 
 ## Brand Studio starts with a text box
 
-![Brand Studio screenshot](images/brand-studio-placeholder.png)
+> **Image placeholder:** Brand Studio screenshot
 
 <!--
 Brand Studio helps brands generate marketing images. The interface puts a large text box in front of people and asks them to describe the image they want.
@@ -63,7 +65,7 @@ ChatGPT and Claude trained people to treat a big text box as a conversation. The
 
 ## How diffusion works
 
-![Noise being added and removed](images/diffusion-placeholder.png)
+> **Image placeholder:** Noise being added and removed
 
 <!--
 Diffusion models learn by replacing pixels with static noise and learning to reverse that process while associating the image with its description. Starting with noise and text, the model guesses the missing pixels. The book analogy is crossing out words and characters, then asking someone to reconstruct the text.
@@ -84,7 +86,7 @@ Diffusion models learn by replacing pixels with static noise and learning to rev
 
 ## Dialogue confuses diffusion models
 
-![Bad dialogue-as-image example](images/dialogue-failure-placeholder.png)
+> **Image placeholder:** Bad dialogue-as-image example
 
 <!--
 Diffusion models may try to render the wording of a question or instruction rather than respond to it.
@@ -157,13 +159,13 @@ Cartoons and hyperreal images may need different models. Even Stability's own fa
 
 Police sketches and charades are hard for the same reason.
 
-![Police sketch or charades reference](images/description-problem-placeholder.png)
+> **Image placeholder:** Police sketch or charades reference
 
 ---
 
 ## Showing beats describing
 
-![Visual reference](images/showing-reference-placeholder.png)
+> **Image placeholder:** A visual reference that is easier to understand than a description
 
 ---
 
@@ -171,7 +173,7 @@ Police sketches and charades are hard for the same reason.
 
 Users collect a scene, style, or vibe and label what matters.
 
-![Moodboard examples](images/moodboards-placeholder.png)
+> **Image placeholder:** Moodboard examples
 
 ---
 
@@ -341,7 +343,7 @@ Workflows model durable multi-step processes and provide observability for each 
 
 An agent workflow communicates progress from the workflow to the agent, then immediately to the browser.
 
-![Agent, workflow, and browser diagram](images/agent-workflow-placeholder.png)
+> **Diagram placeholder:** Agent, workflow, and browser state synchronisation
 
 ---
 
@@ -405,7 +407,7 @@ The team augmented human abilities with agentic ones while keeping final decisio
 
 ## We built something we were proud of
 
-![Beautiful Producer Mode marketing images](images/final-results-placeholder.png)
+> **Image placeholder:** Beautiful Producer Mode marketing images
 
 ---
 
