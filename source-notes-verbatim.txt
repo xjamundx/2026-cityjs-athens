@@ -1,0 +1,295 @@
+AI talk rambling notes
+
+Hi I'm Jamund Ferguson. I'm currently at Axle Energy but I spent the last 2 years at Stability AI, leading the front-end team and building user interfaces for image generation 
+
+Part 1 — Diffusion Models
+
+At Stability we have a tool called Brand Studio. It's meant to help brands generate images for marketing. Brand Studio puts a big text box in front of people and asks them to type in a description of the image that they want generated 
+
+[ image ]
+
+The problem is that people have become so trained in the last two years by ChatGPT and Claude, etc., that when they see a big text box they assume that they're going to be able to chat. If you go through the logs, a significant number of our prompts to get through the system are from people having a 1-way conversation with a robot that can’t really understand what they’re trying to stay.
+
+Diffusion image generation models like Stable Diffusion are trained by replacing random pixels in an image with static noise 
+
+[show picture, maybe animated ]
+
+ and associating the description of that image with those pixels in such a way that starting with just noise and a description, the model is able to guess which pixels are missing and from that generate an image of just about anything 
+
+[ weird ai slop picture ]
+
+
+The standard example of diffusion with text, to make it even clearer, is going through a book and crossing out  words and characters and then having someone try to read it
+
+The more the more descriptive your prompt, the more likely you are to generate a high-quality image.
+
+Contraat:
+
+If someone prompts for “a cat” or “a shoe”, likely to get something very generic 
+
+[ show picture ]
+
+Likewise diffusion models can get confused with attempts at dialogue and will often try to represent instructions or questions as parts of the image
+
+[ show bad example ]
+
+So what do we do about it? Well, Google solved this problem by creating a hybrid model with nano banana, that can understand chat prompts and reason about the image before building it in a series of steps, using a combination of both auto-regressive (standard LLM) and diffusion-based approaches to image generation (along with a few other tricks)
+
+But we weren’t Google and at that point didn’t even have very many ML researchers at the company, so our very AI-pilled product manager Max come up with a fantastically complicated plan for solving this problem, mostly on the frontend.
+
+This is the story of building a better UI for diffusion image generation and it’s about to get very technical very fast  🚀 
+
+Part 2 — Make it Work(flow)
+—-
+
+1. Enhance the prompt (Mistral Small 4)   The first thing we did was focus on enhancing the prompt. They type in “a shoe” we convert it to something much more detailed, automatically. It may not end up being the shoe they wanted, but at least it has some flair and hints at how the user could maybe do better.  Diagram: ``` [ user prompt]              |  ___________ “You are an expert at writing prompts for diffusion image generation models. Given a users prompt, you’re able to add important details, for example….. Here is the prompt: <prompt”             |  (mistral small 4)             |            V [ enhanced prompt ] ```  This also mostly solves the chat problem, because it conveys anything into an image prompt.
+
+1. Choose the Best Model for the Prompt (Jev)  The next thing we knew we needed to do was to auto-route the users’s prompt to the best model for the job. If they’re asking for cartoon they might need one model vs if they’re asking for hyper realism. Even just sticking with own own Stable Diffusion models, there are quite a few options.  [picture of model options]  The model of choice today for this part of the workflow today would be something like Jev, which is great at taking context and selecting a result from a list of pre-computed options. Which is exactly what we’re doing here!   Diagram: ```    [prompt and options]                |               V            (Jed)                |                V     [ best model] ```  So now we’ve got somewhat usable prompts, and we’ve automatically selected the best tool for the job. 
+2. Creative Guidance (Moodboards)
+
+To take this a few steps further you have to accept that most average people aren't particularly good at communicating what they can see. 
+
+Think police sketches. Or the game charades or whatever. (Any other
+
+[ pictures ]
+
+Someone's describing to an artist someone they’ve actually seen and they need to recreate them in an accurate way. That's a really hard job and that's essentially what we're asking of our models.
+
+Of course what works a lot better than me describing a person is showing you a picture of a person.
+
+￼
+
+
+We built mood boards
+
+[ pictures ]
+
+Where users could cultivate an image of a particular scene or vibe that they were trying to capture in the output and even categorise them in meaningful ways that we could use when piecing together our prompt.
+
+So it works kind of like this:
+
+    1. Drop some images onto a board
+    2. Optionally categorise them for what you want to highlight (background, subject, etc)
+    3. In the background we immediately start running then against a VLM (gemini flash 3.8-lite)
+    4. Save those descriptions into the DB
+    5. When you go to generate an image with your moodboard, we don’t pull the images, we pull the descriptions and inject them into the prompt BEFORE passing it into the prompt enhancer (show example)
+    6. The outcome is now a decent mix of the  images and the user’s prompt
+
+[ show some examples ]
+
+This took us pretty far at getting good base images with basic prompts, but it fails a critical marketing use case. Companies need a way to highlight their own products and people not just imaginary ones.
+
+4. Product Insertion
+
+——
+
+We basically just added a few more categories to our mood board and allowed our users to throw their products,props, people, and places in there 
+
+[Diagram w/prompts]
+
+And then for each image tagged with one of these “product” type categories we use an inpaint model to insert the item onto the base image.
+
+[ pictures: base + product = result]
+
+Et voila!
+
+Two challenge:
+
+1. This thing now takes forever 
+2. We were verging into AI slop territory.
+
+Solution 1: Progress updates 
+
+A user needs to be able to see what’s going on. Where are they in this multi-step process. 
+
+Solution 2:
+
+1. Slop Checker
+
+
+And we need some kind of eval step, some type of capability where we can decide if the image is actually passable or not. The way that we structure that is we have a VLM. It asks if we're looking at slop. It's going to return a slop score that's too high, we'll kick the flow back to the human to decide:
+- that's fine
+- just throw it away and start over
+- let's just use the last image and skip this step altogether
+ 
+
+
+———-
+
+So now  this has become an extremely complicated workflow and it’s one that was particularly well suited for the biggest buzzword of the day: agents.
+
+Aside: For building image generation workflows AI engineers usually go with a tool called ComfyUI. The whole applied AI team at Stability relies on ComfyUI which lets you build a graph of image manipulation tools that get applied one after another. The config is just a JSON file that defines nodes, inputs and outputs. It’s fantastic. But it’s sort of a black box right? For our workflow we needed to be able to communicate our progress constantly to the client and this lent itself to using a different architecture altogether.
+
+
+—- Part 3 — Agents  
+
+We really considered two options: LangChain and Cloudflare Agents. 
+
+Our frontend infrastructure was already on Cloudflare and we already had websocket connections and REST APIs to communicate between the server and the browser.
+
+And there are of course a million options for an agent framework: LangChain (python), Mastra (typescript), Cloudflare has Agent SDK, CodeMode and a Think, also Workflows and now Dynamic Wordklows  now Eve from Vercel, Flue of course Vercel AI SDK, TanStack AI, CrewAI 😱 
+
+One of the differentiators here is interactivity without chat. A lot of the standard AI SDKs and frameworks are built with the expectation that you'll be building a chatbot 
+
+Transition:
+I hope what I've shown so far explains the evolution of the UX, why we made some of the choices that we did, and what problems we were trying to solve. Now I want to very quickly dive into why we chose Cloudflare Agents SDK and Cloudflare Workflows 
+
+There are fundamentally two problems that we need to solve with the architecture, just two big-picture things:
+1. a way organize or arrange and execute our multi-step mage generation workflow.
+2. a way to communicate progress updates and feedback between the agent and the browser
+
+“And for better or worse we decided to go with Cloudflare, specifically workflows and their agents SDK"
+
+So let’s get into it 
+ 
+Early Attempts
+
+1. The first tool we tried to use to build this was Langchain and that's because it's so popular but we found out very quickly it doesn't work super well with Cloudflare. It has a lot of expectations about your database and about other things that made it quite awkward to work in this kind of serverless environment.
+2. It doesn't provide a native way to communicate with the client. We found out that even if we did use Langchain to sort of manage the agent in the cloud, keeping the state in sync with the customer is not something that we get for free. We have to build that out ourselves anyway.
+
+3. And lastly while it's super powerful, I found LangChain to have quite a big and steep learning curve. There are so many complicated tools and capabilities. It was sort of difficult to explain it in simple terms to people, which made it feel like it was not something. Honestly what we were saying was that building stuff out took sort of thousands of lines of code. Of course we're using AI tools so it wasn't the end of the world but it felt a bit overwhelming. I would say maybe a lot of complexity 
+4. That being said it was much more capable and there's so much more to it. We didn't need chat but if we wanted to add chat later, it'd be easy to do. It's still pretty compelling I could easily see choosing it and going all in. If you're building your architecture from scratch, you really need to lean into the capabilities. It seems like a totally valid option. 
+
+
+
+Cloudflare Basics
+
+I feel like, to explain how the agents SDK and workflows works, I need to explain two other related cloudflare technologies.
+
+So everyone knows, basically, that Cloudflare is a CDN, a massively distributed edge network.
+
+One of the first core features that Cloudflare added was called Workers, which are very similar to AWS lambdas, except they run at the edge, so they're extremely low latency , and they're built using something called V8 isolates instead of containers so there are almost no cold start costs. Almost everything that Cloudflare has built is built since then is built on top of Workers. Workers can also communicate with one another.
+
+The mental model for workers is:
+
+here is spin up some temporary compute resources as close to the request  as possible 
+
+[ picture maybe? ]
+
+On top of workers, Cloudflare built durable objects which builds on workers by giving each instance a unique name, a local database and a “hibernating” WebSocket connection.
+
+Now the mental model changes. where Workers were a sort of a generic serverless compute platform,) taking on requests and spinning up as needed ), with durable objects every user or org  can now have their own dedicated stateful computing instance. 
+
+It's the smallest cutest little cloud computer to ever exist and when you’re not using it it goes to sleep but because it’s durable if you ever wake it up it still has all your data intact. Pretty cool 😎 
+
+At some point they realised this is basically the perfect primitive to build an AI agent framework on top of. 
+
+Durable objects or durable agents??
+
+
+Cloudflare Agents SDK
+
+What the Cloudflare Agents SDK adds is a dead simple way to keep state in sync between the browser and the agent.  
+
+The agent has a setState function, backed by SQL and when that’s called on either the server or the frontend, the other is notified immediately over the WebSocket.
+
+State sync solved. 
+
+Setting up the connection between the client and server is just a couple lines of code, there’s a custom hook that lets you do this in react.
+
+Making server functions available for clients to call is available by adding a simple decorator to any of your backend methods 
+
+This is really the first problem we are trying to solve: client and server communication. And it's almost all comes for free. 
+
+------
+
+[Probably show code or diagrams here or something]
+-----
+
+
+
+
+Workflows
+
+The second tool we need to reach for to finish building our feature is Cloud workflows. These let us model complicated multi-step processes and provide durability and observability into each step of the flow. Using them is also dead simple. 
+
+
+[ Dashboard Screenshot ]
+
+You create a workflow by instantiating the workflow class and modelling each step by calling `step.do`. 
+
+We can build out entire image generation pipeline, roughly like this:
+
+[ Fancy code sample or animation ] 
+
+And even the trickier bits aren’t that much:
+
+[ show the wait for response and throw stuff ] 
+
+So now we can pass our prompt and moodboard information into the workflow. It's going to step through all these processes and when  it's done. Hopefully, have a decent image available to use.
+
+
+Putting it together 
+
+So we have an agent connected to our browser and we have a workflow that can generate images, let’s put them together 
+
+To get workflows speaking with agents, we need to use a subclass of workflows called agent workflows.
+
+[ code example ]
+
+As you can see here, these provide quite a few nice helpers for communicating back and forth between the agent and the workflow.As progress is made in your workflow, your agent is updated automatically, which means your client is able to immediately see the progress. 
+
+< screenshot >
+
+The final capability we need to sort out is putting the human in the loop. Both agent workflows and the Cloudflare Agents SDK provide nice helpers for making this possible.
+
+For our initial version we wanted users to be able to accept, skip or retry an after each image insertion step. Modeling accept and skip were quite simple, retry required a little out of the box thinking 
+
+[ show code example, expand for retry  ]
+
+Agents don’t have to make all the decisions
+
+One thing that I think might bother people about this talk is that many people assume that agents have to be smart or in charge for them to really count as agents. 
+ 
+And really what we’re talking about there is Deterministic vs Probabilistic Workflows
+
+Does it not count as an agentic workflow if we're telling it which Models to call and in which order? 
+
+Does the agent have to be the one making the decisions about what to do next, which tools to call, and what arguments to send? 
+
+My hot take is that we should rely on deterministic workflows as much as possible. 
+
+Why? They're essentially cheaper because you don't need an agent to decide every turn and they're easier to test and eval because you know all the possible outcomes in advance. It’s also how you can encode human taste and decision making into an agentic process. Which I think  is a good thing. 
+
+We don't need to cede all control to the robots just yet 
+
+What’s left?
+
+The Cloudflare Agents SDK and Cloudflare Workflows made it really easy to keep agent state in sync between the frontend and backend and model out a complex image generation workflow for our users. As you can see from these examples, the happy path here of the agent code is literally only maybe 100 lines for some quite complex capabilities. 
+
+It’s quite impressive and certainly makes for great demos, but there’s obviously quite a lot here that I haven't shown you, right? How we actually manage the frontend state, how we modelled the workflow in a way that made it easy to see in the frontend, weird and creative mistakes we saw along the way,  we and a tonne of thinking about edge cases and problems, observability and failure modes. I’m happy to share more offline if people want to reach out, but to close out the talk I want to get back to the product story that started this whole project:
+
+—-
+
+Part 4 — 
+
+If you recall, people were struggling to use our BrandStudio product well. They weren’t able to generate the kind high quality images they needed for branding and marketing. One-shot prompting certain wasn’t going to do it, no matter how much AI prompt enhancement we threw at them. So we worked to find ways augment human abilities with agentic ones while still letting the humans make the final decisions.
+
+We had built a UI and workflow that we knew could generate beautiful marketing quality images and we were proud of what we’d done 
+
+[ show beautiful marketing images made with producer mode ]
+
+
+So we shipped it 🎉 And do you want to know what happened next? Well…
+
+ Two weeks later our whole team got shut down. New sign ups were turned off and we never actually got to find out if we’d truly cracked the UX for building high quality marketing images.
+
+So what then was the point of this talk, or even this whole project? I mean it was a lot of fun to build, but I think my number one takeaway would be this:
+
+Build something you can be proud of even if nobody is ever going to see it.
+
+Build a feature so good you want to talk about even if when don’t work there anymore. 
+
+Thank you Athens 🇬🇷 
+—————
+
+—-
+
+Problems and Evals 
+
+1. Can’t arbitrarily restart at earlier steps
+2. Annoying we don’t see output of failed steps, only that is retried
+3. Combining image gen with eval steps blows out some observability 
+
+
+
