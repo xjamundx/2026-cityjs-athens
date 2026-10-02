@@ -1,0 +1,6 @@
+.slidev-layout h1::before,
+.slidev-layout h2::before,
+.slidev-layout h3::before {
+  content: none !important;
+  padding-right: 0 !important;
+}

@@ -13,59 +13,144 @@ themeConfig:
   colorPattern: rotation
 ---
 
-# Agentic Image Generation
+# Building a Multi-Step Agentic Image Generation Workflow
 
-From prompt to production workflow
 
-Jamund Ferguson · CityJS Athens 2026
+###  Jamund Ferguson 
+
+#### CityJS Athens 2026 🇬🇷
+
+
+<a href="https://www.x.com/anxietytech" class="text-teal">@anxietytech</a>
+
 
 <!--
-Hi, I'm Jamund Ferguson. I'm currently at Axle Energy, but I spent the last two years at Stability AI leading the front-end team and building UIs for image generation.
+Hi, I'm Jamund Ferguson. I'm currently at Axle Energy, but I spent the last two years at Stability AI leading the front-end team and building UIs for image generation. Primarily a tool called Brand Studio.
+-->
+
+
+---
+
+# Thinking Outside The Prompt
+
+#### Interactive UIs in the age of agents
+
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+
+###  Jamund Ferguson <span class="text-sm">\[<a href="https://www.x.com/anxietytech" class="text-teal text">@anxietytech</a>\]</span>
+#### CityJS Athens 2026 🇬🇷
+
+
+
+<!--
+Hi, I'm Jamund Ferguson. I'm currently at Axle Energy, but I spent the last two years at Stability AI leading the front-end team and building UIs for image generation. Primarily a tool called Brand Studio.
+-->
+
+
+---
+
+<div class="flex gap-20 justify-center">
+  <img
+    src="./assets/orly-cloudflare.png"
+    alt="Brand Studio workflow"
+    class="block w-85"
+  />
+  <img
+    src="./assets/orly-agents.png"
+    alt="Brand Studio workflow"
+    class="block w-85"
+  />
+</div>
+
+<!--
+So my talk is going to be a bit about this stuff, but first I'm going to tell you a bit about what i've been working on
+-->
+
+
+---
+
+<div class="absolute inset-6 grid grid-cols-[7fr_5fr] items-center gap-8">
+  <div class="h-full min-w-0 flex items-center justify-center">
+    <img
+      src="./assets/brandstudio-slow.gif"
+      alt="Brand Studio workflow"
+      class="block max-h-full w-full rounded-xl object-contain"
+    />
+  </div>
+  <div class="pl-2">
+    <h2 class="!mt-0 !mb-4">Brand Studio</h2>
+    <p>Generates marketing images from a text prompt.</p>
+  </div>
+</div>
+
+<!--
+I mainly worked on a tool called brand studio, which helps companies edit and generate images used in marketing campaigns.
+
+As you can see here we throw up a big text box in front of people and asks them what they want to create. 
+
 -->
 
 ---
 
-## The story
 
-1. Diffusion models
-2. Make it Work(flow)
-3. Agents
-4. What happened next
-
----
-
-# Part 1
-## Diffusion models
-
----
-
-## Brand Studio starts with a text box
-
-> **Image placeholder:** Brand Studio screenshot
+<div class="absolute inset-6 flex flex-col">
+  <div class="flex justify-center">
+    <h2 class="!mt-0 !mb-4">People want to chat with the 🤖</h2>
+  </div>
+  
+  <img
+    src="./assets/chatgpt.png"
+    alt="People trying to chat with an image-generation prompt"
+    class="absolute inset-0 m-auto block max-h-full max-w-[80%] top-20 rounded-xl object-contain transition-opacity duration-500"
+  />
+</div>
 
 <!--
-Brand Studio helps brands generate marketing images. The interface puts a large text box in front of people and asks them to describe the image they want.
 
--->
-
----
-
-## A text box looks like chat
-
-- People expect a conversation
-- The model receives a one-way prompt
-- Questions and instructions may become parts of the image
-
-<!--
 ChatGPT and Claude trained people to treat a big text box as a conversation. The logs showed many people trying to talk to a robot that could not understand them in that way.
 
 -->
+---
+
+## ❌ Writing Bad Prompts
+
+<img
+  v-click.hide="1"
+  src="./assets/chat.png"
+  alt="People trying to chat with an image-generation prompt"
+  class="absolute inset-0 m-auto block max-h-full max-w-[70%] rounded-xl object-contain transition-opacity duration-500"
+/>
+
+<img
+  v-click="1"
+  src="./assets/prompt-shoe.png"
+  alt="People trying to chat with an image-generation prompt"
+  class="absolute inset-0 m-auto block max-h-full max-w-[90%] rounded-xl object-contain transition-opacity duration-500"
+/>
+
+<!--
+Lots of text, without specific detail isn't helpful. Neither are really generic approaches without much detail like "a shoe"
+
+Both of these are going to result in poor quality output.
+-->
 
 ---
 
-## How diffusion works
 
-> **Image placeholder:** Noise being added and removed
+![x](./assets/explainer-noise.png)
+![x](./assets/explainer-clear.png)
+
+<center>
+<strong>Source:</strong> <a href="https://poloclub.github.io/diffusion-explainer/">https://poloclub.github.io/diffusion-explainer/</a>
+</center>
 
 <!--
 Diffusion models learn by replacing pixels with static noise and learning to reverse that process while associating the image with its description. Starting with noise and text, the model guesses the missing pixels. The book analogy is crossing out words and characters, then asking someone to reconstruct the text.
@@ -76,28 +161,21 @@ Diffusion models learn by replacing pixels with static noise and learning to rev
 
 ## Prompt detail matters
 
-| Prompt | Likely result |
-| --- | --- |
-| “A cat” | Generic |
-| “A shoe” | Generic |
-| A detailed visual description | More directed |
-
----
-
-## Dialogue confuses diffusion models
-
-> **Image placeholder:** Bad dialogue-as-image example
+![x](./assets/explainer-diff2.png)
+<center>
+<strong>Source:</strong> <a href="https://poloclub.github.io/diffusion-explainer/">https://poloclub.github.io/diffusion-explainer/</a>
+</center>
 
 <!--
-Diffusion models may try to render the wording of a question or instruction rather than respond to it.
-
+Here's another graphic from the same site demonstrating how important it is to layer details into the prompt. Slight changes in the wording or in the text can end up creating drastically different images.
 -->
 
 ---
+<!--
 
-## Hybrid models changed the interaction
+## A better model?
 
-Nano Banana can reason about a request before rendering the image.
+When Google released Nano Banana Pro in late 2025 they combined the natural language capabilities of an LLM, the power of Google Search, and the X power of XYY. 
 
 <!--
 Google combined autoregressive language-model behaviour with diffusion and other techniques. We were not Google and did not have many ML researchers, so our product manager Max proposed a complicated solution that lived mostly in the product workflow.
@@ -108,7 +186,7 @@ Google combined autoregressive language-model behaviour with diffusion and other
 
 ## A better interface for image generation
 
-This is where the talk gets technical.
+We need to think outside the prompt
 
 ---
 
@@ -283,6 +361,19 @@ The wider option set included LangChain, Mastra, Cloudflare Agents SDK, CodeMode
 LangChain remained compelling, especially if chat might be added later. The criticism is about fit and complexity, not that the framework is bad.
 
 -->
+---
+## Cloudflare Quirks
+
+Bindings &amp; Migrations
+
+<!--
+Instead of maing a normal REST API call to use cloudflare's internal services, they have you register "bindings"
+for each app that then will give you a typed SDK to enable the feature and typically execute commands over fast
+RPC connection
+
+Because durable objects are at least part database, they require a version in this migrations config, so that
+if you make major changes to the data structure, you can bring everyone along
+-->
 
 ---
 
@@ -305,6 +396,7 @@ A named, stateful compute instance with local storage and a hibernating WebSocke
 Each user or organisation can have a dedicated stateful instance. It sleeps when unused and retains its data when it wakes. This became the primitive for Cloudflare's agent framework.
 
 -->
+
 
 ---
 
