@@ -195,17 +195,15 @@ We need to think outside the prompt
 
 ---
 
-## Step 1: Enhance the prompt
-
-```text
-[user prompt]
-      |
-      v
-[Mistral Small 4]
-      |
-      v
-[enhanced image prompt]
-```
+<div class="absolute inset-6 grid grid-cols-[5fr_7fr] items-stretch gap-8">
+  <div class="flex flex-col justify-center pr-2">
+    <p class="!mb-2 text-sm font-bold tracking-[0.16em] text-violet-300 uppercase">Step 1 of 7</p>
+    <h2 class="!mt-0 !mb-4">Enhance the prompt</h2>
+    <p>Turn a short or conversational request into a useful image description.</p>
+    <p class="text-slate-400">The user can stay brief while the system supplies visual detail and structure.</p>
+  </div>
+  <WorkflowDiagram :active="1" />
+</div>
 
 <!--
 If someone types “a shoe,” convert it into something more detailed. It might not be the exact shoe they wanted, but it adds flair, teaches better prompting, and converts conversational input into an image description.
@@ -214,17 +212,15 @@ If someone types “a shoe,” convert it into something more detailed. It might
 
 ---
 
-## Step 2: Choose the best model
-
-```text
-[prompt + model options]
-           |
-           v
-         [Jev]
-           |
-           v
-      [best model]
-```
+<div class="absolute inset-6 grid grid-cols-[5fr_7fr] items-stretch gap-8">
+  <div class="flex flex-col justify-center pr-2">
+    <p class="!mb-2 text-sm font-bold tracking-[0.16em] text-violet-300 uppercase">Step 2 of 7</p>
+    <h2 class="!mt-0 !mb-4">Choose the model</h2>
+    <p>Match the request to the image model best suited to its style and subject.</p>
+    <p class="text-slate-400">A cartoon and a photoreal campaign image may need different generators.</p>
+  </div>
+  <WorkflowDiagram :active="2" />
+</div>
 
 <!--
 Cartoons and hyperreal images may need different models. Even Stability's own family offered many options. The notes call the routing model Jev, and once call it Jed; verify the final product name before presenting.
@@ -233,95 +229,82 @@ Cartoons and hyperreal images may need different models. Even Stability's own fa
 
 ---
 
-## People struggle to describe what they see
-
-Police sketches and charades are hard for the same reason.
-
-> **Image placeholder:** Police sketch or charades reference
-
----
-
-## Showing beats describing
-
-> **Image placeholder:** A visual reference that is easier to understand than a description
-
----
-
-## Moodboards
-
-Users collect a scene, style, or vibe and label what matters.
-
-> **Image placeholder:** Moodboard examples
-
----
-
-## Moodboard processing
-
-1. Add images
-2. Categorise background, subject, or another role
-3. Run each image through a VLM such as Gemini Flash 3.8 Lite
-4. Save the descriptions
-5. Inject descriptions before prompt enhancement
-6. Generate from the prompt and visual guidance
+<div class="absolute inset-6 grid grid-cols-[5fr_7fr] items-stretch gap-8">
+  <div class="flex flex-col justify-center pr-2">
+    <p class="!mb-2 text-sm font-bold tracking-[0.16em] text-violet-300 uppercase">Step 3 of 7</p>
+    <h2 class="!mt-0 !mb-4">Add visual references</h2>
+    <p>Let users show the scene, style, subject, or mood they want.</p>
+    <p class="text-slate-400">Showing is often easier than describing, so references become a moodboard with labelled roles.</p>
+  </div>
+  <WorkflowDiagram :active="3" />
+</div>
 
 <!--
-At generation time, the workflow pulls the descriptions rather than the original images. The result mixes the user's text with the moodboard guidance.
+People struggle to describe what they see. Police sketches and charades are hard for the same reason. Showing beats describing, so users collect a scene, style, or vibe and label what matters in a moodboard.
+-->
+
+---
+
+<div class="absolute inset-6 grid grid-cols-[5fr_7fr] items-stretch gap-8">
+  <div class="flex flex-col justify-center pr-2">
+    <p class="!mb-2 text-sm font-bold tracking-[0.16em] text-violet-300 uppercase">Step 4 of 7</p>
+    <h2 class="!mt-0 !mb-4">Process the references</h2>
+    <p>A vision model describes each reference according to its role in the moodboard.</p>
+    <p class="text-slate-400">The workflow saves those descriptions and blends them into the enhanced prompt.</p>
+  </div>
+  <WorkflowDiagram :active="4" />
+</div>
+
+<!--
+Users add images and categorise each one as a background, subject, or another role. A VLM describes the images, the product saves those descriptions, and the workflow injects them before prompt enhancement. At generation time, it pulls the descriptions rather than the original images. The result mixes the user's text with the moodboard guidance.
 
 -->
 
 ---
 
-## Marketing needs real products and people
-
-Good base images still fail when a company needs its own product, person, prop, or place.
+<div class="absolute inset-6 grid grid-cols-[5fr_7fr] items-stretch gap-8">
+  <div class="flex flex-col justify-center pr-2">
+    <p class="!mb-2 text-sm font-bold tracking-[0.16em] text-violet-300 uppercase">Step 5 of 7</p>
+    <h2 class="!mt-0 !mb-4">Generate the base image</h2>
+    <p>Create the first complete image from the enhanced prompt, selected model, and visual guidance.</p>
+    <p class="text-slate-400">This establishes the composition before branded elements are added.</p>
+  </div>
+  <WorkflowDiagram :active="5" />
+</div>
 
 ---
 
-## Product insertion
-
-```text
-[base image] + [product / person / prop / place] = [result]
-```
+<div class="absolute inset-6 grid grid-cols-[5fr_7fr] items-stretch gap-8">
+  <div class="flex flex-col justify-center pr-2">
+    <p class="!mb-2 text-sm font-bold tracking-[0.16em] text-violet-300 uppercase">Step 6 of 7</p>
+    <h2 class="!mt-0 !mb-4">Insert branded assets</h2>
+    <p>Add the real product, person, prop, or place that the campaign must feature.</p>
+    <p class="text-slate-400">An inpainting model places each tagged asset into the generated base image.</p>
+  </div>
+  <WorkflowDiagram :active="6" />
+</div>
 
 <!--
-The team added product-like categories to moodboards and used an inpainting model to insert every tagged item into the base image.
+Good base images still fail when a company needs its own product, person, prop, or place. The team added product-like categories to moodboards and used an inpainting model to insert every tagged item into the base image.
 
 -->
 
 ---
 
-## Two new problems
-
-1. The workflow takes a long time
-2. The output risks becoming AI slop
-
----
-
-## Progress updates
-
-The user needs to see where they are in the multi-step process.
-
----
-
-## Slop checker
-
-- A VLM produces a slop score
-- A high score sends the result to a person
-- The person can accept, retry, discard, or skip the insertion
+<div class="absolute inset-6 grid grid-cols-[5fr_7fr] items-stretch gap-8">
+  <div class="flex flex-col justify-center pr-2">
+    <p class="!mb-2 text-sm font-bold tracking-[0.16em] text-violet-300 uppercase">Step 7 of 7</p>
+    <h2 class="!mt-0 !mb-4">Evaluate and review</h2>
+    <p>A vision model scores the result and sends uncertain images to a person.</p>
+    <p class="text-slate-400">The interface reports progress throughout the run. A reviewer can accept, retry, discard, or skip.</p>
+  </div>
+  <WorkflowDiagram :active="7" />
+</div>
 
 <!--
-The human remains the final decision maker. The exact choices in the notes are: accept it, throw it away and start over, or use the previous image and skip the step.
+The workflow takes a long time and the output risks becoming AI slop, so the user needs to see where they are in the multi-step process. A VLM produces a slop score, and a high score sends the result to a person. The human remains the final decision maker. The exact choices in the notes are: accept it, throw it away and start over, or use the previous image and skip the step.
 
--->
-
----
-
-## ComfyUI was the obvious image tool
-
-ComfyUI models image manipulation as a graph of nodes, inputs, and outputs stored as JSON.
-
-<!--
-Stability's applied AI team relied on ComfyUI. It is excellent, but it felt like a black box for a product that needed constant progress communication with the client.
+Stability's applied AI team relied on ComfyUI, which models image manipulation as a graph of nodes, inputs, and outputs stored as JSON. It is excellent, but it felt like a black box for a product that needed constant progress communication with the client.
 
 -->
 
