@@ -171,30 +171,21 @@ Here's another graphic from the same site demonstrating how important it is to l
 -->
 
 ---
-<!--
-
-## A better model?
-
-When Google released Nano Banana Pro in late 2025 they combined the natural language capabilities of an LLM, the power of Google Search, and the X power of XYY. 
-
-<!--
-Google combined autoregressive language-model behaviour with diffusion and other techniques. We were not Google and did not have many ML researchers, so our product manager Max proposed a complicated solution that lived mostly in the product workflow.
-
--->
+layout: section
 
 ---
 
-## A better interface for image generation
+<p class="!mb-4 text-sm font-bold tracking-[0.16em] text-violet-300 uppercase">Part 2 · Making the Workflow</p>
+
+# A better interface for image generation
 
 We need to think outside the prompt
 
 <!--
 At stability I worked with a fantastic product manager Max who was constantly vibe coding different prototypes for how users could get better results out of our product.
--->
----
 
-# Part 2
-## Make it Work(flow)
+Google combined autoregressive language-model behaviour with diffusion and other techniques. We were not Google and did not have many ML researchers, so Max proposed a complicated solution that lived mostly in the product workflow.
+-->
 
 ---
 
@@ -217,7 +208,7 @@ If someone types “a shoe,” convert it into something more detailed. It might
 <div class="absolute inset-6 grid grid-cols-[5fr_7fr] items-stretch gap-8">
   <div class="flex flex-col justify-center pr-2">
     <p class="!mb-2 text-sm font-bold tracking-[0.16em] text-violet-300 uppercase">Step 2 of 6</p>
-    <h2 class="!mt-0 !mb-4">Route to the image model</h2>
+    <h2 class="!mt-0 !mb-4">Route to the best image generation model</h2>
     <p>JEV compares the enhanced prompt with a fixed list of model capabilities.</p>
     <p class="text-slate-400">For this marketing image, it selects Stable Image Ultra.</p>
   </div>
