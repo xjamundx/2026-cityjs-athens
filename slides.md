@@ -188,6 +188,9 @@ Google combined autoregressive language-model behaviour with diffusion and other
 
 We need to think outside the prompt
 
+<!--
+At stability I worked with a fantastic product manager Max who was constantly vibe coding different prototypes for how users could get better results out of our product.
+-->
 ---
 
 # Part 2
@@ -197,46 +200,44 @@ We need to think outside the prompt
 
 <div class="absolute inset-6 grid grid-cols-[5fr_7fr] items-stretch gap-8">
   <div class="flex flex-col justify-center pr-2">
-    <p class="!mb-2 text-sm font-bold tracking-[0.16em] text-violet-300 uppercase">Step 1 of 7</p>
+    <p class="!mb-2 text-sm font-bold tracking-[0.16em] text-violet-300 uppercase">Step 1 of 6</p>
     <h2 class="!mt-0 !mb-4">Enhance the prompt</h2>
-    <p>Turn a short or conversational request into a useful image description.</p>
-    <p class="text-slate-400">The user can stay brief while the system supplies visual detail and structure.</p>
+    <p>Mistral Small 4 turns a short request into a useful image description.</p>
+    <p class="text-slate-400">The user can stay brief while the prompt enhancer supplies visual detail and structure.</p>
   </div>
   <WorkflowDiagram :active="1" />
 </div>
 
 <!--
 If someone types “a shoe,” convert it into something more detailed. It might not be the exact shoe they wanted, but it adds flair, teaches better prompting, and converts conversational input into an image description.
-
 -->
 
 ---
 
 <div class="absolute inset-6 grid grid-cols-[5fr_7fr] items-stretch gap-8">
   <div class="flex flex-col justify-center pr-2">
-    <p class="!mb-2 text-sm font-bold tracking-[0.16em] text-violet-300 uppercase">Step 2 of 7</p>
-    <h2 class="!mt-0 !mb-4">Choose the model</h2>
-    <p>Match the request to the image model best suited to its style and subject.</p>
-    <p class="text-slate-400">A cartoon and a photoreal campaign image may need different generators.</p>
+    <p class="!mb-2 text-sm font-bold tracking-[0.16em] text-violet-300 uppercase">Step 2 of 6</p>
+    <h2 class="!mt-0 !mb-4">Route to the image model</h2>
+    <p>JEV compares the enhanced prompt with a fixed list of model capabilities.</p>
+    <p class="text-slate-400">For this marketing image, it selects Stable Image Ultra.</p>
   </div>
   <WorkflowDiagram :active="2" />
 </div>
 
 <!--
-Cartoons and hyperreal images may need different models. Even Stability's own family offered many options. The notes call the routing model Jev, and once call it Jed; verify the final product name before presenting.
-
+Cartoons and hyperreal images may need different models. Even Stability's own family offered many options. The routing model JEV takes context and selects from a list of precomputed options.
 -->
 
 ---
 
 <div class="absolute inset-6 grid grid-cols-[5fr_7fr] items-stretch gap-8">
   <div class="flex flex-col justify-center pr-2">
-    <p class="!mb-2 text-sm font-bold tracking-[0.16em] text-violet-300 uppercase">Step 3 of 7</p>
-    <h2 class="!mt-0 !mb-4">Add visual references</h2>
+    <p class="!mb-2 text-sm font-bold tracking-[0.16em] text-violet-300 uppercase">Step 3a of 6</p>
+    <h2 class="!mt-0 !mb-4">Build the moodboard</h2>
     <p>Let users show the scene, style, subject, or mood they want.</p>
-    <p class="text-slate-400">Showing is often easier than describing, so references become a moodboard with labelled roles.</p>
+    <p class="text-slate-400">They add reference images and label each image's role.</p>
   </div>
-  <WorkflowDiagram :active="3" />
+  <WorkflowDiagram :active="3" :moodboard-stage="2" />
 </div>
 
 <!--
@@ -247,65 +248,62 @@ People struggle to describe what they see. Police sketches and charades are hard
 
 <div class="absolute inset-6 grid grid-cols-[5fr_7fr] items-stretch gap-8">
   <div class="flex flex-col justify-center pr-2">
-    <p class="!mb-2 text-sm font-bold tracking-[0.16em] text-violet-300 uppercase">Step 4 of 7</p>
+    <p class="!mb-2 text-sm font-bold tracking-[0.16em] text-violet-300 uppercase">Step 3b of 6</p>
     <h2 class="!mt-0 !mb-4">Process the references</h2>
-    <p>A vision model describes each reference according to its role in the moodboard.</p>
-    <p class="text-slate-400">The workflow saves those descriptions and blends them into the enhanced prompt.</p>
+    <p>Gemini Flash 3.8 describes each reference according to its moodboard role.</p>
+    <p class="text-slate-400">The workflow saves the descriptions and injects them before prompt enhancement.</p>
   </div>
-  <WorkflowDiagram :active="4" />
+  <WorkflowDiagram :active="3" :moodboard-stage="5" />
 </div>
 
 <!--
 Users add images and categorise each one as a background, subject, or another role. A VLM describes the images, the product saves those descriptions, and the workflow injects them before prompt enhancement. At generation time, it pulls the descriptions rather than the original images. The result mixes the user's text with the moodboard guidance.
-
 -->
 
 ---
 
 <div class="absolute inset-6 grid grid-cols-[5fr_7fr] items-stretch gap-8">
   <div class="flex flex-col justify-center pr-2">
-    <p class="!mb-2 text-sm font-bold tracking-[0.16em] text-violet-300 uppercase">Step 5 of 7</p>
+    <p class="!mb-2 text-sm font-bold tracking-[0.16em] text-violet-300 uppercase">Step 4 of 6</p>
     <h2 class="!mt-0 !mb-4">Generate the base image</h2>
-    <p>Create the first complete image from the enhanced prompt, selected model, and visual guidance.</p>
+    <p>Stable Image Ultra creates the first complete image from the enhanced prompt and visual guidance.</p>
     <p class="text-slate-400">This establishes the composition before branded elements are added.</p>
   </div>
-  <WorkflowDiagram :active="5" />
+  <WorkflowDiagram :active="4" :moodboard-stage="5" />
 </div>
 
 ---
 
 <div class="absolute inset-6 grid grid-cols-[5fr_7fr] items-stretch gap-8">
   <div class="flex flex-col justify-center pr-2">
-    <p class="!mb-2 text-sm font-bold tracking-[0.16em] text-violet-300 uppercase">Step 6 of 7</p>
+    <p class="!mb-2 text-sm font-bold tracking-[0.16em] text-violet-300 uppercase">Step 5 of 6</p>
     <h2 class="!mt-0 !mb-4">Insert branded assets</h2>
     <p>Add the real product, person, prop, or place that the campaign must feature.</p>
     <p class="text-slate-400">An inpainting model places each tagged asset into the generated base image.</p>
   </div>
-  <WorkflowDiagram :active="6" />
+  <WorkflowDiagram :active="5" :moodboard-stage="5" />
 </div>
 
 <!--
 Good base images still fail when a company needs its own product, person, prop, or place. The team added product-like categories to moodboards and used an inpainting model to insert every tagged item into the base image.
-
 -->
 
 ---
 
 <div class="absolute inset-6 grid grid-cols-[5fr_7fr] items-stretch gap-8">
   <div class="flex flex-col justify-center pr-2">
-    <p class="!mb-2 text-sm font-bold tracking-[0.16em] text-violet-300 uppercase">Step 7 of 7</p>
+    <p class="!mb-2 text-sm font-bold tracking-[0.16em] text-violet-300 uppercase">Step 6 of 6</p>
     <h2 class="!mt-0 !mb-4">Evaluate and review</h2>
-    <p>A vision model scores the result and sends uncertain images to a person.</p>
-    <p class="text-slate-400">The interface reports progress throughout the run. A reviewer can accept, retry, discard, or skip.</p>
+    <p>Gemini Flash 3.8 scores the result and sends uncertain images to a person.</p>
+    <p class="text-slate-400">Accept finishes. Retry repeats insertion. Skip returns to the base image.</p>
   </div>
-  <WorkflowDiagram :active="7" />
+  <WorkflowDiagram :active="6" :moodboard-stage="5" />
 </div>
 
 <!--
 The workflow takes a long time and the output risks becoming AI slop, so the user needs to see where they are in the multi-step process. A VLM produces a slop score, and a high score sends the result to a person. The human remains the final decision maker. The exact choices in the notes are: accept it, throw it away and start over, or use the previous image and skip the step.
 
 Stability's applied AI team relied on ComfyUI, which models image manipulation as a graph of nodes, inputs, and outputs stored as JSON. It is excellent, but it felt like a black box for a product that needed constant progress communication with the client.
-
 -->
 
 ---
