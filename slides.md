@@ -429,6 +429,16 @@ transition: none
 
   <img src="./assets/fishing-bad.png" class="left-36 absolute h-100"/>
 
+
+<ModelBadge
+  v-click
+  class="absolute right-7 top-6 z-20 w-88"
+  :step="5"
+  title="Evaluate Realism"
+  model-type="Multi-Modal LLM"
+  model="Gemini Flash 3.8"
+/>
+
 <!--
 
 ---
@@ -515,7 +525,7 @@ Durability means being able to recover after a crash or for example if the insta
 
 ---
 
-## Two Major Architectural Challenges
+# Two Major Architectural Challenges
 
 <div class="grid grid-cols-2 gap-4 mt-12">
   <div class="p-4 border border-white rounded-4 shadow-teal shadow-md w-full h-full text-center">
@@ -524,14 +534,29 @@ Durability means being able to recover after a crash or for example if the insta
 </span>
   </div>
   <div class="p-4 border border-white rounded-4 shadow-teal shadow-md text-center"><span class="text-blue shadow-black text-shadow-sm">Syncing State between the <br/> Workflow and the Browser</span></div>
-  <div v-click class="col-span-2 justify-items-center"><img  class="h-20 mb-10 mt-10" src="./assets/cloudflare.png" /></div>
-  <div v-click class="p-4 border border-white rounded-4 shadow-yellow shadow-md w-full h-full text-center">
-      <div  class="text-yellow">Cloudflare Workflows</div>
+
+  <div v-click class="p-4 border border-white  shadow-orange shadow-md w-full h-full text-center bg-orange text-white">
+      <div  class="text-white">Workflows</div>
     </div>
-    <div v-click class="p-4 border border-white rounded-4 shadow-yellow shadow-md w-full h-full text-center">
-    <div  class="text-yellow">Cloudflare Agents SDK</div>
+    <div v-click class="p-4 border border-white shadow-orange shadow-md w-full h-full text-center bg-orange">
+    <div  class="text-white">Agents SDK</div>
   </div>
 </div>
+
+
+---
+layout: section
+transition: none
+
+---
+
+# Cloudflare Workflows
+
+Modeling and Durably Executing our AI Workflow
+
+<!--
+Let's define this very quickly, and then we'll turn it into code. 
+-->
 
 ---
 transition: none
@@ -540,72 +565,51 @@ transition: none
 <div class="absolute inset-6 grid grid-cols-[2fr_1fr] items-stretch gap-8">
   <div class="flex flex-col justify-center pr-2">
     <p class="!mb-2 text-sm font-bold tracking-[0.16em] text-violet-300 uppercase">Step 1 of 5</p>
-    <h2 class="!mt-0 !mb-4">Enhance the prompt</h2>
-    <p>Mistral Small 4 turns a short request into a useful image description.</p>
-    <p class="text-slate-400">The user can stay brief while the prompt enhancer supplies visual detail and structure.</p>
+    <h2 class="!mt-0 !mb-4">Retrieve the moodboard</h2>
+    <p>Load the campaign's saved moodboard data before making any model calls.</p>
+    <p class="text-slate-400">The workflow retrieves descriptions and categorized reference images from the database.</p>
   </div>
   <WorkflowDiagram :active="1" />
 </div>
 
 <!--
-If someone types “a shoe,” convert it into something more detailed. It might not be the exact shoe they wanted, but it adds flair, teaches better prompting, and converts conversational input into an image description.
+Moodboard creation happens earlier in the product. By the time this durable workflow starts, it only needs to retrieve the saved descriptions and category images that the later steps consume.
 -->
 
 ---
 transition: none
-
 ---
 
 <div class="absolute inset-6 grid grid-cols-[2fr_1fr] items-stretch gap-8">
   <div class="flex flex-col justify-center pr-2">
     <p class="!mb-2 text-sm font-bold tracking-[0.16em] text-violet-300 uppercase">Step 2 of 5</p>
-    <h2 class="!mt-0 !mb-4">Route to the best image generation model</h2>
-    <p>JEV compares the enhanced prompt with a fixed list of model capabilities.</p>
-    <p class="text-slate-400">For this marketing image, it selects Stable Image Ultra.</p>
+    <h2 class="!mt-0 !mb-4">Enhance the prompt</h2>
+    <p>Mistral Small 4 turns a short request into a useful image description.</p>
+    <p class="text-slate-400">The user can stay brief while the prompt sent to the enhancer gets injected with the moodboard image descriptions.</p>
   </div>
   <WorkflowDiagram :active="2" />
 </div>
 
 <!--
-Cartoons and hyperreal images may need different models. Even Stability's own family offered many options. The routing model JEV takes context and selects from a list of precomputed options.
+If someone types “a shoe,” convert it into something more detailed. It might not be the exact shoe they wanted, but it adds flair, teaches better prompting, and converts conversational input plus moodboard context into an image description.
 -->
 
 ---
 transition: none
-
 ---
 
 <div class="absolute inset-6 grid grid-cols-[2fr_1fr] items-stretch gap-8">
   <div class="flex flex-col justify-center pr-2">
-    <p class="!mb-2 text-sm font-bold tracking-[0.16em] text-violet-300 uppercase">Step 3a of 5</p>
-    <h2 class="!mt-0 !mb-4">Build the moodboard</h2>
-    <p>Let users show the scene, style, subject, or mood they want.</p>
-    <p class="text-slate-400">They add reference images and label each image's role.</p>
+    <p class="!mb-2 text-sm font-bold tracking-[0.16em] text-violet-300 uppercase">Step 3 of 5</p>
+    <h2 class="!mt-0 !mb-4">Route to the best image generation model</h2>
+    <p>Jev or a similar decision API compares the enhanced prompt with a fixed list of model capabilities.</p>
+    <p class="text-slate-400">For this marketing image, it selects Stable Image Ultra.</p>
   </div>
-  <WorkflowDiagram :active="3" :moodboard-stage="2" />
+  <WorkflowDiagram :active="3" />
 </div>
 
 <!--
-People struggle to describe what they see. Police sketches and charades are hard for the same reason. Showing beats describing, so users collect a scene, style, or vibe and label what matters in a moodboard.
--->
-
----
-transition: none
-
----
-
-<div class="absolute inset-6 grid grid-cols-[2fr_1fr] items-stretch gap-8">
-  <div class="flex flex-col justify-center pr-2">
-    <p class="!mb-2 text-sm font-bold tracking-[0.16em] text-violet-300 uppercase">Step 3b of 5</p>
-    <h2 class="!mt-0 !mb-4">Process the references</h2>
-    <p>Gemini 3.8 Flash-Lite describes each reference according to its moodboard role.</p>
-    <p class="text-slate-400">Moodboard creation ends after saving. Its output then feeds Step 1 prompt enhancement.</p>
-  </div>
-  <WorkflowDiagram :active="3" :moodboard-stage="5" />
-</div>
-
-<!--
-Users add images and categorise each one as a background, subject, or another role. A VLM describes the images, the product saves those descriptions, and the workflow injects them before prompt enhancement. At generation time, it pulls the descriptions rather than the original images. The result mixes the user's text with the moodboard guidance.
+Cartoons and hyperreal images may need different models. Even Stability's own family offered many options. The routing model Jev takes context and selects from a list of precomputed options.
 -->
 
 ---
@@ -620,7 +624,7 @@ transition: none
     <p>Stable Image Ultra creates the first complete image from the enhanced prompt and visual guidance.</p>
     <p class="text-slate-400">This establishes the composition before branded elements are added.</p>
   </div>
-  <WorkflowDiagram :active="4" :moodboard-stage="5" />
+  <WorkflowDiagram :active="4" />
 </div>
 
 ---
@@ -630,99 +634,20 @@ transition: none
 
 <div class="absolute inset-6 grid grid-cols-[2fr_1fr] items-stretch gap-8">
   <div class="flex flex-col justify-center pr-2">
-    <p class="!mb-2 text-sm font-bold tracking-[0.16em] text-violet-300 uppercase">Step 5a of 5</p>
-    <h2 class="!mt-0 !mb-4">Inpaint people</h2>
-    <p>Nano Banana 2 inpaints each required person before the workflow regenerates and evaluates the image.</p>
-    <p class="text-slate-400">A score below 80% sends the image to a person for a decision.</p>
+    <p class="!mb-2 text-sm font-bold tracking-[0.16em] text-violet-300 uppercase">Step 5 of 5</p>
+    <h2 class="!mt-0 !mb-4">Image Insertion Loop</h2>
+    <p>For each category in the moodboard, Nano Banana 2 inserts its images into the latest accepted image.</p>
+    <p class="text-slate-400">Gemini Flash 3.8 checks realism. Results at or above 80% continue automatically; anything below asks a person what to do next.</p>
   </div>
-  <WorkflowDiagram :active="5" :moodboard-stage="5" :asset-stage="1" />
+  <WorkflowDiagram :active="5" :asset-stage="3" />
 </div>
-
-<!--
-Good base images still fail when a company needs its own product, person, prop, or place. The team added product-like categories to moodboards and used an inpainting model to insert every tagged item into the base image.
--->
 
 ---
 transition: none
 
 ---
 
-<div class="absolute inset-6 grid grid-cols-[2fr_1fr] items-stretch gap-8">
-  <div class="flex flex-col justify-center pr-2">
-    <p class="!mb-2 text-sm font-bold tracking-[0.16em] text-violet-300 uppercase">Step 5b of 5</p>
-    <h2 class="!mt-0 !mb-4">Inpaint products</h2>
-    <p>Nano Banana 2 repeats the inpainting cycle for every product the campaign must feature.</p>
-    <p class="text-slate-400">A score below 80% asks a person whether the product needs another pass.</p>
-  </div>
-  <WorkflowDiagram :active="5" :moodboard-stage="5" :asset-stage="2" />
-</div>
-
-<!--
-People and products run through separate insertion, generation, and evaluation cycles. Each evaluation can return to its own insertion step.
--->
-
----
-transition: none
-
----
-
-<div class="absolute inset-6 grid grid-cols-[2fr_1fr] items-stretch gap-8">
-  <div class="flex flex-col justify-center pr-2">
-    <p class="!mb-2 text-sm font-bold tracking-[0.16em] text-violet-300 uppercase">Step 5c of 5</p>
-    <h2 class="!mt-0 !mb-4">Complete asset inpainting</h2>
-    <p>Nano Banana 2 handles inpainting. Gemini Flash 3.8 evaluates the result against an 80% realism threshold.</p>
-    <p class="text-slate-400">Anything below the quality gate pauses the workflow and asks a person.</p>
-  </div>
-  <WorkflowDiagram :active="5" :moodboard-stage="5" :asset-stage="3" />
-</div>
-
-<!--
-The workflow does not need to regenerate every branded asset when only one insertion fails. Each lane loops independently before the complete image moves forward.
-
-The workflow takes a long time and the output risks becoming AI slop, so the user needs to see where they are in the multi-step process. A VLM produces a slop score, and a high score sends the result to a person. The human remains the final decision maker. The exact choices in the notes are: accept it, throw it away and start over, or use the previous image and skip the step.
-
-Stability's applied AI team relied on ComfyUI, which models image manipulation as a graph of nodes, inputs, and outputs stored as JSON. It is excellent, but it felt like a black box for a product that needed constant progress communication with the client.
--->
-
----
-transition: none
-class: workflow-code-slide
-
----
-
-## The workflow as code
-
-```ts {all|1-3|5-7|9-11|13-15|17-24}
-const moodboard = await step.do("collect moodboard data", () =>
-  agent.describeMoodboard(campaign.moodboard)
-)
-
-const enhancedPrompt = await step.do("enhance prompt", () =>
-  agent.enhancePrompt(campaign.prompt, moodboard)
-)
-
-const model = await step.do("select optimal model", () =>
-  agent.selectModel(enhancedPrompt)
-)
-
-let image = await step.do("generate base image", () =>
-  agent.generateImage(model, enhancedPrompt)
-)
-
-for (const category of ["people", "products", "landmarks", "props"]) {
-  image = await step.do(`insert ${category}`, () =>
-    agent.insertMoodboardImages(image, moodboard[category])
-  )
-
-  await step.do(`evaluate ${category}`, () =>
-    agent.evaluateRealismOrAskHuman(image)
-  )
-}
-```
-
-<!--
-This is deliberately pseudocode rather than the production implementation. The important point is that the visual workflow maps cleanly to named, durable steps. Each step can retry independently, and the category loop carries the latest image into the next insertion.
--->
+<ImageInsertionLoop />
 
 ---
 transition: none
@@ -730,13 +655,10 @@ class: workflow-code-slide model-call-slide
 
 ---
 
-```ts {all|1-5|7-11|13-30}
-const moodboard = await step.do("collect moodboard data", async () => {
-  const result = await env.AI.run("google/gemini-3.8-flash", {
-    contents: [moodboardMessage(campaign.moodboard)],
-  })
-  return parseMoodboard(textOf(result))
-})
+```ts {all|1-3|5-9|11-28}
+const moodboard = await step.do("collect moodboard data", () =>
+  env.DB.prepare("SELECT data FROM moodboards WHERE campaign_id = ?").bind(campaign.id).first()
+)
 
 const enhanced = await step.do("enhance prompt", async () => {
   const result = await env.AI.run("mistral/mistral-small-4", {
@@ -804,8 +726,27 @@ Sources checked on 4 October 2026: Cloudflare AI binding documentation, AI model
 
 ---
 transition: none
-class: workflow-code-slide boilerplate-slide
+---
 
+<div class="relative -top-6 h-[35rem]">
+  <div class="absolute inset-0 overflow-hidden p-2">
+    <img src="/assets/cf-workflows-dash.png" class="h-full w-full rounded-xl object-contain" />
+  </div>
+  <div v-click class="absolute inset-0 overflow-hidden p-2">
+    <img src="/assets/cf-workflows-dash-2.png" class="h-full w-full rounded-xl object-contain" />
+  </div>
+  <div v-click class="absolute inset-0 overflow-hidden p-2">
+    <img src="/assets/cf-worfklows-dash-3.png" class="h-full w-full rounded-xl object-contain" />
+  </div>
+</div>
+
+<!--
+So you get a list of all of your wo
+-->
+
+---
+transition: none
+class: workflow-code-slide boilerplate-slide
 ---
 
 ## Cloudflare boilerplate non-sense
@@ -819,8 +760,8 @@ class: workflow-code-slide boilerplate-slide
   "ai": { "binding": "AI" },
   "workflows": [
     {
-      "name": "image-generation-workflow-production",
-      "binding": "IMAGE_WORKFLOW",
+      "name": "image-generation-workflow",
+      "binding": "IMAGE_GEN_WORKFLOW",
       "class_name": "ImageGenerationWorkflow"
     }
   ],
