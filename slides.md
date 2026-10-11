@@ -15,16 +15,16 @@ themeConfig:
 
 <div class="opening-slide">
   <div class="opening-copy">
-    <p class="opening-kicker">Building a multi-step workflow</p>
+    <p class="opening-kicker">Beyond the Prompt</p>
     <h1 class="opening-title">
-      <span>Agentic image</span>
-      <span>generation</span>
+      <span>Building a multi-step</span>
+      <span>image generation workflow</span>
     </h1>
-    <p class="opening-subtitle">From prompt enhancement to human quality gates</p>
+    <p class="opening-subtitle">With the Cloudflare Agents SDK</p>
   </div>
 
   <div class="opening-footer">
-    <div>
+    <div class="text-left">
       <strong>Jamund Ferguson</strong>
       <a href="https://www.x.com/anxietytech">@anxietytech</a>
     </div>
@@ -34,32 +34,6 @@ themeConfig:
     </div>
   </div>
 </div>
-
-
-<!--
-Hi, I'm Jamund Ferguson. I'm currently at Axle Energy, but I spent the last two years at Stability AI leading the front-end team and building UIs for image generation. Primarily a tool called Brand Studio.
--->
-
-
----
-
-# Thinking Outside The Prompt
-
-#### Interactive UIs in the age of agents
-
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-
-###  Jamund Ferguson <span class="text-sm">\[<a href="https://www.x.com/anxietytech" class="text-teal text">@anxietytech</a>\]</span>
-#### CityJS Athens 2026 🇬🇷
-
 
 
 <!--
@@ -78,7 +52,7 @@ Hi, I'm Jamund Ferguson. I'm currently at Axle Energy, but I spent the last two 
   </div>
   <div class="pl-2">
     <h2 class="!mt-0 !mb-4">Brand Studio</h2>
-    <p>Generates marketing images from a text prompt.</p>
+    <p>Generates marketing images <br/> from a text prompt box</p>
   </div>
 </div>
 
@@ -91,24 +65,24 @@ As you can see here we throw up a big text box in front of people and asks them 
 
 ---
 
+<h2><span class="text-white ">4 UX Challenges</span></h2>
 
-<div class="absolute inset-6 flex flex-col">
-  <div class="flex justify-center">
-    <h2 class="!mt-0 !mb-4">People want to chat with the 🤖</h2>
+<div class="grid grid-cols-2 h-100 gap-4 text-black font-bold">
+  <div class="bg-red p-4 shadow-lg shadow-black">
+    1. It's really hard to write a good prompt
   </div>
-  
-  <img
-    src="./assets/chatgpt.png"
-    alt="People trying to chat with an image-generation prompt"
-    class="absolute inset-0 m-auto block max-h-full max-w-[80%] top-20 rounded-xl object-contain transition-opacity duration-500"
-  />
+  <div class="bg-orange p-4 shadow-lg shadow-black">
+    2. There are a tonne of different image models to choose from
+  </div>
+  <div class="bg-yellow p-4 shadow-lg shadow-black">
+    3. People want to see their brand, or in some cases themselves, represented in the output
+    </div>
+  <div class="bg-blue p-4 shadow-lg shadow-black">
+    4. An overall lack of creative control over the image generation process
+  </div>
 </div>
 
-<!--
 
-ChatGPT and Claude trained people to treat a big text box as a conversation. The logs showed many people trying to talk to a robot that could not understand them in that way.
-
--->
 ---
 
 ## ❌ Writing Bad Prompts
@@ -128,39 +102,55 @@ ChatGPT and Claude trained people to treat a big text box as a conversation. The
 />
 
 <!--
-Lots of text, without specific detail isn't helpful. Neither are really generic approaches without much detail like "a shoe"
 
-Both of these are going to result in poor quality output.
+People have been kind of trained to treat prompt boxes like this, like chat boxes, and expect the history to remember the things that they talked about in the past. They also expect that it should be able to access the internet to add more context, which none of that's true in our diffusion models. 
+
+On the opposite end of the spectrum, people write these really tiny prompts with no details and expect to get some kind of high quality output, which is unrealistic.
 -->
 
 ---
-
-
-![x](./assets/explainer-noise.png)
-![x](./assets/explainer-clear.png)
-
-<center>
-<strong>Source:</strong> <a href="https://poloclub.github.io/diffusion-explainer/">https://poloclub.github.io/diffusion-explainer/</a>
-</center>
-
-<!--
-Diffusion models learn by replacing pixels with static noise and learning to reverse that process while associating the image with its description. Starting with noise and text, the model guesses the missing pixels. The book analogy is crossing out words and characters, then asking someone to reconstruct the text.
-
--->
+layout: section
 
 ---
 
-## Prompt detail matters
+<h2 className="!m-0 !p-0">Too Much Model Choice</h2>
 
-![x](./assets/explainer-diff2.png)
+<div class="flex flex-row gap-4">
+
+![a](./assets/models-1.png)
+
+![b](./assets/models-2.png)
+
+![c](./assets/models-3.png)
+
+</div>
+
+<!-- It's overwheleming right, and each have different strengths and weaknesses that aren't obvious to our customers -->
+
+---
+
 <center>
-<strong>Source:</strong> <a href="https://poloclub.github.io/diffusion-explainer/">https://poloclub.github.io/diffusion-explainer/</a>
+  <h2>People Want To Sell Their Own Stuff</h2>
+  <img src="./assets/ai-slop-chocolate.jpg" class="h-80" />
+<p class="!mb-4 text-sm font-bold tracking-[0.16em] text-violet-300 uppercase">Not your AI slop chocolate</p>
+
 </center>
+<!-- They don't want to sell your AI slop chocolate bars with random typos -->
 
-<!--
-Here's another graphic from the same site demonstrating how important it is to layer details into the prompt. Slight changes in the wording or in the text can end up creating drastically different images.
--->
 
+---
+layout: section
+
+---
+
+# Image Models are a Black Box
+
+<center>
+  <p class="text-black w-180 !leading-none p-0">People don't really understand how they work and have really no idea how to steer them in one direction or another.</p>
+
+  <img src="./assets/dune-pain-box.avif" class="h-90" />
+  <sub class="relative -top-6 !text-xs !p-0 text-slate-600">Image: Warner Bros. Pictures</sub>
+</center>
 ---
 layout: section
 
@@ -185,6 +175,15 @@ Google combined autoregressive language-model behaviour with diffusion and other
 
 # AI Prompt Enhancement
 
+<ModelBadge
+  v-click
+  class="absolute right-7 bottom-6 z-20 w-88"
+  :step="1"
+  title="Enhance prompt"
+  model-type="LLM"
+  model="Mistral Small 4"
+/>
+
 <video src="./assets/prompt-enhance.mov" class="w-full" autoplay  controls></video>
 
 <!--
@@ -198,6 +197,15 @@ It worked okay, but it definitely wasn't enough.
 
 # Auto-Model Selection
 
+<ModelBadge
+  v-click="2"
+  class="absolute right-7 bottom-6 z-20 w-88"
+  :step="2"
+  title="Auto Model Selection"
+  model-type="Decision Model"
+  model="Jev, Clef or Decisions API"
+  tone="current"
+/>
 
 <div v-click="1" class="absolute">
 
@@ -220,6 +228,12 @@ It worked okay, but it definitely wasn't enough.
 <!--
 As you can see from this very long dropdown, there are a tonne of model choices that we offer in Brand Studio. And nobody ever wants to think about the best one for their pick.
 -->
+
+---
+
+# Moodboards
+
+Trying to devic
 
 ---
 
@@ -923,4 +937,35 @@ Build a feature worth talking about after you leave.
 
 <!--
 These points appeared after the main ending in the original notes. Keep them for Q&A or a deeper technical version.
+-->
+
+
+
+---
+
+
+
+![x](./assets/explainer-noise.png)
+![x](./assets/explainer-clear.png)
+
+<center>
+<strong>Source:</strong> <a href="https://poloclub.github.io/diffusion-explainer/">https://poloclub.github.io/diffusion-explainer/</a>
+</center>
+
+<!--
+Diffusion models learn by replacing pixels with static noise and learning to reverse that process while associating the image with its description. Starting with noise and text, the model guesses the missing pixels. The book analogy is crossing out words and characters, then asking someone to reconstruct the text.
+
+-->
+
+---
+
+## Prompt detail matters
+
+![x](./assets/explainer-diff2.png)
+<center>
+<strong>Source:</strong> <a href="https://poloclub.github.io/diffusion-explainer/">https://poloclub.github.io/diffusion-explainer/</a>
+</center>
+
+<!--
+Here's another graphic from the same site demonstrating how important it is to layer details into the prompt. Slight changes in the wording or in the text can end up creating drastically different images.
 -->
