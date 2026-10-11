@@ -233,8 +233,25 @@ As you can see from this very long dropdown, there are a tonne of model choices 
 
 # Moodboards
 
-Trying to devic
 
+<!--
+Trying to describe an image to a diffusion model is kind of like those police sketches where you have to describe the features that you want them to draw and they do their best to interpret it
+-->
+<div class="flex flex-row gap-4">
+  <figure>
+    <img src="./assets/police-sketch.avif" class="h-80" />
+    <figcaption><a class="text-xs" href="https://www.independent.co.uk/news/weird-news/worst-police-sketch-ever-police-hunt-oddly-spherical-man-9075276.html">The Independent: Worst police sketch ever? Police hunt oddly spherical man
+  </a></figcaption>
+  </figure>
+  <figure>
+  <p v-click.hide="1" class="absolute">
+  This is kind of how I think about describing an image to an image generation model. <br/><br/>Sure, you try to remember the features, but who knows if you forgot some important details?
+  <br/><br/>The details really matter.
+  </p>
+    <img v-click="1" src="./assets/t2-have-you-seen.jpg" />
+    <figcaption  v-click="1"  class="text-xs">Waynes World</figcaption>
+  </figure>
+</div>
 ---
 
 <center>
@@ -278,13 +295,13 @@ transition: none
 ---
 
 
-<h1 class="uppercase">There is a problem <br/> here though</h1>
+<h1 class="uppercase "><span class="!text-green">There is a problem <br/> here though</span></h1>
 
 ---
 
 
 
-<p class="!mb-4 text-sm font-bold tracking-[0.16em] text-violet-300 uppercase">OUR CUSTOMERS DON'T WANT TO SELL MY AI-GENERATED BOOTS</p>
+<p class="!mb-4 text-sm font-bold tracking-[0.16em] text-green uppercase">OUR CUSTOMERS DON'T WANT TO SELL MY AI-GENERATED BOOTS</p>
 
 
 
@@ -325,45 +342,37 @@ Along with a INSPIRATION image of loch ness
 -->
 
 
+
 ---
 
+# GETTING RID OF THE BLACK BOX
 
-<center>
-<img src="./assets/prompt-fishing.png" class="h-120"/>
+<center class="flex flex-row gap-4">
+  <img v-click.hide="1" src="./assets/prompt-fishing.png" class="absolute h80"/>
+  <img v-click.hide="2" v-click="1" src="./assets/approve.png" class="h-100"/>
+  <img v-click="2" src="./assets/placeholder.png" class="h-100"/>
 </center>
 
 <!--
+And finally to get rid of the black box, the first thing we're going to do is show the
+customers the image generation plan before we even start (and potentially allow them to change it) and secondly as the the images are generating, 
 
-Then I can go type my prompt, select my mooboard and here's where things get interesting.
-
--->
----
-
-
-<center>
-<img src="./assets/modal.png" class="h-120"/>
-</center>
-
-<!--
-Instead of sending the request to a black box and getting a single output, instead we're showing the user their progress every step of the way.
-
-In this image you can even see the enhanced that got generated.
 -->
 
 ---
 
+# GETTING RID OF THE BLACK BOX
+
 <center>
-<img src="./assets/product-insertion.png" class="h-120"/>
+  <img v-click.hide="1" v-click="2" src="./assets/product-insertion.png" class="left-36 absolute h-100"/>  <img v-click.hide="1" src="./assets/modal.png" class="left-36 absolute h-100"/>
+  <img v-click="1" src="./assets/modal-2.png" class="h-100"/>
+
 </center>
 
+
 <!--
-And as we start inserting the products into the base image, we'll do an automated realism evaluation and we'll also show the user every image that gets generated along the way.
+NOTE: MAYBE DO A BETTER JOB HERE
 -->
-
-
----
-
-### Human in the Loop Placeholder Slide
 
 ---
 
