@@ -13,15 +13,27 @@ themeConfig:
   colorPattern: rotation
 ---
 
-# Building a Multi-Step Agentic Image Generation Workflow
+<div class="opening-slide">
+  <div class="opening-copy">
+    <p class="opening-kicker">Building a multi-step workflow</p>
+    <h1 class="opening-title">
+      <span>Agentic image</span>
+      <span>generation</span>
+    </h1>
+    <p class="opening-subtitle">From prompt enhancement to human quality gates</p>
+  </div>
 
-
-###  Jamund Ferguson 
-
-#### CityJS Athens 2026 🇬🇷
-
-
-<a href="https://www.x.com/anxietytech" class="text-teal">@anxietytech</a>
+  <div class="opening-footer">
+    <div>
+      <strong>Jamund Ferguson</strong>
+      <a href="https://www.x.com/anxietytech">@anxietytech</a>
+    </div>
+    <div class="opening-event">
+      <span>CityJS Athens</span>
+      <strong>2026 🇬🇷</strong>
+    </div>
+  </div>
+</div>
 
 
 <!--
@@ -53,27 +65,6 @@ Hi, I'm Jamund Ferguson. I'm currently at Axle Energy, but I spent the last two 
 <!--
 Hi, I'm Jamund Ferguson. I'm currently at Axle Energy, but I spent the last two years at Stability AI leading the front-end team and building UIs for image generation. Primarily a tool called Brand Studio.
 -->
-
-
----
-
-<div class="flex gap-20 justify-center">
-  <img
-    src="./assets/orly-cloudflare.png"
-    alt="Brand Studio workflow"
-    class="block w-85"
-  />
-  <img
-    src="./assets/orly-agents.png"
-    alt="Brand Studio workflow"
-    class="block w-85"
-  />
-</div>
-
-<!--
-So my talk is going to be a bit about this stuff, but first I'm going to tell you a bit about what i've been working on
--->
-
 
 ---
 
@@ -175,23 +166,248 @@ layout: section
 
 ---
 
-<p class="!mb-4 text-sm font-bold tracking-[0.16em] text-violet-300 uppercase">Part 2 · Making the Workflow</p>
+<p class="!mb-4 text-sm font-bold tracking-[0.16em] text-violet-300 uppercase">Part 2 · Thinking outside the prompt</p>
 
 # A better interface for image generation
 
-We need to think outside the prompt
 
 <!--
 At stability I worked with a fantastic product manager Max who was constantly vibe coding different prototypes for how users could get better results out of our product.
 
+Obviously, there are so many different ways we could think about solving this problem. I'm going to talk about just a few of the approaches that we took, what worked and didn't work about them, and how we ended up combining them all together into a feature that we call producer mode 
+
+
 Google combined autoregressive language-model behaviour with diffusion and other techniques. We were not Google and did not have many ML researchers, so Max proposed a complicated solution that lived mostly in the product workflow.
+-->
+
+
+---
+
+# AI Prompt Enhancement
+
+<video src="./assets/prompt-enhance.mov" class="w-full" autoplay  controls></video>
+
+<!--
+
+ The first thing that we brought in was this AI prompt enhancement feature. Essentially, you type in your bad prompt, you click the little magic button, we send it to an LLM, and you get back a much more detailed prompt, which you can then edit before requesting your image.
+
+It worked okay, but it definitely wasn't enough.
 -->
 
 ---
 
-<div class="absolute inset-6 grid grid-cols-[5fr_7fr] items-stretch gap-8">
+# Auto-Model Selection
+
+
+<div v-click="1" class="absolute">
+
+![d](./assets/auto-model.png)
+
+</div>
+
+
+<div v-click.hide="1" class="flex flex-row gap-4">
+
+![a](./assets/models-1.png)
+
+![b](./assets/models-2.png)
+
+![c](./assets/models-3.png)
+
+</div>
+
+
+<!--
+As you can see from this very long dropdown, there are a tonne of model choices that we offer in Brand Studio. And nobody ever wants to think about the best one for their pick.
+-->
+
+---
+
+<center>
+<img src="./assets/board-urban.png" class="h-120"/>
+</center>
+
+<!-- 
+ Instead of expecting people to very carefully type the perfect description about what they want, why not just have them show you?
+-->
+
+---
+
+<center class="text-lg text-neutral-300">Prompt Enhancement ➕ Auto-Model Routing ➕ Moodboard 🟰 Creative Guidance</center>
+
+<div class="mt-4 flex justify-center items-center">
+  <img src="./assets/prompt-boots.png" v-click.hide="1" class="absolute" />
+  <img src="./assets/boots-urban.png" v-click="1" class="h-100"/>
+</div>
+
+<!--
+So if you combine all those together (prompt enhancement, auto model, and auto model routing with the mood board), you get this feature that we call creative guidance. You can see here, even with a very simple prompt like a boot, you get a really detailed image of a pair of boots in a really dystopian urban scene.
+-->
+
+---
+
+<center class="text-xl text-neutral-300">Creative Guidance: <span class="text-blue">Boots in a Glacier</span></center>
+
+<div class="mt-4 flex justify-evenly items-center">
+  <img src="./assets/board-glacier.png" class="h-100" />
+  <img src="./assets/boots-glacier.png" class="h-66" />
+</div>
+
+<!--
+Here's another example of creative guidance. I put a couple of pictures of a glacier in the moodboard, and I got this really cool picture of boots hanging out by a frozen lake.
+-->
+
+
+---
+layout: section
+transition: none
+---
+
+
+<h1 class="uppercase">There is a problem <br/> here though</h1>
+
+---
+
+
+
+<p class="!mb-4 text-sm font-bold tracking-[0.16em] text-violet-300 uppercase">OUR CUSTOMERS DON'T WANT TO SELL MY AI-GENERATED BOOTS</p>
+
+
+
+<div class="mt-4 gap-4 flex justify-evenly items-center">
+  <img src="./assets/boots-glacier.png" class="h-100" />
+  <img src="./assets/chocolate-glacier.jpeg" v-click class="h-100" />
+</div>
+
+<!--
+Prompt: Replace the boots in this image with a stack ION chocolate bars
+
+They don'tw want to sell my AI generated boots, they want to sell their own products...
+
+-->
+
+---
+
+<center>
+<img src="./assets/board-fishing.png" class="h-120"/>
+</center>
+
+<!--
+So we added some new capabilities to our moodboard.
+-->
+
+---
+
+<center>
+<img src="./assets/board-categories.png" class="h-120"/>
+</center>
+
+<!--
+ For each image that was added, you could categorise it as either an inspiration image to impact the style of the OUTPUT or a product image to be INSERTED into the ouput.
+
+So here i added a canoe, and I also have a picture of myself.
+
+Along with a INSPIRATION image of loch ness
+-->
+
+
+---
+
+
+<center>
+<img src="./assets/prompt-fishing.png" class="h-120"/>
+</center>
+
+<!--
+
+Then I can go type my prompt, select my mooboard and here's where things get interesting.
+
+-->
+---
+
+
+<center>
+<img src="./assets/modal.png" class="h-120"/>
+</center>
+
+<!--
+Instead of sending the request to a black box and getting a single output, instead we're showing the user their progress every step of the way.
+
+In this image you can even see the enhanced that got generated.
+-->
+
+---
+
+<center>
+<img src="./assets/product-insertion.png" class="h-120"/>
+</center>
+
+<!--
+And as we start inserting the products into the base image, we'll do an automated realism evaluation and we'll also show the user every image that gets generated along the way.
+-->
+
+
+---
+
+### Human in the Loop Placeholder Slide
+
+---
+
+### We finally nailed the UX (more or less)
+
+<div class="mt-8 p-4">
+
+<ol>
+  <li class="!list-decimal">Create a moodboard (style & product images)</li>
+  <li class="!list-decimal">Type a simple prompt</li>
+  <li class="!list-decimal">We generate the image for them in multiple steps including: 
+      <p class="pl-4 !m-0">• building the base image</p>
+      <p class="pl-4 !m-0">• inserting any product images</p>
+      <p class="pl-4 !m-0">• evaluating for realism</p>
+  </li>
+  <li class="!list-decimal">Users can both observe and maintain control over every step in the process</li>
+</ol>
+
+</div>
+
+---
+layout: section
+transition: none
+---
+
+<p class="!mb-4 text-sm font-bold tracking-[0.16em] text-violet-300 uppercase">Part 3 · Making the Workflow</p>
+
+# Let's Build The Thing
+
+Building Agent is Fun (Sometimes)
+
+<!--
+
+Now for the fun bit, how did we build it?
+-->
+
+
+---
+
+<div class="flex gap-20 justify-center">
+  <img
+    src="./assets/orly-cloudflare.png"
+    alt="Brand Studio workflow"
+    class="block w-85"
+  />
+</div>
+
+<!--
+So my talk is going to be a bit about this stuff, but first I'm going to tell you a bit about what i've been working on
+-->
+---
+transition: none
+
+---
+
+<div class="absolute inset-6 grid grid-cols-[2fr_1fr] items-stretch gap-8">
   <div class="flex flex-col justify-center pr-2">
-    <p class="!mb-2 text-sm font-bold tracking-[0.16em] text-violet-300 uppercase">Step 1 of 6</p>
+    <p class="!mb-2 text-sm font-bold tracking-[0.16em] text-violet-300 uppercase">Step 1 of 5</p>
     <h2 class="!mt-0 !mb-4">Enhance the prompt</h2>
     <p>Mistral Small 4 turns a short request into a useful image description.</p>
     <p class="text-slate-400">The user can stay brief while the prompt enhancer supplies visual detail and structure.</p>
@@ -204,10 +420,13 @@ If someone types “a shoe,” convert it into something more detailed. It might
 -->
 
 ---
+transition: none
 
-<div class="absolute inset-6 grid grid-cols-[5fr_7fr] items-stretch gap-8">
+---
+
+<div class="absolute inset-6 grid grid-cols-[2fr_1fr] items-stretch gap-8">
   <div class="flex flex-col justify-center pr-2">
-    <p class="!mb-2 text-sm font-bold tracking-[0.16em] text-violet-300 uppercase">Step 2 of 6</p>
+    <p class="!mb-2 text-sm font-bold tracking-[0.16em] text-violet-300 uppercase">Step 2 of 5</p>
     <h2 class="!mt-0 !mb-4">Route to the best image generation model</h2>
     <p>JEV compares the enhanced prompt with a fixed list of model capabilities.</p>
     <p class="text-slate-400">For this marketing image, it selects Stable Image Ultra.</p>
@@ -220,10 +439,13 @@ Cartoons and hyperreal images may need different models. Even Stability's own fa
 -->
 
 ---
+transition: none
 
-<div class="absolute inset-6 grid grid-cols-[5fr_7fr] items-stretch gap-8">
+---
+
+<div class="absolute inset-6 grid grid-cols-[2fr_1fr] items-stretch gap-8">
   <div class="flex flex-col justify-center pr-2">
-    <p class="!mb-2 text-sm font-bold tracking-[0.16em] text-violet-300 uppercase">Step 3a of 6</p>
+    <p class="!mb-2 text-sm font-bold tracking-[0.16em] text-violet-300 uppercase">Step 3a of 5</p>
     <h2 class="!mt-0 !mb-4">Build the moodboard</h2>
     <p>Let users show the scene, style, subject, or mood they want.</p>
     <p class="text-slate-400">They add reference images and label each image's role.</p>
@@ -236,13 +458,16 @@ People struggle to describe what they see. Police sketches and charades are hard
 -->
 
 ---
+transition: none
 
-<div class="absolute inset-6 grid grid-cols-[5fr_7fr] items-stretch gap-8">
+---
+
+<div class="absolute inset-6 grid grid-cols-[2fr_1fr] items-stretch gap-8">
   <div class="flex flex-col justify-center pr-2">
-    <p class="!mb-2 text-sm font-bold tracking-[0.16em] text-violet-300 uppercase">Step 3b of 6</p>
+    <p class="!mb-2 text-sm font-bold tracking-[0.16em] text-violet-300 uppercase">Step 3b of 5</p>
     <h2 class="!mt-0 !mb-4">Process the references</h2>
-    <p>Gemini Flash 3.8 describes each reference according to its moodboard role.</p>
-    <p class="text-slate-400">The workflow saves the descriptions and injects them before prompt enhancement.</p>
+    <p>Gemini 3.8 Flash-Lite describes each reference according to its moodboard role.</p>
+    <p class="text-slate-400">Moodboard creation ends after saving. Its output then feeds Step 1 prompt enhancement.</p>
   </div>
   <WorkflowDiagram :active="3" :moodboard-stage="5" />
 </div>
@@ -252,10 +477,13 @@ Users add images and categorise each one as a background, subject, or another ro
 -->
 
 ---
+transition: none
 
-<div class="absolute inset-6 grid grid-cols-[5fr_7fr] items-stretch gap-8">
+---
+
+<div class="absolute inset-6 grid grid-cols-[2fr_1fr] items-stretch gap-8">
   <div class="flex flex-col justify-center pr-2">
-    <p class="!mb-2 text-sm font-bold tracking-[0.16em] text-violet-300 uppercase">Step 4 of 6</p>
+    <p class="!mb-2 text-sm font-bold tracking-[0.16em] text-violet-300 uppercase">Step 4 of 5</p>
     <h2 class="!mt-0 !mb-4">Generate the base image</h2>
     <p>Stable Image Ultra creates the first complete image from the enhanced prompt and visual guidance.</p>
     <p class="text-slate-400">This establishes the composition before branded elements are added.</p>
@@ -264,15 +492,18 @@ Users add images and categorise each one as a background, subject, or another ro
 </div>
 
 ---
+transition: none
 
-<div class="absolute inset-6 grid grid-cols-[5fr_7fr] items-stretch gap-8">
+---
+
+<div class="absolute inset-6 grid grid-cols-[2fr_1fr] items-stretch gap-8">
   <div class="flex flex-col justify-center pr-2">
-    <p class="!mb-2 text-sm font-bold tracking-[0.16em] text-violet-300 uppercase">Step 5 of 6</p>
-    <h2 class="!mt-0 !mb-4">Insert branded assets</h2>
-    <p>Add the real product, person, prop, or place that the campaign must feature.</p>
-    <p class="text-slate-400">An inpainting model places each tagged asset into the generated base image.</p>
+    <p class="!mb-2 text-sm font-bold tracking-[0.16em] text-violet-300 uppercase">Step 5a of 5</p>
+    <h2 class="!mt-0 !mb-4">Inpaint people</h2>
+    <p>Nano Banana 2 inpaints each required person before the workflow regenerates and evaluates the image.</p>
+    <p class="text-slate-400">A score below 80% sends the image to a person for a decision.</p>
   </div>
-  <WorkflowDiagram :active="5" :moodboard-stage="5" />
+  <WorkflowDiagram :active="5" :moodboard-stage="5" :asset-stage="1" />
 </div>
 
 <!--
@@ -280,21 +511,206 @@ Good base images still fail when a company needs its own product, person, prop, 
 -->
 
 ---
+transition: none
 
-<div class="absolute inset-6 grid grid-cols-[5fr_7fr] items-stretch gap-8">
+---
+
+<div class="absolute inset-6 grid grid-cols-[2fr_1fr] items-stretch gap-8">
   <div class="flex flex-col justify-center pr-2">
-    <p class="!mb-2 text-sm font-bold tracking-[0.16em] text-violet-300 uppercase">Step 6 of 6</p>
-    <h2 class="!mt-0 !mb-4">Evaluate and review</h2>
-    <p>Gemini Flash 3.8 scores the result and sends uncertain images to a person.</p>
-    <p class="text-slate-400">Accept finishes. Retry repeats insertion. Skip returns to the base image.</p>
+    <p class="!mb-2 text-sm font-bold tracking-[0.16em] text-violet-300 uppercase">Step 5b of 5</p>
+    <h2 class="!mt-0 !mb-4">Inpaint products</h2>
+    <p>Nano Banana 2 repeats the inpainting cycle for every product the campaign must feature.</p>
+    <p class="text-slate-400">A score below 80% asks a person whether the product needs another pass.</p>
   </div>
-  <WorkflowDiagram :active="6" :moodboard-stage="5" />
+  <WorkflowDiagram :active="5" :moodboard-stage="5" :asset-stage="2" />
 </div>
 
 <!--
+People and products run through separate insertion, generation, and evaluation cycles. Each evaluation can return to its own insertion step.
+-->
+
+---
+transition: none
+
+---
+
+<div class="absolute inset-6 grid grid-cols-[2fr_1fr] items-stretch gap-8">
+  <div class="flex flex-col justify-center pr-2">
+    <p class="!mb-2 text-sm font-bold tracking-[0.16em] text-violet-300 uppercase">Step 5c of 5</p>
+    <h2 class="!mt-0 !mb-4">Complete asset inpainting</h2>
+    <p>Nano Banana 2 handles inpainting. Gemini Flash 3.8 evaluates the result against an 80% realism threshold.</p>
+    <p class="text-slate-400">Anything below the quality gate pauses the workflow and asks a person.</p>
+  </div>
+  <WorkflowDiagram :active="5" :moodboard-stage="5" :asset-stage="3" />
+</div>
+
+<!--
+The workflow does not need to regenerate every branded asset when only one insertion fails. Each lane loops independently before the complete image moves forward.
+
 The workflow takes a long time and the output risks becoming AI slop, so the user needs to see where they are in the multi-step process. A VLM produces a slop score, and a high score sends the result to a person. The human remains the final decision maker. The exact choices in the notes are: accept it, throw it away and start over, or use the previous image and skip the step.
 
 Stability's applied AI team relied on ComfyUI, which models image manipulation as a graph of nodes, inputs, and outputs stored as JSON. It is excellent, but it felt like a black box for a product that needed constant progress communication with the client.
+-->
+
+---
+transition: none
+class: workflow-code-slide
+
+---
+
+## The workflow as code
+
+```ts {all|1-3|5-7|9-11|13-15|17-24}
+const moodboard = await step.do("collect moodboard data", () =>
+  agent.describeMoodboard(campaign.moodboard)
+)
+
+const enhancedPrompt = await step.do("enhance prompt", () =>
+  agent.enhancePrompt(campaign.prompt, moodboard)
+)
+
+const model = await step.do("select optimal model", () =>
+  agent.selectModel(enhancedPrompt)
+)
+
+let image = await step.do("generate base image", () =>
+  agent.generateImage(model, enhancedPrompt)
+)
+
+for (const category of ["people", "products", "landmarks", "props"]) {
+  image = await step.do(`insert ${category}`, () =>
+    agent.insertMoodboardImages(image, moodboard[category])
+  )
+
+  await step.do(`evaluate ${category}`, () =>
+    agent.evaluateRealismOrAskHuman(image)
+  )
+}
+```
+
+<!--
+This is deliberately pseudocode rather than the production implementation. The important point is that the visual workflow maps cleanly to named, durable steps. Each step can retry independently, and the category loop carries the latest image into the next insertion.
+-->
+
+---
+transition: none
+class: workflow-code-slide model-call-slide
+
+---
+
+```ts {all|1-5|7-11|13-30}
+const moodboard = await step.do("collect moodboard data", async () => {
+  const result = await env.AI.run("google/gemini-3.8-flash", {
+    contents: [moodboardMessage(campaign.moodboard)],
+  })
+  return parseMoodboard(textOf(result))
+})
+
+const enhanced = await step.do("enhance prompt", async () => {
+  const result = await env.AI.run("mistral/mistral-small-4", {
+    messages: [enhanceMessage(prompt, moodboard)],
+  })
+  return textOf(result)
+})
+
+const model = await step.do("select optimal model", async () => {
+  const result = await env.AI.run("typesafe/jev", {
+    state: enhanced,
+    questions: { imageModel: {
+      type: "choice",
+      instructions: "Which Stable Image model best fits?",
+      criteria: {
+        "stability/stable-image-ultra": "Art or product detail",
+        "stability/stable-image-core": "Quick experimentation",
+        "stability/stable-diffusion-3.5-large": "Highest realism",
+        "stability/stable-diffusion-3.5-large-turbo": "Fast quality",
+        "stability/stable-diffusion-3.5-medium": "Balanced",
+      },
+    } },
+  })
+  return result.imageModel
+})
+```
+
+---
+transition: none
+class: workflow-code-slide model-call-slide
+
+---
+
+```ts {all|1-6|8-14|16-22}
+let image = await step.do("generate base image", async () => {
+  const result = await env.AI.run(model, {
+    prompt: enhanced, aspect_ratio: "16:9",
+  })
+  return result.image
+})
+
+for (const category of categories) {
+  image = await step.do(`insert ${category}`, async () => {
+    const result = await env.AI.run("google/nano-banana-2", {
+      prompt: insertionPrompt(category, moodboard),
+      image_input: [image, ...moodboard[category]],
+    })
+    return result.image
+  })
+
+  const realism = await step.do(`evaluate ${category}`, async () => {
+    const result = await env.AI.run("google/gemini-3.8-flash", {
+      contents: [realismMessage(image)],
+    })
+    return parseRealism(textOf(result))
+  })
+}
+```
+
+<!--
+This is realistic illustrative code, not copied production code. Cloudflare's AI binding accepts both Cloudflare-hosted and third-party model IDs. Jev returns one of the Stable Image model IDs based on explicit criteria. Nano Banana 2 receives the latest generated image plus the relevant moodboard images for each category. The final VLM call produces the realism score that drives the human gate.
+
+Sources checked on 4 October 2026: Cloudflare AI binding documentation, AI model catalog, Gemini 3 Flash model documentation, and Nano Banana 2 model documentation.
+-->
+
+---
+transition: none
+class: workflow-code-slide boilerplate-slide
+
+---
+
+## Cloudflare boilerplate non-sense
+
+```jsonc {all|5-5|7-13|15-20|22-25|27-29}
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "producer-agent",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-10-04",
+  "ai": { "binding": "AI" },
+  "workflows": [
+    {
+      "name": "image-generation-workflow-production",
+      "binding": "IMAGE_WORKFLOW",
+      "class_name": "ImageGenerationWorkflow"
+    }
+  ],
+  "durable_objects": {
+    "bindings": [
+      { "name": "PRODUCER_AGENT", "class_name": "ProducerAgent" }
+    ]
+  },
+  "migrations": [
+    { "tag": "v1", "new_sqlite_classes": ["ProducerAgent"] }
+  ],
+  "observability": { "enabled": true },
+  "vars": {
+    "AI_GATEWAY_ID": "producer"
+  }
+}
+```
+
+<!--
+The AI binding creates env.AI. The workflow binding exposes env.IMAGE_WORKFLOW and its class name must match the exported Workflow class. The Durable Object binding exposes the producer agent. Existing projects may still need a tagged SQLite migration; Cloudflare now recommends the declarative exports field for new Durable Object class lifecycle configuration. After changing bindings, run wrangler types so TypeScript sees them.
+
+Sources checked on 4 October 2026: Cloudflare Workers AI bindings, Workflows setup, Wrangler configuration, and Durable Object migration documentation.
 -->
 
 ---
