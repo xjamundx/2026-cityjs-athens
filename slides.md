@@ -498,7 +498,19 @@ https://developers.cloudflare.com/workflows/
 https://developers.cloudflare.com/workflows/get-started/durable-agents/
 https://developers.cloudflare.com/reference-architecture/architectures/cdn/
 
-§
+CDN: Worldwide distributed edge network, nice for serving image files and caching requests to your website.
+
+Workers: are very similar to AWS lambdas, except they run at the edge, so they're extremely low latency , and they're built using something called V8 isolates instead of containers so there are almost no cold start costs.
+
+Almost everything that Cloudflare has built is built since then is built on top of Workers.
+
+On of the most unique features of Cloudflare is called durable objects which builds on workers by giving each instance a unique name, a local database and a “hibernating” WebSocket connection that it can use to connect directly with clients.
+
+
+Whereas Workers are a sort of a generic serverless compute platform, with durable objects you can assign every user or organization their own cute little dedicated stateful computing instance.
+
+
+Durability means being able to recover after a crash or for example if the instance gets "evicted" because the data is stored in database, not in the workers memory.
 -->
 
 ---
