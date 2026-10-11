@@ -255,16 +255,61 @@ Trying to describe an image to a diffusion model is kind of like those police sk
 ---
 
 <center>
+<img v-click="1" src="./assets/categories-urban.png" class="absolute h-120"/>
 <img src="./assets/board-urban.png" class="h-120"/>
 </center>
 
+<ModelBadge
+  v-click="2"
+  class="absolute right-7 bottom-6 z-20 w-88"
+  :step="3"
+  title="Describe Images"
+  model-type="Vision LM (VLM)"
+  model="Gemini 3.1 Flash-Lite"
+/>
+
+
 <!-- 
  Instead of expecting people to very carefully type the perfect description about what they want, why not just have them show you?
+
+ And then we'll use a vision language model or a multi-modal VLM such as Gemini 3.1-flash lite to provide a description of that image.
 -->
 
 ---
 
-<center class="text-lg text-neutral-300">Prompt Enhancement ➕ Auto-Model Routing ➕ Moodboard 🟰 Creative Guidance</center>
+<h1 v-click class="absolute text-center w-full mt-20">Creative Guidance</h1>
+
+<div class="flex flex-row gap-8 items-center h-120 justify-center">
+  <ModelBadge
+    class="w-88"
+    :step="1"
+    title="Enhance prompt"
+    model-type="LLM"
+    model="Mistral Small 4"
+  />
+  <span>➕</span>
+  <ModelBadge
+    class="w-88"
+    :step="2"
+    title="Auto Model Selection"
+    model-type="Decision Model"
+    model="Jev, Clef or Decisions API"
+  />
+  <span>➕</span>
+  <ModelBadge
+    class="w-88"
+    :step="3"
+    title="Describe Images"
+    model-type="Vision LM (VLM)"
+    model="Gemini 3.1 Flash-Lite"
+  />
+</div>
+
+<!--
+So if you combine all those together (prompt enhancement, auto model, and auto model routing with the mood board), you get this feature that we call creative guidance.
+-->
+
+---
 
 <div class="mt-4 flex justify-center items-center">
   <img src="./assets/prompt-boots.png" v-click.hide="1" class="absolute" />
@@ -272,7 +317,7 @@ Trying to describe an image to a diffusion model is kind of like those police sk
 </div>
 
 <!--
-So if you combine all those together (prompt enhancement, auto model, and auto model routing with the mood board), you get this feature that we call creative guidance. You can see here, even with a very simple prompt like a boot, you get a really detailed image of a pair of boots in a really dystopian urban scene.
+ You can see here, even with a very simple prompt like a boot, you get a really detailed image of a pair of boots in a really dystopian urban scene.
 -->
 
 ---
@@ -295,15 +340,11 @@ transition: none
 ---
 
 
-<h1 class="uppercase "><span class="!text-green">There is a problem <br/> here though</span></h1>
+<h1 class="uppercase ">There is a problem <br/> here though</h1>
 
 ---
 
-
-
 <p class="!mb-4 text-sm font-bold tracking-[0.16em] text-green uppercase">OUR CUSTOMERS DON'T WANT TO SELL MY AI-GENERATED BOOTS</p>
-
-
 
 <div class="mt-4 gap-4 flex justify-evenly items-center">
   <img src="./assets/boots-glacier.png" class="h-100" />
@@ -330,8 +371,19 @@ So we added some new capabilities to our moodboard.
 ---
 
 <center>
-<img src="./assets/board-categories.png" class="h-120"/>
+  <img v-click.hide="1" src="./assets/board-categories.png" class="absolute h-120 left-24" />
+  <img v-click="1" src="./assets/board-categories-highlighted.png" class="h-120 absolute left-24" />
 </center>
+
+<ModelBadge
+  v-click="2"
+  class="absolute right-7 bottom-6 z-20 w-88"
+  :step="4"
+  title="Insert Product(s)"
+  model-type="Inpaint Model"
+  model="Nano Banana Pro"
+/>
+
 
 <!--
  For each image that was added, you could categorise it as either an inspiration image to impact the style of the OUTPUT or a product image to be INSERTED into the ouput.
@@ -341,11 +393,9 @@ So here i added a canoe, and I also have a picture of myself.
 Along with a INSPIRATION image of loch ness
 -->
 
-
-
 ---
 
-# GETTING RID OF THE BLACK BOX
+# Putting the user in control
 
 <center class="flex flex-row gap-4">
   <img v-click.hide="1" src="./assets/prompt-fishing.png" class="absolute h80"/>
@@ -358,21 +408,26 @@ And finally to get rid of the black box, the first thing we're going to do is sh
 customers the image generation plan before we even start (and potentially allow them to change it) and secondly as the the images are generating, 
 
 -->
-
+---
+transition: none
 ---
 
-# GETTING RID OF THE BLACK BOX
+# Dismantling the black box
 
 <center>
-  <img v-click.hide="1" v-click="2" src="./assets/product-insertion.png" class="left-36 absolute h-100"/>  <img v-click.hide="1" src="./assets/modal.png" class="left-36 absolute h-100"/>
-  <img v-click="1" src="./assets/modal-2.png" class="h-100"/>
-
+  <img src="./assets/fishing-1.png" class="left-36 absolute h-100"/>  
+  <img v-click src="./assets/fishing-2.png" class="left-36 absolute h-100"/>  
+  <img v-click="2" src="./assets/fishing-3.png" class="left-36 absolute h-100"/>
 </center>
 
 
-<!--
-NOTE: MAYBE DO A BETTER JOB HERE
--->
+---
+transition: none
+---
+
+# Maintaining Creative Control
+
+  <img src="./assets/fishing-bad.png" class="left-36 absolute h-100"/>
 
 ---
 
@@ -383,12 +438,12 @@ NOTE: MAYBE DO A BETTER JOB HERE
 <ol>
   <li class="!list-decimal">Create a moodboard (style & product images)</li>
   <li class="!list-decimal">Type a simple prompt</li>
-  <li class="!list-decimal">We generate the image for them in multiple steps including: 
-      <p class="pl-4 !m-0">• building the base image</p>
-      <p class="pl-4 !m-0">• inserting any product images</p>
-      <p class="pl-4 !m-0">• evaluating for realism</p>
+  <li class="!list-decimal">We generate the image for them: 
+      <p class="pl-4 !m-0">• Building the base image</p>
+      <p class="pl-4 !m-0">• Inserting any product images</p>
+      <p class="pl-4 !m-0">• Evaluating for realism</p>
   </li>
-  <li class="!list-decimal">Users can both observe and maintain control over every step in the process</li>
+  <li class="!list-decimal">Users can see and modify steps in real-time</li>
 </ol>
 
 </div>
@@ -402,7 +457,7 @@ transition: none
 
 # Let's Build The Thing
 
-Building Agent is Fun (Sometimes)
+Building an Agent is Fun (Sometimes)
 
 <!--
 
@@ -425,7 +480,6 @@ So my talk is going to be a bit about this stuff, but first I'm going to tell yo
 -->
 ---
 transition: none
-
 ---
 
 <div class="absolute inset-6 grid grid-cols-[2fr_1fr] items-stretch gap-8">
