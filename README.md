@@ -1,39 +1,38 @@
-# Agentic Image Generation — Slidev
+# Agentic Image Generation
 
-The talk is in `slides.md`. Every slide is separated by `---`.
+**[Watch the slides →](https://xjamundx.github.io/2026-cityjs-athens/)**
 
-The original notes are preserved without rewriting in
-`source-notes-verbatim.txt`. Keep that file as the source of truth while the
-slide outline evolves.
+This talk by Jamund Ferguson explores what image-generation products look like when we move beyond a single prompt box and treat creation as a multi-step, agentic workflow. Drawing on Jamund’s experience building Brand Studio at Stability AI, it follows a campaign image from prompt enhancement and model routing through moodboard guidance, generation, image insertion, evaluation, and human quality gates.
 
-## Preview
+Along the way, the talk examines where conversational interfaces help, where purpose-built interfaces remain essential, and how durable workflows can make AI systems understandable and controllable. The examples use Cloudflare Workflows and Workers AI-style APIs to show how the individual model calls and human decisions can fit together in a real application.
 
-Install Node.js, then run:
+The presentation was created for **CityJS Athens 2026** and is built with [Slidev](https://sli.dev/).
+
+## Run locally
+
+You’ll need a recent version of Node.js and npm.
 
 ```sh
-npm install
+git clone https://github.com/xjamundx/2026-cityjs-athens.git
+cd 2026-cityjs-athens
+npm ci
 npm run dev
 ```
 
-Slidev opens a live browser preview. Edit `slides.md` and save to update it.
+Slidev will open the presentation in your browser. Edit `slides.md` to update the deck; changes appear in the preview as you save.
 
-## Images
+## Build or export
 
-Create a `public/images` directory and put images there. Reference them from
-the slides like this:
+Create the static production build:
 
-```markdown
-![Description](/images/example.png)
+```sh
+npm run build
 ```
 
-The current image references are placeholders and intentionally point to
-filenames that do not exist yet.
-
-## Export
+Export the deck using Slidev’s export tools:
 
 ```sh
 npm run export
 ```
 
-Slidev can export to PDF, PNG, and PPTX. Interactive features may not remain
-editable when converted to another format.
+The original talk notes are preserved verbatim in `source-notes-verbatim.txt`.
