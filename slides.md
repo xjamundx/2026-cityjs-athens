@@ -429,6 +429,8 @@ transition: none
 
   <img src="./assets/fishing-bad.png" class="left-36 absolute h-100"/>
 
+<!--
+
 ---
 
 ### We finally nailed the UX (more or less)
@@ -447,7 +449,7 @@ transition: none
 </ol>
 
 </div>
-
+-->
 ---
 layout: section
 transition: none
@@ -476,8 +478,49 @@ Now for the fun bit, how did we build it?
 </div>
 
 <!--
-So my talk is going to be a bit about this stuff, but first I'm going to tell you a bit about what i've been working on
+Pretty much all the stuff that we're going to talk about today is built on top of Cloudflare, which is the service that we are already using for hosting our web stuff. There are tonnes of other agent frameworks that we could have used to have built this, but in our case this seemed like a good bet.
 -->
+
+
+---
+
+# Cloudflare Concepts
+
+<CloudflareRings />
+
+<!--
+This is a conceptual product stack, not a literal inheritance diagram.
+Cloudflare Agents build on Durable Objects. Workflows provide durable execution for applications on Workers, and the Agents SDK can be used with Workflows. The CDN represents the global Cloudflare network beneath the application runtime.
+
+Sources:
+https://developers.cloudflare.com/agents/runtime/lifecycle/agent-class/
+https://developers.cloudflare.com/workflows/
+https://developers.cloudflare.com/workflows/get-started/durable-agents/
+https://developers.cloudflare.com/reference-architecture/architectures/cdn/
+
+§
+-->
+
+---
+
+## Two Major Architectural Challenges
+
+<div class="grid grid-cols-2 gap-4 mt-12">
+  <div class="p-4 border border-white rounded-4 shadow-teal shadow-md w-full h-full text-center">
+<span class="shadow-black text-shadow-sm text-blue">
+  Modeling and Durably  <br/> Executing our AI Workflow
+</span>
+  </div>
+  <div class="p-4 border border-white rounded-4 shadow-teal shadow-md text-center"><span class="text-blue shadow-black text-shadow-sm">Syncing State between the <br/> Workflow and the Browser</span></div>
+  <div v-click class="col-span-2 justify-items-center"><img  class="h-20 mb-10 mt-10" src="./assets/cloudflare.png" /></div>
+  <div v-click class="p-4 border border-white rounded-4 shadow-yellow shadow-md w-full h-full text-center">
+      <div  class="text-yellow">Cloudflare Workflows</div>
+    </div>
+    <div v-click class="p-4 border border-white rounded-4 shadow-yellow shadow-md w-full h-full text-center">
+    <div  class="text-yellow">Cloudflare Agents SDK</div>
+  </div>
+</div>
+
 ---
 transition: none
 ---
