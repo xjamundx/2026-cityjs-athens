@@ -329,21 +329,17 @@ So if you combine all those together (prompt enhancement, auto model, and auto m
 
 ---
 
-<center class="text-xl text-neutral-300">Creative Guidance: <span class="text-blue">Boots in a Glacier</span></center>
-
-<div class="mt-4 flex justify-evenly items-center">
-  <img src="./assets/board-glacier.png" class="h-100" />
-  <img src="./assets/boots-glacier.png" class="h-66" />
+<div class="flex justify-evenly items-center">
+  <img src="./assets/board-glacier.png" class="h-120" />
 </div>
 
 <!--
 Here's another example of creative guidance. I put a couple of pictures of a glacier in the moodboard, and I got this really cool picture of boots hanging out by a frozen lake.
 -->
 
-
 ---
 
-<p class="!mb-4 text-sm font-bold tracking-[0.16em] text-green uppercase">OUR CUSTOMERS DON'T WANT TO SELL MY AI-GENERATED BOOTS</p>
+<p v-click class="!mb-4 text-sm font-bold tracking-[0.16em] uppercase">OUR CUSTOMERS DON'T WANT TO SELL MY AI-GENERATED BOOTS</p>
 
 <div class="mt-4 gap-4 flex justify-evenly items-center">
   <img src="./assets/boots-glacier.png" class="h-100" />
@@ -354,7 +350,6 @@ Here's another example of creative guidance. I put a couple of pictures of a gla
 Prompt: Replace the boots in this image with a stack ION chocolate bars
 
 They don'tw want to sell my AI generated boots, they want to sell their own products...
-
 -->
 
 ---
@@ -430,7 +425,7 @@ transition: none
 
 <div class="absolute pr-4 grid grid-cols-[1fr_28rem] items-center gap-14">
   <div>
-    <p class="!mb-3 text-sm font-bold tracking-[0.2em] text-green uppercase">The Full AI Workflow</p>
+    <p class="!mb-3 text-sm font-bold tracking-[0.2em] text-green uppercase">Our Full AI Workflow</p>
     <h1 class="!m-0 text-6xl leading-tight text-blue">Producer<br/>Mode</h1>
     <p class="mt-6 max-w-md text-xl leading-relaxed text-slate-300">
       Use moodboard images to enhance the users image prompt and then pick
@@ -515,19 +510,11 @@ transition: none
 transition: none
 ---
 
-# Maintaining Creative Control
+# Cutting Out The Slop
 
   <img src="./assets/fishing-bad.png" class="left-36 absolute h-100"/>
 
 
-<ModelBadge
-  v-click
-  class="absolute right-7 top-6 z-20 w-88"
-  :step="5"
-  title="Evaluate Realism"
-  model-type="Multi-Modal LLM"
-  model="Gemini Flash 3.8"
-/>
 
 <!--
 
