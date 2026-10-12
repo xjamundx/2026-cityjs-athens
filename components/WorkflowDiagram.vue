@@ -38,7 +38,7 @@ const steps = [
                 <strong>{{ lane }}</strong><i v-if="laneIndex < 3">→</i>
               </template>
             </div>
-            <div class="mini-flow"><span>Insert category</span><i>→</i><span>Evaluate realism</span></div>
+            <div class="mini-flow"><span>Insert category</span><i>⟶</i><span>Evaluate realism</span></div>
             <div class="mini-branches">
               <span><small>≥80%</small><strong>Continue</strong></span>
               <span><small>Below 80%</small><strong>Ask human</strong><i>Continue · Retry · Skip</i></span>
@@ -68,8 +68,8 @@ const steps = [
 .connector{z-index:1;width:1px;min-height:.36rem;flex:1 1 .58rem;background:transparent}.connector.complete{background:rgb(52 211 153/.65)}
 .asset-subflow{margin:.14rem .04rem .02rem 1.35rem;padding:.15rem .18rem;display:grid;gap:.11rem;border:1px solid rgb(167 139 250/.3);border-radius:.38rem;background:rgb(8 8 18/.58)}
 .asset-eval-meta{display:grid;grid-template-columns:1fr 1fr;gap:.18rem}.asset-eval-meta span{display:flex;flex-direction:column;color:#94a3b8;font-size:.25rem;line-height:1.08}.asset-eval-meta strong{margin-top:.03rem;color:#ddd6fe;font-size:.3rem}
-.mini-categories{display:flex;align-items:center;justify-content:space-between;gap:.06rem;padding:.09rem .1rem;border:1px solid rgb(196 181 253/.22);border-radius:.22rem}.mini-categories strong{font-size:.25rem}.mini-categories i{color:#a78bfa;font-size:.25rem;font-style:normal}
-.mini-flow{display:flex;align-items:center;justify-content:center;gap:.12rem}.mini-flow span{padding:.07rem .14rem;border:1px solid rgb(196 181 253/.35);border-radius:.22rem;background:rgb(76 29 149/.2);font-size:.27rem;font-weight:700}.mini-flow i{color:#a78bfa;font-size:.3rem;font-style:normal}
+.mini-categories{min-height:.72rem;padding:0 .1rem;display:flex;align-items:center;justify-content:space-between;gap:.06rem;border:1px solid rgb(196 181 253/.22);border-radius:.22rem;line-height:1}.mini-categories strong{font-size:.24rem;line-height:1}.mini-categories i{color:#a78bfa;font-size:.26rem;font-style:normal;line-height:1}
+.mini-flow{display:flex;align-items:center;justify-content:center;gap:.1rem}.mini-flow span{height:.76rem;padding:0 .12rem;display:flex;align-items:center;justify-content:center;border:1px solid rgb(196 181 253/.35);border-radius:.22rem;background:rgb(76 29 149/.2);font-size:.25rem;font-weight:700;line-height:1}.mini-flow i{min-width:.72rem;display:block;color:#ddd6fe;font-size:.46rem;font-style:normal;font-weight:800;line-height:1;text-align:center}
 .mini-branches{display:grid;grid-template-columns:.78fr 1.22fr;gap:.1rem}.mini-branches>span{padding:.08rem;border:1px solid rgb(52 211 153/.48);border-radius:.22rem;text-align:center;line-height:1}.mini-branches>span+span{border-color:rgb(251 191 36/.5)}.mini-branches small,.mini-branches strong,.mini-branches i{display:block}.mini-branches small{color:#94a3b8;font-size:.2rem}.mini-branches strong{margin-top:.03rem;color:#a7f3d0;font-size:.27rem}.mini-branches>span+span strong{color:#fde68a}.mini-branches i{margin-top:.04rem;color:#cbd5e1;font-size:.18rem;font-style:normal}
 @keyframes node-arrive{from{opacity:0;transform:translateY(-.4rem) scale(.97)}to{opacity:1;transform:none}}@keyframes connector-grow{from{transform:scaleY(0)}to{transform:scaleY(1)}}
 @media(prefers-reduced-motion:reduce){.workflow-node.current,.connector.newest{animation:none}}

@@ -67,7 +67,7 @@ As you can see here we throw up a big text box in front of people and asks them 
 
 <h2><span class="text-white ">4 UX Challenges</span></h2>
 
-<div class="grid grid-cols-2 h-100 gap-4 text-black font-bold">
+<div class="grid grid-cols-2 h-100 gap-4 text-black font-bold" style="font-size: 1.5em; line-height: 1.28">
   <div class="bg-red p-4 shadow-lg shadow-black">
     1. It's really hard to write a good prompt
   </div>
@@ -277,32 +277,38 @@ Trying to describe an image to a diffusion model is kind of like those police sk
 
 ---
 
-<h1 v-click class="absolute text-center w-full mt-20">Creative Guidance</h1>
+<div class="absolute inset-10 grid grid-cols-[1fr_28rem] items-center gap-14">
+  <div v-click>
+    <p class="!mb-3 text-sm font-bold tracking-[0.2em] text-green uppercase">The complete solution</p>
+    <h1 class="!m-0 text-6xl leading-tight text-blue">Creative<br/>Guidance</h1>
+    <p class="mt-6 max-w-md text-xl leading-relaxed text-slate-300">
+      Three focused AI calls combine into one guided creative experience.
+    </p>
+  </div>
 
-<div class="flex flex-row gap-8 items-center h-120 justify-center">
-  <ModelBadge
-    class="w-88"
-    :step="1"
-    title="Enhance prompt"
-    model-type="LLM"
-    model="Mistral Small 4"
-  />
-  <span>➕</span>
-  <ModelBadge
-    class="w-88"
-    :step="2"
-    title="Auto Model Selection"
-    model-type="Decision Model"
-    model="Jev, Clef or Decisions API"
-  />
-  <span>➕</span>
-  <ModelBadge
-    class="w-88"
-    :step="3"
-    title="Describe Images"
-    model-type="Vision LM (VLM)"
-    model="Gemini 3.1 Flash-Lite"
-  />
+  <div class="flex flex-col gap-4">
+    <ModelBadge
+      class="w-full"
+      :step="1"
+      title="Enhance prompt"
+      model-type="LLM"
+      model="Mistral Small 4"
+    />
+    <ModelBadge
+      class="w-full"
+      :step="2"
+      title="Auto Model Selection"
+      model-type="Decision Model"
+      model="Jev, Clef or Decisions API"
+    />
+    <ModelBadge
+      class="w-full"
+      :step="3"
+      title="Describe Images"
+      model-type="Vision LM (VLM)"
+      model="Gemini 3.1 Flash-Lite"
+    />
+  </div>
 </div>
 
 <!--
@@ -333,14 +339,6 @@ So if you combine all those together (prompt enhancement, auto model, and auto m
 Here's another example of creative guidance. I put a couple of pictures of a glacier in the moodboard, and I got this really cool picture of boots hanging out by a frozen lake.
 -->
 
-
----
-layout: section
-transition: none
----
-
-
-<h1 class="uppercase ">There is a problem <br/> here though</h1>
 
 ---
 
@@ -525,21 +523,34 @@ Durability means being able to recover after a crash or for example if the insta
 
 ---
 
-# Two Major Architectural Challenges
+<div class="absolute inset-10 flex flex-col">
+  <p class="!mb-2 text-sm font-bold tracking-[0.2em] text-green uppercase">The architecture</p>
+  <h1 class="!m-0 text-5xl text-blue">Two hard problems</h1>
 
-<div class="grid grid-cols-2 gap-4 mt-12">
-  <div class="p-4 border border-white rounded-4 shadow-teal shadow-md w-full h-full text-center">
-<span class="shadow-black text-shadow-sm text-blue">
-  Modeling and Durably  <br/> Executing our AI Workflow
-</span>
-  </div>
-  <div class="p-4 border border-white rounded-4 shadow-teal shadow-md text-center"><span class="text-blue shadow-black text-shadow-sm">Syncing State between the <br/> Workflow and the Browser</span></div>
-
-  <div v-click class="p-4 border border-white  shadow-orange shadow-md w-full h-full text-center bg-orange text-white">
-      <div  class="text-white">Workflows</div>
+  <div class="mt-8 grid flex-1 grid-cols-2 gap-7">
+    <div class="flex flex-col overflow-hidden rounded-3xl border border-teal/60 bg-[#15172a] shadow-xl shadow-black/30">
+      <div class="flex flex-1 flex-col p-7">
+        <div class="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl bg-teal/15 text-xl font-bold text-green">01</div>
+        <p class="!mb-3 text-sm font-bold tracking-[0.14em] text-slate-400 uppercase">Orchestration</p>
+        <h2 class="!m-0 text-3xl leading-tight text-white">Model and durably execute the AI workflow</h2>
+        <p class="mt-4 text-lg leading-relaxed text-slate-300">Long-running steps, retries, and human approval need to survive failures.</p>
+      </div>
+      <div v-click class="border-t border-teal/40 bg-teal/10 px-7 py-5">
+        <span class="text-sm font-bold tracking-[0.16em] text-green uppercase">Cloudflare Workflows</span>
+      </div>
     </div>
-    <div v-click class="p-4 border border-white shadow-orange shadow-md w-full h-full text-center bg-orange">
-    <div  class="text-white">Agents SDK</div>
+
+    <div class="flex flex-col overflow-hidden rounded-3xl border border-purple/70 bg-[#17152b] shadow-xl shadow-black/30">
+      <div class="flex flex-1 flex-col p-7">
+        <div class="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl bg-purple/20 text-xl font-bold text-purple">02</div>
+        <p class="!mb-3 text-sm font-bold tracking-[0.14em] text-slate-400 uppercase">State</p>
+        <h2 class="!m-0 text-3xl leading-tight text-white">Sync the workflow state with the browser</h2>
+        <p class="mt-4 text-lg leading-relaxed text-slate-300">The UI should always show the latest progress, even after reconnecting.</p>
+      </div>
+      <div v-click class="border-t border-purple/50 bg-purple/10 px-7 py-5">
+        <span class="text-sm font-bold tracking-[0.16em] text-purple uppercase">Cloudflare Agents SDK</span>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -728,15 +739,18 @@ Sources checked on 4 October 2026: Cloudflare AI binding documentation, AI model
 transition: none
 ---
 
-<div class="relative -top-6 h-[35rem]">
-  <div class="absolute inset-0 overflow-hidden p-2">
+<div class="absolute inset-6 flex flex-col">
+  <h2 class="!m-0 shrink-0 text-white">Workflows in the Dashboard</h2>
+  <div class="relative mt-3 min-h-0 flex-1">
+  <div class="absolute inset-0 overflow-hidden">
     <img src="/assets/cf-workflows-dash.png" class="h-full w-full rounded-xl object-contain" />
   </div>
-  <div v-click class="absolute inset-0 overflow-hidden p-2">
+  <div v-click class="absolute inset-0 overflow-hidden">
     <img src="/assets/cf-workflows-dash-2.png" class="h-full w-full rounded-xl object-contain" />
   </div>
-  <div v-click class="absolute inset-0 overflow-hidden p-2">
+  <div v-click class="absolute inset-0 overflow-hidden">
     <img src="/assets/cf-worfklows-dash-3.png" class="h-full w-full rounded-xl object-contain" />
+  </div>
   </div>
 </div>
 
