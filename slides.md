@@ -146,7 +146,7 @@ layout: section
 # Image Models are a Black Box
 
 <center>
-  <p class="text-black w-180 !leading-none p-0">People don't really understand how they work and have really no idea how to steer them in one direction or another.</p>
+  <p class="text-green font-semibold w-180 !leading-tight p-0">People don't really understand how they work and have really no idea how to steer them in one direction or another.</p>
 
   <img src="./assets/dune-pain-box.avif" class="h-90" />
   <sub class="relative -top-6 !text-xs !p-0 text-slate-600">Image: Warner Bros. Pictures</sub>
@@ -278,11 +278,12 @@ Trying to describe an image to a diffusion model is kind of like those police sk
 ---
 
 <div class="absolute inset-10 grid grid-cols-[1fr_28rem] items-center gap-14">
-  <div v-click>
-    <p class="!mb-3 text-sm font-bold tracking-[0.2em] text-green uppercase">The complete solution</p>
+  <div>
+    <p class="!mb-3 text-sm font-bold tracking-[0.2em] text-green uppercase">A Partial AI Workflow</p>
     <h1 class="!m-0 text-6xl leading-tight text-blue">Creative<br/>Guidance</h1>
     <p class="mt-6 max-w-md text-xl leading-relaxed text-slate-300">
-      Three focused AI calls combine into one guided creative experience.
+      Use moodboard images to enhance the users image prompt and then pick
+      the best model
     </p>
   </div>
 
@@ -290,23 +291,23 @@ Trying to describe an image to a diffusion model is kind of like those police sk
     <ModelBadge
       class="w-full"
       :step="1"
+      title="Describe Moodboard Images"
+      model-type="Vision LM (VLM)"
+      model="Gemini 3.1 Flash-Lite"
+    />
+    <ModelBadge
+      class="w-full"
+      :step="2"
       title="Enhance prompt"
       model-type="LLM"
       model="Mistral Small 4"
     />
     <ModelBadge
       class="w-full"
-      :step="2"
+      :step="3"
       title="Auto Model Selection"
       model-type="Decision Model"
       model="Jev, Clef or Decisions API"
-    />
-    <ModelBadge
-      class="w-full"
-      :step="3"
-      title="Describe Images"
-      model-type="Vision LM (VLM)"
-      model="Gemini 3.1 Flash-Lite"
     />
   </div>
 </div>
@@ -369,26 +370,117 @@ So we added some new capabilities to our moodboard.
 ---
 
 <center>
-  <img v-click.hide="1" src="./assets/board-categories.png" class="absolute h-120 left-24" />
-  <img v-click="1" src="./assets/board-categories-highlighted.png" class="h-120 absolute left-24" />
+  <img src="./assets/board-categories.png" class="absolute h-120 left-24" />
 </center>
 
-<ModelBadge
-  v-click="2"
+
+---
+
+<div v-click.hide="1" class="absolute  right-8 p-4 gap-4 flex flex-col text-right">
+    <p class="!mb-3text-sm font-bold tracking-[0.2em] text-green uppercase">Product Insertion Loop</p>
+    <p class="pl-4 mt-6 max-w-md text-xl leading-relaxed text-slate-300">
+      Replace items in your base image with people and products from your moodboard.
+    </p>
+</div>
+
+<center class="flex flex-row gap-4">
+  <img src="./assets/prompt-fishing.png" class="absolute h80" />
+  <img v-click="1" src="./assets/base-fishing.jpg" class="left-36 absolute h-120" />  
+  <img v-click="2" src="./assets/item-me.png" class="absolute h70 z-20" />
+  <img v-click="3" src="./assets/fishing-me.jpg" class="left-36 absolute h-120" />  
+  <img v-click="4" src="./assets/item-canoe.png" class="left-36 absolute z-20 h-50" />
+  <img v-click="5" src="./assets/fishing-all.png" class="left-36 absolute h-120" />
+  <ModelBadge
+  v-click="6"
   class="absolute right-7 bottom-6 z-20 w-88"
   :step="4"
   title="Insert Product(s)"
   model-type="Inpaint Model"
   model="Nano Banana Pro"
 />
-
+</center>
 
 <!--
- For each image that was added, you could categorise it as either an inspiration image to impact the style of the OUTPUT or a product image to be INSERTED into the ouput.
+For each image that was added, you could categorise it as either an inspiration image to impact the style of the OUTPUT or a product image to be INSERTED into the ouput.
 
 So here i added a canoe, and I also have a picture of myself.
 
 Along with a INSPIRATION image of loch ness
+-->
+
+---
+transition: none
+---
+
+<div class="flex justify-center">
+  <img src="./assets/fishing-fail.jpg" class="h-120 "/>
+   <span class="absolute top-60 z-20" style="font-size: 138px;">❌</span>
+</div>
+
+<ModelBadge
+  v-click
+  class="absolute right-7 top-6 z-20 w-88"
+  :step="5"
+  title="Evaluate Realism"
+  model-type="Multi-Modal LLM"
+  model="Gemini Flash 3.8"
+/>
+
+---
+
+<div class="absolute pr-4 grid grid-cols-[1fr_28rem] items-center gap-14">
+  <div>
+    <p class="!mb-3 text-sm font-bold tracking-[0.2em] text-green uppercase">The Full AI Workflow</p>
+    <h1 class="!m-0 text-6xl leading-tight text-blue">Producer<br/>Mode</h1>
+    <p class="mt-6 max-w-md text-xl leading-relaxed text-slate-300">
+      Use moodboard images to enhance the users image prompt and then pick
+      the best model
+    </p>
+  </div>
+
+  <div class="flex flex-col gap-4">
+    <ModelBadge
+      class="w-full"
+      :step="1"
+      title="Describe Moodboard Images"
+      model-type="Vision LM (VLM)"
+      model="Gemini 3.1 Flash-Lite"
+    />
+    <ModelBadge
+      class="w-full"
+      :step="2"
+      title="Enhance prompt"
+      model-type="LLM"
+      model="Mistral Small 4"
+    />
+    <ModelBadge
+      class="w-full"
+      :step="3"
+      title="Auto Model Selection"
+      model-type="Decision Model"
+      model="Jev, Clef or Decisions API"
+    />
+    <div class="rounded-xl border-2 border-dashed border-fuchsia p-4 gap-4 flex flex-col">
+    <ModelBadge
+      class="w-full"
+      :step="4"
+      title="Insert Product(s)"
+      model-type="Inpaint Model"
+      model="Nano Banana Pro"
+    />
+    <ModelBadge
+      class="w-full"
+      :step="5"
+      title="Evaluate Realism"
+      model-type="Multi-Modal LLM"
+      model="Gemini Flash 3.8"
+    />
+    </div>
+  </div>
+</div>
+
+<!--
+So if you combine all those together (prompt enhancement, auto model, and auto model routing with the mood board), you get this feature that we call creative guidance.
 -->
 
 ---
@@ -526,28 +618,26 @@ Durability means being able to recover after a crash or for example if the insta
 <div class="absolute inset-10 flex flex-col">
   <p class="!mb-2 text-sm font-bold tracking-[0.2em] text-green uppercase">The architecture</p>
   <h1 class="!m-0 text-5xl text-blue">Two hard problems</h1>
-
-  <div class="mt-8 grid flex-1 grid-cols-2 gap-7">
+  <div class="mt-7 grid h-[19.5rem] grid-cols-2 gap-7">
     <div class="flex flex-col overflow-hidden rounded-3xl border border-teal/60 bg-[#15172a] shadow-xl shadow-black/30">
-      <div class="flex flex-1 flex-col p-7">
-        <div class="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl bg-teal/15 text-xl font-bold text-green">01</div>
-        <p class="!mb-3 text-sm font-bold tracking-[0.14em] text-slate-400 uppercase">Orchestration</p>
-        <h2 class="!m-0 text-3xl leading-tight text-white">Model and durably execute the AI workflow</h2>
-        <p class="mt-4 text-lg leading-relaxed text-slate-300">Long-running steps, retries, and human approval need to survive failures.</p>
+      <div class="flex min-h-0 flex-1 flex-col p-5">
+        <div class="mb-3 flex h-10 w-10 items-center justify-center rounded-xl bg-teal/15 text-base font-bold text-green">01</div>
+        <p class="!m-0 text-xs font-bold tracking-[0.14em] text-slate-400 uppercase">Orchestration</p>
+        <h2 class="!m-0 text-[1.6rem] leading-tight text-white">Model and durably execute the AI workflow</h2>
+        <p class="!mb-0 !mt-2 text-sm leading-snug text-slate-300">Long-running steps, retries, and human approval need to survive failures.</p>
       </div>
-      <div v-click class="border-t border-teal/40 bg-teal/10 px-7 py-5">
+      <div v-click class="border-t border-teal/40 bg-teal/10 px-5 py-3">
         <span class="text-sm font-bold tracking-[0.16em] text-green uppercase">Cloudflare Workflows</span>
       </div>
     </div>
-
     <div class="flex flex-col overflow-hidden rounded-3xl border border-purple/70 bg-[#17152b] shadow-xl shadow-black/30">
-      <div class="flex flex-1 flex-col p-7">
-        <div class="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl bg-purple/20 text-xl font-bold text-purple">02</div>
-        <p class="!mb-3 text-sm font-bold tracking-[0.14em] text-slate-400 uppercase">State</p>
-        <h2 class="!m-0 text-3xl leading-tight text-white">Sync the workflow state with the browser</h2>
-        <p class="mt-4 text-lg leading-relaxed text-slate-300">The UI should always show the latest progress, even after reconnecting.</p>
+      <div class="flex min-h-0 flex-1 flex-col p-5">
+        <div class="mb-3 flex h-10 w-10 items-center justify-center rounded-xl bg-purple/20 text-base font-bold text-purple">02</div>
+        <p class="!m-0 text-xs font-bold tracking-[0.14em] text-slate-400 uppercase">State</p>
+        <h2 class="!m-0 text-[1.6rem] leading-tight text-white">Sync the workflow state with the browser</h2>
+        <p class="!mb-0 !mt-2 text-sm leading-snug text-slate-300">The UI should always show the latest progress, even after reconnecting.</p>
       </div>
-      <div v-click class="border-t border-purple/50 bg-purple/10 px-7 py-5">
+      <div v-click class="border-t border-purple/50 bg-purple/10 px-5 py-3">
         <span class="text-sm font-bold tracking-[0.16em] text-purple uppercase">Cloudflare Agents SDK</span>
       </div>
     </div>
