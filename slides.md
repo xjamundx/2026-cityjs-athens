@@ -602,35 +602,44 @@ Durability means being able to recover after a crash or for example if the insta
 
 ---
 
+<center>
+   <img src="./assets/cloudflare-agents.png" class="h-120" />
+</center>
+
+<!--
+Cloudflare has got this entire choose your own adventure series of Agent-related infastructure we're only going taking advantage of a very small part of it.
+-->
+
+---
+
 <div class="absolute inset-10 flex flex-col">
   <p class="!mb-2 text-sm font-bold tracking-[0.2em] text-green uppercase">The architecture</p>
-  <h1 class="!m-0 text-5xl text-blue">Two hard problems</h1>
+  <h1 class="!m-0 text-5xl text-blue">Our Two Challenges</h1>
   <div class="mt-7 grid h-[19.5rem] grid-cols-2 gap-7">
     <div class="flex flex-col overflow-hidden rounded-3xl border border-teal/60 bg-[#15172a] shadow-xl shadow-black/30">
       <div class="flex min-h-0 flex-1 flex-col p-5">
         <div class="mb-3 flex h-10 w-10 items-center justify-center rounded-xl bg-teal/15 text-base font-bold text-green">01</div>
         <p class="!m-0 text-xs font-bold tracking-[0.14em] text-slate-400 uppercase">Orchestration</p>
-        <h2 class="!m-0 text-[1.6rem] leading-tight text-white">Model and durably execute the AI workflow</h2>
-        <p class="!mb-0 !mt-2 text-sm leading-snug text-slate-300">Long-running steps, retries, and human approval need to survive failures.</p>
+        <h2 class="!m-0 text-[1.6rem] leading-tight text-white">Model and durably execute our AI workflows</h2>
+        <p class="!mb-0 !mt-2 text-sm leading-snug text-slate-300">Long-running steps, retries, and observability.</p>
       </div>
-      <div v-click class="border-t border-teal/40 bg-teal/10 px-5 py-3">
+      <div v-click class="border-t border-teal/40 py-3 px-6">
         <span class="text-sm font-bold tracking-[0.16em] text-green uppercase">Cloudflare Workflows</span>
       </div>
     </div>
     <div class="flex flex-col overflow-hidden rounded-3xl border border-purple/70 bg-[#17152b] shadow-xl shadow-black/30">
       <div class="flex min-h-0 flex-1 flex-col p-5">
         <div class="mb-3 flex h-10 w-10 items-center justify-center rounded-xl bg-purple/20 text-base font-bold text-purple">02</div>
-        <p class="!m-0 text-xs font-bold tracking-[0.14em] text-slate-400 uppercase">State</p>
+        <p class="!m-0 text-xs font-bold tracking-[0.14em] text-slate-400 uppercase">Communication</p>
         <h2 class="!m-0 text-[1.6rem] leading-tight text-white">Sync the workflow state with the browser</h2>
-        <p class="!mb-0 !mt-2 text-sm leading-snug text-slate-300">The UI should always show the latest progress, even after reconnecting.</p>
+        <p class="!mb-0 !mt-2 text-sm leading-snug text-slate-300">The UI should always show the latest progress. Clients needs to be able to direct the workflow.</p>
       </div>
-      <div v-click class="border-t border-purple/50 bg-purple/10 px-5 py-3">
+      <div v-click class="border-t border-purple/50 py-3 px-6">
         <span class="text-sm font-bold tracking-[0.16em] text-purple uppercase">Cloudflare Agents SDK</span>
       </div>
     </div>
   </div>
 </div>
-
 
 ---
 layout: section
