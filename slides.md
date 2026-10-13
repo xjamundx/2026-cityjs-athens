@@ -523,9 +523,8 @@ So if you combine all those together (prompt enhancement, auto model, and auto m
 # Putting the user in control
 
 <center class="flex flex-row gap-4">
-  <img v-click.hide="1" src="./assets/prompt-fishing.png" class="absolute h80"/>
-  <img v-click.hide="2" v-click="1" src="./assets/approve.png" class="h-100"/>
-  <img v-click="2" src="./assets/placeholder.png" class="h-100"/>
+  <img src="./assets/prompt-fishing.png" class="h80"/>
+  <img v-click src="./assets/approve.png" class="h-100"/>
 </center>
 
 <!--
@@ -538,21 +537,18 @@ customers the image generation plan before we even start (and potentially allow 
 transition: none
 ---
 
-# Dismantling the black box
-
 <center>
-  <img src="./assets/fishing-1.png" class="left-36 absolute h-100"/>  
-  <img v-click src="./assets/fishing-2.png" class="left-36 absolute h-100"/>  
-  <img v-click="2" src="./assets/fishing-3.png" class="left-36 absolute h-100"/>
+  <img v-click  src="./assets/fishing-1.png" class="left-36 absolute h-120"/>  
+  <img v-click src="./assets/fishing-2.png" class="left-36 absolute h-120"/>  
+  <img v-click src="./assets/fishing-3.png" class="left-36 absolute h-120"/>
+  <img src="./assets/placeholder.png" class="h-120"/>
 </center>
 
 ---
 transition: none
 ---
 
-# Cutting Out The Slop
-
-  <img src="./assets/fishing-bad.png" class="left-36 absolute h-100"/>
+  <img src="./assets/fishing-bad.png" class="left-36 absolute h-120"/>
 
 <!--
 
