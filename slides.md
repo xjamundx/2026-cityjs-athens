@@ -1,5 +1,5 @@
 ---
-theme: '@ktym4a/slidev-theme-ktym4a'
+theme: "@ktym4a/slidev-theme-ktym4a"
 title: Agentic Image Generation
 info: |
   Jamund Ferguson, CityJS Athens 2026
@@ -35,7 +35,6 @@ themeConfig:
   </div>
 </div>
 
-
 <!--
 Hi, I'm Jamund Ferguson. I'm currently at Axle Energy, but I spent the last two years at Stability AI leading the front-end team and building UIs for image generation. Primarily a tool called Brand Studio.
 -->
@@ -59,28 +58,54 @@ Hi, I'm Jamund Ferguson. I'm currently at Axle Energy, but I spent the last two 
 <!--
 I mainly worked on a tool called brand studio, which helps companies edit and generate images used in marketing campaigns.
 
-As you can see here we throw up a big text box in front of people and asks them what they want to create. 
+As you can see here we throw up a big text box in front of people and asks them what they want to create.
 
 -->
 
 ---
 
-<h2><span class="text-white ">4 UX Challenges</span></h2>
+<h2><span class="text-white text-shadow-lg">4 UX Challenges</span></h2>
 
 <div class="grid grid-cols-2 h-100 gap-4 text-black font-bold" style="font-size: 1.5em; line-height: 1.28">
-  <div class="bg-red p-4 shadow-lg shadow-black">
+  <div class="bg-red p-4 text-shadow-xl shadow-sm shadow-black text-white">
     1. It's really hard to write a good prompt
   </div>
-  <div class="bg-orange p-4 shadow-lg shadow-black">
+  <div class="bg-orange p-4 text-shadow-xl shadow-black shadow-lg text-white">
     2. There are a tonne of different image models to choose from
   </div>
-  <div class="bg-yellow p-4 shadow-lg shadow-black">
+  <div class="bg-yellow p-4 text-shadow-lg shadow-lg shadow-black text-white">
     3. People want to see their brand, or in some cases themselves, represented in the output
     </div>
-  <div class="bg-blue p-4 shadow-lg shadow-black">
+  <div class="bg-blue p-4 text-shadow-lg shadow-black text-white">
     4. An overall lack of creative control over the image generation process
   </div>
 </div>
+
+
+---
+
+<h1><span class="text-yellow text-shadow-lg">HAVE YOU SEEN THIS MAN?</span></h1>
+
+<!--
+Trying to describe an image to a diffusion model is kind of like those police sketches where you have to describe the features that you want them to draw and they do their best to interpret it
+-->
+<div class="flex flex-row gap-4 p-4">
+  <figure class="w-100"s>
+    <img src="./assets/police-sketch.avif" class="h-80" />
+    <figcaption><a class="text-xs" href="https://www.independent.co.uk/news/weird-news/worst-police-sketch-ever-police-hunt-oddly-spherical-man-9075276.html">The Independent: Worst police sketch ever? Police hunt oddly spherical man
+  </a></figcaption>
+  </figure>
+  <div>
+  <div class="absolute text-[2.5em] leading-[.75] text-shadow-sm">
+Humans in general are fairly bad at describing people in great detail.
+  <br/><br/>But the details really matter.
+  </div>
+  </div>
+</div>
+
+<!--
+  This is kind of how I think about prompting an image generation model. <br/><br/> Like you're describing a criminal a sketch arist. <br/><br/>
+-->
 
 
 ---
@@ -103,17 +128,15 @@ As you can see here we throw up a big text box in front of people and asks them 
 
 <!--
 
-People have been kind of trained to treat prompt boxes like this, like chat boxes, and expect the history to remember the things that they talked about in the past. They also expect that it should be able to access the internet to add more context, which none of that's true in our diffusion models. 
+People have been kind of trained to treat prompt boxes like this, like chat boxes, and expect the history to remember the things that they talked about in the past. They also expect that it should be able to access the internet to add more context, which none of that's true in our diffusion models.
 
 On the opposite end of the spectrum, people write these really tiny prompts with no details and expect to get some kind of high quality output, which is unrealistic.
 -->
 
 ---
-layout: section
-
 ---
 
-<h2 className="!m-0 !p-0">Too Much Model Choice</h2>
+<h2 className="!m-0 !p-0 uppercase">Too Many Models</h2>
 
 <div class="flex flex-row gap-4">
 
@@ -130,13 +153,22 @@ layout: section
 ---
 
 <center>
-  <h2>People Want To Sell Their Own Stuff</h2>
+  <img src="./assets/dont-make-me-think.jpg" class="h-120" />
+</center>
+
+<!--
+We're breaking the golden rule of UX
+-->
+
+---
+
+<center>
+  <h2 class="uppercase text-shadow-lg"><span class="text-violet-200">People Want To Sell Their Own Stuff</span></h2>
   <img src="./assets/ai-slop-chocolate.jpg" class="h-80" />
-<p class="!mb-4 text-sm font-bold tracking-[0.16em] text-violet-300 uppercase">Not your AI slop chocolate</p>
+<p class="!mb-4 text-sm font-bold tracking-[0.16em] text-green uppercase">Not your AI slop chocolate</p>
 
 </center>
 <!-- They don't want to sell your AI slop chocolate bars with random typos -->
-
 
 ---
 layout: section
@@ -160,16 +192,14 @@ layout: section
 
 # A better interface for image generation
 
-
 <!--
 At stability I worked with a fantastic product manager Max who was constantly vibe coding different prototypes for how users could get better results out of our product.
 
-Obviously, there are so many different ways we could think about solving this problem. I'm going to talk about just a few of the approaches that we took, what worked and didn't work about them, and how we ended up combining them all together into a feature that we call producer mode 
+Obviously, there are so many different ways we could think about solving this problem. I'm going to talk about just a few of the approaches that we took, what worked and didn't work about them, and how we ended up combining them all together into a feature that we call producer mode
 
 
 Google combined autoregressive language-model behaviour with diffusion and other techniques. We were not Google and did not have many ML researchers, so Max proposed a complicated solution that lived mostly in the product workflow.
 -->
-
 
 ---
 
@@ -213,7 +243,6 @@ It worked okay, but it definitely wasn't enough.
 
 </div>
 
-
 <div v-click.hide="1" class="flex flex-row gap-4">
 
 ![a](./assets/models-1.png)
@@ -224,15 +253,13 @@ It worked okay, but it definitely wasn't enough.
 
 </div>
 
-
 <!--
 As you can see from this very long dropdown, there are a tonne of model choices that we offer in Brand Studio. And nobody ever wants to think about the best one for their pick.
 -->
 
 ---
 
-# Moodboards
-
+# CAN WE DO BETTER THAN TEXT?
 
 <!--
 Trying to describe an image to a diffusion model is kind of like those police sketches where you have to describe the features that you want them to draw and they do their best to interpret it
@@ -244,10 +271,9 @@ Trying to describe an image to a diffusion model is kind of like those police sk
   </a></figcaption>
   </figure>
   <figure>
-  <p v-click.hide="1" class="absolute">
-  This is kind of how I think about describing an image to an image generation model. <br/><br/>Sure, you try to remember the features, but who knows if you forgot some important details?
-  <br/><br/>The details really matter.
-  </p>
+  <div v-click.hide="1" class="absolute text-[2.5em] leading-[1.2] text-shadow-navy text-shadow-lg text-yellow">
+  If you were looking for someone specific, what would be the quickest way to convey that information?
+  </div>
     <img v-click="1" src="./assets/t2-have-you-seen.jpg" />
     <figcaption  v-click="1"  class="text-xs">Waynes World</figcaption>
   </figure>
@@ -268,8 +294,7 @@ Trying to describe an image to a diffusion model is kind of like those police sk
   model="Gemini 3.1 Flash-Lite"
 />
 
-
-<!-- 
+<!--
  Instead of expecting people to very carefully type the perfect description about what they want, why not just have them show you?
 
  And then we'll use a vision language model or a multi-modal VLM such as Gemini 3.1-flash lite to provide a description of that image.
@@ -368,10 +393,9 @@ So we added some new capabilities to our moodboard.
   <img src="./assets/board-categories.png" class="absolute h-120 left-24" />
 </center>
 
-
 ---
 
-<div v-click.hide="1" class="absolute  right-8 p-4 gap-4 flex flex-col text-right">
+<div v-click.hide="1" class="absolute  right-4 p-4 pl-8 gap-4 flex flex-col text-right w-100">
     <p class="!mb-3text-sm font-bold tracking-[0.2em] text-green uppercase">Product Insertion Loop</p>
     <p class="pl-4 mt-6 max-w-md text-xl leading-relaxed text-slate-300">
       Replace items in your base image with people and products from your moodboard.
@@ -379,14 +403,29 @@ So we added some new capabilities to our moodboard.
 </div>
 
 <center class="flex flex-row gap-4">
-  <img src="./assets/prompt-fishing.png" class="absolute h80" />
+  <img src="./assets/prompt-fishing.png" class="absolute h-100 mt-4" />
   <img v-click="1" src="./assets/base-fishing.jpg" class="left-36 absolute h-120" />  
-  <img v-click="2" src="./assets/item-me.png" class="absolute h70 z-20" />
-  <img v-click="3" src="./assets/fishing-me.jpg" class="left-36 absolute h-120" />  
-  <img v-click="4" src="./assets/item-canoe.png" class="left-36 absolute z-20 h-50" />
-  <img v-click="5" src="./assets/fishing-all.png" class="left-36 absolute h-120" />
+  <img
+    v-click="2"
+    v-click.hide="4"
+    v-motion
+    :initial="{ x: 0, y: 0, scale: 1 }"
+    :click-3="{ x: 435, y: 65, scale: .25 }"
+    src="./assets/item-me.png"
+    class="absolute h70 z-20"
+  />
+  <img 
+    v-click="4" src="./assets/fishing-me.jpg" class="left-36 absolute h-120" />  
+  <img v-click="5" 
+      v-motion
+      :initial="{ x: 0, y: 0, scale: 1 }"
+      :click-6="{ x: 330, y: 175, scale: 2 }"
+      v-click.hide="7"
+      src="./assets/item-canoe.png"
+      class="left-36 absolute z-20 h-50" />
+  <img v-click="7" src="./assets/fishing-all.png" class="left-36 absolute h-120" />
   <ModelBadge
-  v-click="6"
+  v-click="8"
   class="absolute right-7 bottom-6 z-20 w-88"
   :step="4"
   title="Insert Product(s)"
@@ -405,6 +444,7 @@ Along with a INSPIRATION image of loch ness
 
 ---
 transition: none
+
 ---
 
 <div class="flex justify-center">
@@ -490,9 +530,10 @@ So if you combine all those together (prompt enhancement, auto model, and auto m
 
 <!--
 And finally to get rid of the black box, the first thing we're going to do is show the
-customers the image generation plan before we even start (and potentially allow them to change it) and secondly as the the images are generating, 
+customers the image generation plan before we even start (and potentially allow them to change it) and secondly as the the images are generating,
 
 -->
+
 ---
 transition: none
 ---
@@ -505,7 +546,6 @@ transition: none
   <img v-click="2" src="./assets/fishing-3.png" class="left-36 absolute h-100"/>
 </center>
 
-
 ---
 transition: none
 ---
@@ -513,8 +553,6 @@ transition: none
 # Cutting Out The Slop
 
   <img src="./assets/fishing-bad.png" class="left-36 absolute h-100"/>
-
-
 
 <!--
 
@@ -527,7 +565,7 @@ transition: none
 <ol>
   <li class="!list-decimal">Create a moodboard (style & product images)</li>
   <li class="!list-decimal">Type a simple prompt</li>
-  <li class="!list-decimal">We generate the image for them: 
+  <li class="!list-decimal">We generate the image for them:
       <p class="pl-4 !m-0">• Building the base image</p>
       <p class="pl-4 !m-0">• Inserting any product images</p>
       <p class="pl-4 !m-0">• Evaluating for realism</p>
@@ -537,6 +575,7 @@ transition: none
 
 </div>
 -->
+
 ---
 layout: section
 transition: none
@@ -553,7 +592,6 @@ Building an Agent is Fun (Sometimes)
 Now for the fun bit, how did we build it?
 -->
 
-
 ---
 
 <div class="flex gap-20 justify-center">
@@ -567,7 +605,6 @@ Now for the fun bit, how did we build it?
 <!--
 Pretty much all the stuff that we're going to talk about today is built on top of Cloudflare, which is the service that we are already using for hosting our web stuff. There are tonnes of other agent frameworks that we could have used to have built this, but in our case this seemed like a good bet.
 -->
-
 
 ---
 
@@ -608,7 +645,7 @@ Durability means being able to recover after a crash or for example if the insta
   <div class="mt-7 grid h-[19.5rem] grid-cols-2 gap-7">
     <div class="flex flex-col overflow-hidden rounded-3xl border border-teal/60 bg-[#15172a] shadow-xl shadow-black/30">
       <div class="flex min-h-0 flex-1 flex-col p-5">
-        <div class="mb-3 flex h-10 w-10 items-center justify-center rounded-xl bg-teal/15 text-base font-bold text-green">01</div>
+        <div class="mb-3 flex h-10 w-10 items-center justify-center rounded-xl bg-teal/15 text-base font-bold !text-green">01</div>
         <p class="!m-0 text-xs font-bold tracking-[0.14em] text-slate-400 uppercase">Orchestration</p>
         <h2 class="!m-0 text-[1.6rem] leading-tight text-white">Model and durably execute our AI workflows</h2>
         <p class="!mb-0 !mt-2 text-sm leading-snug text-slate-300">Long-running steps, retries, and observability.</p>
@@ -622,7 +659,7 @@ Durability means being able to recover after a crash or for example if the insta
         <div class="mb-3 flex h-10 w-10 items-center justify-center rounded-xl bg-purple/20 text-base font-bold text-purple">02</div>
         <p class="!m-0 text-xs font-bold tracking-[0.14em] text-slate-400 uppercase">Communication</p>
         <h2 class="!m-0 text-[1.6rem] leading-tight text-white">Sync the workflow state with the browser</h2>
-        <p class="!mb-0 !mt-2 text-sm leading-snug text-slate-300">The UI should always show the latest progress. Clients needs to be able to direct the workflow.</p>
+        <div class="!mb-0 !mt-2 text-sm leading-snug text-slate-300">The UI should always show the latest progress. Clients needs to be able to direct the workflow.</div>
       </div>
       <div v-click class="border-t border-purple/50 py-3 px-6">
         <span class="text-sm font-bold tracking-[0.16em] text-purple uppercase">Cloudflare Agents SDK</span>
@@ -692,29 +729,30 @@ transition: none
 
 ```ts {1-2,24-25|3-6|8-15|17-19|21-23}
 export class ImageProcessingWorkflow extends WorkflowEntrypoint {
-	async run(event: WorkflowEvent, step: WorkflowStep) {
-		const imageData = await step.do('fetch image', async () => {
-			const object = await this.env.BUCKET.get(event.payload.imageKey);
-			return await object.arrayBuffer();
-		});
+  async run(event: WorkflowEvent, step: WorkflowStep) {
+    const imageData = await step.do("fetch image", async () => {
+      const object = await this.env.BUCKET.get(event.payload.imageKey);
+      return await object.arrayBuffer();
+    });
 
-		const description = await step.do('generate description', async () => {
-			const imageArray = Array.from(new Uint8Array(imageData));
-			return await this.env.AI.run('@cf/llava-hf/llava-1.5-7b-hf', {
-				image: imageArray,
-				prompt: 'Describe this image in one sentence',
-				max_tokens: 50,
-			});
-		});
+    const description = await step.do("generate description", async () => {
+      const imageArray = Array.from(new Uint8Array(imageData));
+      return await this.env.AI.run("@cf/llava-hf/llava-1.5-7b-hf", {
+        image: imageArray,
+        prompt: "Describe this image in one sentence",
+        max_tokens: 50,
+      });
+    });
 
-		await step.waitForEvent('await approval', {
-			event: 'approved', timeout: '24 hours',
-		});
+    await step.waitForEvent("await approval", {
+      event: "approved",
+      timeout: "24 hours",
+    });
 
-		await step.do('publish', async () => {
-			await this.env.BUCKET.put(`public/${event.payload.imageKey}`, imageData);
-		});
-	}
+    await step.do("publish", async () => {
+      await this.env.BUCKET.put(`public/${event.payload.imageKey}`, imageData);
+    });
+  }
 }
 ```
 
@@ -740,7 +778,6 @@ Sample Workflow Code
 ---
 layout: section
 transition: none
-
 ---
 
 # Cloudflare Agents SDK
@@ -753,7 +790,6 @@ Let's define this very quickly, and then we'll turn it into code.
 
 ---
 transition: none
-
 ---
 
 <center>
@@ -781,13 +817,13 @@ import { useAgent } from "agents/react";
 import type { MyAgent } from "./server";
 
 function App() {
-	const agent = useAgent<MyAgent, State>({
-		agent: "my-agent",
-		name: "user-123",
-	});
+  const agent = useAgent<MyAgent, State>({
+    agent: "my-agent",
+    name: "user-123",
+  });
 
-	// Call methods on the agent
-	const greeting = agent.stub.greet();
+  // Call methods on the agent
+  const greeting = agent.stub.greet();
 }
 ```
 
@@ -804,7 +840,6 @@ export class MyAgent extends Agent {
 	}
 }
 ```
-
 
 </div>
 </div>
@@ -831,14 +866,14 @@ import { useAgent } from "agents/react";
 import type { MyAgent } from "./server";
 
 function App() {
-	const agent = useAgent<MyAgent, State>({
-		agent: "my-agent",
-		name: "user-123",
-	});
+  const agent = useAgent<MyAgent, State>({
+    agent: "my-agent",
+    name: "user-123",
+  });
 
-    agent.stub.setName("Jamund");
+  agent.stub.setName("Jamund");
 
-	agent.stub.greet(); // "Hello, Jamund"
+  agent.stub.greet(); // "Hello, Jamund"
 }
 ```
 
@@ -875,7 +910,6 @@ export class MyAgent extends Agent {
 Remembmer, Agents are built on-top of durable, so they have state, but the agents class makes it much easier to work with than durable objects.
 
 -->
-
 
 ---
 
@@ -922,6 +956,7 @@ The happy-path agent code was roughly 100 lines for complex capabilities. Offer 
 ---
 
 # Part 4
+
 ## What happened next
 
 ---
@@ -977,11 +1012,7 @@ Build a feature worth talking about after you leave.
 These points appeared after the main ending in the original notes. Keep them for Q&A or a deeper technical version.
 -->
 
-
-
 ---
-
-
 
 ![x](./assets/explainer-noise.png)
 ![x](./assets/explainer-clear.png)
@@ -1000,6 +1031,7 @@ Diffusion models learn by replacing pixels with static noise and learning to rev
 ## Prompt detail matters
 
 ![x](./assets/explainer-diff2.png)
+
 <center>
 <strong>Source:</strong> <a href="https://poloclub.github.io/diffusion-explainer/">https://poloclub.github.io/diffusion-explainer/</a>
 </center>
