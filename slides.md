@@ -520,7 +520,7 @@ So if you combine all those together (prompt enhancement, auto model, and auto m
 
 ---
 
-# Putting the user in control
+# PUTTING THE USER IN CONTROL
 
 <center class="flex flex-row gap-4">
   <img src="./assets/prompt-fishing.png" class="h80"/>
@@ -800,13 +800,30 @@ Cloudflare has got this entire choose your own adventure series of Agent-related
 transition: none
 ---
 
-## Basic Fullstack Example
+<h4 class="text-violet !text-md mb-3 w-full text-shadow-lg">Agents SDK Basics</h4>
 
-<span class="text-violet text-sm">Agents for the server and the browser</span>
+<div class="flex flex-row gap-4 justify-start h-106">
 
-<div class="flex flex-row gap-4 justify-start">
+<div class="w-1/2 h-full">
+  <span class="text-sm pl-2">Agent Code</span>
+  <div class="flex flex-col w-full h-full rounded bg-black p-2"  style="background-color: var(--slidev-code-background)">
 
-<div>Client Code
+```ts{|3,8|4-7}
+import { Agent, callable } from "agents";
+
+export class MyAgent extends Agent {
+  @callable()
+  async greet(name: string): Promise<string> {
+    return `Hello, ${name}!`;
+  }
+}
+```
+  </div>
+</div>
+
+<div class="w-1/2 h-full">
+  <span class="text-sm pl-2">Client Code</span>
+  <div class="flex flex-col w-full h-full rounded bg-black p-2"  style="background-color: var(--slidev-code-background)">
 
 ```ts {|5-7|9-11}
 import { useAgent } from "agents/react";
@@ -822,22 +839,9 @@ function App() {
   const greeting = agent.stub.greet();
 }
 ```
-
+  </div>
 </div>
-<div class="flex flex-col">Server Code
 
-```ts{|3,8|4-7}
-import { Agent, callable } from "agents";
-
-export class MyAgent extends Agent {
-	@callable()
-	async greet(name: string): Promise<string> {
-		return `Hello, ${name}!`;
-	}
-}
-```
-
-</div>
 </div>
 
 <!--
@@ -851,32 +855,16 @@ You can make RPC calls by adding this decorator to your agent methods
 
 ---
 
-## Managing State
+<h4 class="text-violet !text-md mb-3 w-full text-shadow-lg">Managing Agent State</h4>
 
-<div class="flex flex-row gap-4 justify-start">
+<div class="flex flex-row gap-4 justify-start h-106">
 
-<div>Client Code
+<div class="w-1/2 h-full">
+  <span class="text-sm pl-2">Agent Code</span>
+  <div class="flex flex-col w-full h-full rounded bg-black p-2"  style="background-color: var(--slidev-code-background)">
 
-```ts
-import { useAgent } from "agents/react";
-import type { MyAgent } from "./server";
 
-function App() {
-  const agent = useAgent<MyAgent, State>({
-    agent: "my-agent",
-    name: "user-123",
-  });
-
-  agent.stub.setName("Jamund");
-
-  agent.stub.greet(); // "Hello, Jamund"
-}
-```
-
-</div>
-<div class="flex flex-col">Server Code
-
-```ts{|3-5,7-10|11-19|13,18}
+```ts{|3-5,7-10|11-19|13,18|}
 import { Agent, callable } from "agents";
 
 type MyState = {
@@ -901,11 +889,201 @@ export class MyAgent extends Agent {
 
 </div>
 </div>
+<div class="w-1/2 h-full">
+  <span class="text-sm pl-2">Client Code</span>
+  <div class="flex flex-col w-full h-full rounded bg-black p-2"  style="background-color: var(--slidev-code-background)">
 
+```ts{|10|12}
+import { useAgent } from "agents/react";
+import type { MyAgent } from "./server";
+
+function App() {
+  const agent = useAgent<MyAgent, State>({
+    agent: "my-agent",
+    name: "user-123",
+  });
+
+  agent.stub.setName("Jamund");
+
+  agent.stub.greet(); // "Hello, Jamund"
+}
+```
+
+</div>
+</div>
+</div>
 <!--
 Remembmer, Agents are built on-top of durable, so they have state, but the agents class makes it much easier to work with than durable objects.
 
 -->
+
+
+
+---
+
+
+<h4 class="text-violet !text-md mb-3 w-full text-shadow-lg">Syncing agent state between client and server</h4>
+
+<div class="flex flex-row gap-4 justify-start h-106">
+
+<div class="w-1/2 h-full">
+  <span class="text-sm pl-2">Agent Code</span>
+  <div class="flex flex-col w-full h-full rounded bg-black p-2"  style="background-color: var(--slidev-code-background)">
+
+
+```ts
+import { Agent, callable } from "agents";
+
+type MyState = {
+    name: string;
+}
+export class MyAgent extends Agent {
+	initialState: MyState = {
+		name: "",
+	};
+
+	@callable()
+    async setName(name: string): Promise<string> {
+        this.setState({ name: name });
+    }
+
+	@callable()
+	async greet(): Promise<string> {
+		return `Hello, ${this.state.name}!`;
+	}
+}
+```
+
+</div>
+</div>
+<div class="w-1/2 h-full">
+  <span class="text-sm pl-2">Client Code</span>
+  <div class="flex flex-col w-full h-full rounded bg-black p-2"  style="background-color: var(--slidev-code-background)">
+
+```ts{|8-10|13|9-10}
+import { useAgent } from "agents/react";
+import type { MyAgent } from "./server";
+
+function App() {
+  const agent = useAgent<MyAgent, State>({
+    agent: "my-agent",
+    name: "user-123",
+    onStateUpdate: (state) => {
+      console.log("New state:", state);
+    }
+  });
+
+  agent.stub.setName("Jamund");
+
+  agent.stub.greet(); // "Hello, Jamund"
+}
+```
+
+</div>
+</div>
+</div>
+<!--
+Remembmer, Agents are built on-top of durable, so they have state, but the agents class makes it much easier to work with than durable objects.
+
+-->
+
+---
+
+<h4
+  class="text-violet !text-md mb-3 w-full text-shadow-lg">
+  Building an Agent Worfklow
+</h4>
+
+<div class="w-full h-full rounded bg-black p-2" 
+    style="background-color: var(--slidev-code-background)">
+
+```ts{|3-5|6,7|9-13|15,16|18,19|21,22}
+type TaskParams = { moodboardId: string };
+
+export class ProcessingWorkflow extends AgentWorkflow<MyAgent, TaskParams> {
+  async run(event: AgentWorkflowEvent<TaskParams>, step: AgentWorkflowStep) {
+  
+    // process input
+    const { moodboardId } = event.payload;
+
+    // step 1
+    const moodboard = await step.do("collect moodboard data", async () => {
+      const moodbard = await getMoodboardById(moodboardId);
+      return moodboard;
+    }
+
+    // step 2
+    await step.do("enhance prompt", () => { /* ... */ });
+
+    // step 3
+    await step.do("select optimal model", () => { /* ... */ });
+
+    // step 4
+    await step.do("generate image", () => { /* ... */ });
+}
+```
+
+</div>
+
+
+---
+
+<h4 class="text-violet !text-md mb-3 w-full text-shadow-lg">Firing off a workflow</h4>
+
+<div class="flex flex-row gap-4 justify-start h-106">
+
+<div class="w-1/2 h-full">
+  <span class="text-sm pl-2">Agent</span>
+  <div class="fw-full h-full rounded bg-black p-2"  style="background-color: var(--slidev-code-background)">
+
+
+```ts
+export class ConductorAgent extends Agent {
+  @callable()
+  async start(moodboard: Moodboard): Promise<string> {
+    const name = "IMAGE_GEN_WORKFLOW";
+    const id = await this.runWorkflow(name, {
+      moodboardId
+    });
+    return { id };
+  }
+}
+```
+
+</div>
+</div>
+
+<div class="w-1/2 h-full relative">
+  <span class="text-sm pl-2">Worfklow</span>
+    <div class="w-full h-full rounded bg-black p-2 absolute"
+       style="background-color: var(--slidev-code-background)">
+
+```ts
+type TaskParams = { moodboardId: string };
+
+export class ProcessingWorkflow extends AgentWorkflow<ConductorAgent, TaskParams> {
+  async run(event: AgentWorkflowEvent<TaskParams>, step: AgentWorkflowStep) {
+    const { moodboardId } = event.payload;
+
+    const moodboard = await step.do("collect moodboard data", async () => {
+      const moodbard = await getMoodboardById(moodboardId);
+      return moodboard
+    }
+    // await step.do("");
+    // await step.do("");
+    // await step.do("");
+}
+```
+
+</div>
+</div>
+</div>
+<!--
+Remembmer, Agents are built on-top of durable, so they have state, but the agents class makes it much easier to work with than durable objects.
+
+-->
+
+
 
 ---
 
