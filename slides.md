@@ -804,7 +804,7 @@ await step.do("enhance prompt", () => {
     },
     {
         role: "user",
-        content: userPrompt", // <--- send in the users prompt as well
+        content: userPrompt, // <--- send in the users prompt as well
     }];
     const response = await this.env.AI.run("@cf/mistralai/mistral-small-3.1-24b-instruct", { messages });
     return response;
@@ -1144,7 +1144,7 @@ await step.reportComplete(image);
 
 
 
-```ts{|10-17}
+```ts{|10-13,18|14-17}
 export class MyAgent extends Agent {
 	initialState: MyState = {
 		name: "",
@@ -1157,9 +1157,10 @@ export class MyAgent extends Agent {
 	async onWorkflowComplete(
 		workflowName: string,
 		instanceId: string,
-		result?: unknown,
+		result?: GeneratedImage,
 	) {
-        const activeWorkflows = activeWorkflows.filter(id => id === instanceId);
+        const activeWorkflows = activeWorkflows
+            .filter(id => id === instanceId);
 		this.setState({ activeWorkflows })
 	}
 
@@ -1171,13 +1172,21 @@ export class MyAgent extends Agent {
 </div>
 </div>
 
+
+---
+transition: none
+
 ---
 
 ### Monitoring Workflow Progress
 
-TODO: 
-1. Show the screenshot
-2. Show the code with v-click √
+<div class="flex flex-row justify-center items-center">
+    <img src="./assets/fishing-1.png" class="h100" />
+</div>
+
+---
+
+<h4 class="text-violet !text-md mb-3 w-full text-shadow-lg">Step-By Step Prorgress Updates</h4>
 
 <div class="flex flex-row gap-4 justify-start h-106">
 
@@ -1185,20 +1194,25 @@ TODO:
   <span class="text-sm pl-2">Workflow Code</span>
   <div class="flex flex-col w-full h-full rounded bg-black p-2"  style="background-color: var(--slidev-code-background)">
 
+```ts{|2-5|2-5,12-15}
+await step.do("enhance prompt"", async () => {
+    await this.reportProgress({
+        step: step.name,
+        status: "active"
+    });
+   
+    const response = await this.env.AI.run(
+        "@cf/mistralai/mistral-small-3.1-24b-instruct",
+        { messages }
+    );
+    
+    await this.reportProgress({
+        step: step.name,
+        status: "completed"
+    });
 
-```ts
-await step.do("generate image", async (step) => {
-    await this.reportProgress({
-        step: step.name,
-        status: "starting"
-    });
-    
-    // the actual thing...
-    
-    await this.reportProgress({
-        step: step.name,
-        status: "complete"
-    });
+    return response;
+
  });
 ```
 
@@ -1210,25 +1224,27 @@ await step.do("generate image", async (step) => {
 
 
 
-```ts{|10-17}
+```ts{|1-4,7|10-14,20|15-19}
+type StepStatus = Record<StepName, "pending" | "active" | "completed">;
+type MyState = {
+    activeWorkflows: Record<WorkflowId, StepStatus>
+}
 export class MyAgent extends Agent {
 	initialState: MyState = {
-		name: "",
-        activeWorkflows: []
+        activeWorkflows: {}
 	};
-
-    @callable()
-    async start(moodboardId: string): Promise<string> { /* ... */ }
 
 	async onWorkflowProgress(
 		workflowName: string,
 		instanceId: string,
-		progress: unknown,
+		progress: MyState["activeWorkflows"],
 	) {
-        // ...
+        const activeWorkflows = {
+            ...this.state.activeWorkflow,
+            [progress.step]: progress.status,
+        };
+        this.setState({ activeWorkflows });
 	}
-
-    // ...
 }
 ```
 
@@ -1238,9 +1254,17 @@ export class MyAgent extends Agent {
 
 ---
 layout: section
+transition: none
 ---
 
-### Architecture
+## IT'S REALLY NOT THAT COMPLICATED
+
+
+---
+transition: none
+---
+
+## Architecture
 
 ---
 
@@ -1251,7 +1275,7 @@ TODO: Add some diagrams
 layout: section
 ---
 
-### THE END FOR FOR NOW
+### THE END
 
 ---
 
