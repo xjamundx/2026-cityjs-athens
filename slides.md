@@ -757,7 +757,62 @@ Sample Workflow Code
 -->
 
 ---
+transition: none
+---
 
+
+```ts{|3-5|6,7|9-13|15,16|18,19|21,22|24-25}
+type TaskParams = { moodboardId: string, userPrompt: string; };
+
+export class ImageProcessingWorkflow extends AgentWorkflow<MyAgent, TaskParams> {
+  async run(event: AgentWorkflowEvent<TaskParams>, step: AgentWorkflowStep) {
+  
+    // grab user input
+    const { moodboardId, userPrompt } = event.payload;
+
+    // step 1
+    const moodboard = await step.do("collect moodboard data", async () => {
+      const moodbard = await getMoodboardById(moodboardId);
+      return moodboard;
+    }
+
+    // step 2
+    const newPrompt = await step.do("enhance prompt", () => { /* ... */ });
+
+    // step 3
+    const model = await step.do("select optimal model", () => { /* ... */ });
+
+    // step 4
+    const image = await step.do("generate image", () => { /* ... */ });
+
+    // step 5
+    await step.do("save to image library", () => { /* ... */ })
+}
+```
+---
+
+## Enhance Prompt Step Example
+
+```ts
+await step.do("enhance prompt", () => {
+    const messages = [{
+        role: "system",
+        content: "You are an expert at writing prompts for diffusion image generation..." +
+            "Be extremely clear and descriptive about the feautres of the image..." +
+            "Please extend the users prompt to include details similar to the following examples:"
+            moodboard.map(item =>  item.category + ":" + item.description) +
+    },
+    {
+        role: "user",
+        content: userPrompt", // <--- send in the users prompt as well
+    }];
+    const response = await this.env.AI.run("@cf/mistralai/mistral-small-3.1-24b-instruct", { messages });
+    return response;
+});
+```
+---
+layout: none
+---
 <div class="absolute inset-0 flex flex-col">
   <div class="relative mt-3 min-h-0 flex-1">
   <div class="absolute inset-0 overflow-hidden">
@@ -778,7 +833,7 @@ transition: none
 
 # Cloudflare Agents SDK
 
-Sync the workflow state with the browser
+Coordinate the work and keep us in sync
 
 <!--
 Let's define this very quickly, and then we'll turn it into code.
@@ -922,7 +977,7 @@ Remembmer, Agents are built on-top of durable, so they have state, but the agent
 ---
 
 
-<h4 class="text-violet !text-md mb-3 w-full text-shadow-lg">Syncing agent state between client and server</h4>
+<h4 class="text-violet !text-md mb-3 w-full text-shadow-lg">State automatically flows between client and server</h4>
 
 <div class="flex flex-row gap-4 justify-start h-106">
 
@@ -931,7 +986,7 @@ Remembmer, Agents are built on-top of durable, so they have state, but the agent
   <div class="flex flex-col w-full h-full rounded bg-black p-2"  style="background-color: var(--slidev-code-background)">
 
 
-```ts
+```ts{10-14}
 import { Agent, callable } from "agents";
 
 type MyState = {
@@ -968,7 +1023,7 @@ function App() {
   const agent = useAgent<MyAgent, State>({
     agent: "my-agent",
     name: "user-123",
-    onStateUpdate: (state) => {
+    onStateChanged: (state) => {
       console.log("New state:", state);
     }
   });
@@ -989,74 +1044,67 @@ Remembmer, Agents are built on-top of durable, so they have state, but the agent
 
 ---
 
-<h4
-  class="text-violet !text-md mb-3 w-full text-shadow-lg">
-  Building an Agent Worfklow
-</h4>
+<h4 class="text-violet !text-md mb-3 w-full text-shadow-lg">Firing off a workflow</h4>
 
-<div class="w-full h-full rounded bg-black p-2" 
-    style="background-color: var(--slidev-code-background)">
 
-```ts{|3-5|6,7|9-13|15,16|18,19|21,22}
-type TaskParams = { moodboardId: string };
+```ts{|9-15,18|1,3,8,16-17}
+type MyState = {
+    name: string;
+    activeWorkflows: string[]
+}
+export class MyAgent extends Agent {
+	initialState: MyState = {
+		name: "",
+        activeWorkflows: []
+	};
 
-export class ProcessingWorkflow extends AgentWorkflow<MyAgent, TaskParams> {
-  async run(event: AgentWorkflowEvent<TaskParams>, step: AgentWorkflowStep) {
-  
-    // process input
-    const { moodboardId } = event.payload;
-
-    // step 1
-    const moodboard = await step.do("collect moodboard data", async () => {
-      const moodbard = await getMoodboardById(moodboardId);
-      return moodboard;
+    @callable()
+    async start(moodboardId: string): Promise<string> {
+        const id = await this.runWorkflow("IMAGE_GEN_WORKFLOW", {
+            moodboardId
+        });
+        const activeWorkflows = this.state.activeWorkflows.concat(id);
+        this.setState({ activeWorkflows })
+        return { id };
     }
 
-    // step 2
-    await step.do("enhance prompt", () => { /* ... */ });
-
-    // step 3
-    await step.do("select optimal model", () => { /* ... */ });
-
-    // step 4
-    await step.do("generate image", () => { /* ... */ });
+	// ...
 }
 ```
-
-</div>
-
 
 ---
 
-<h4 class="text-violet !text-md mb-3 w-full text-shadow-lg">Firing off a workflow</h4>
-
-<div class="flex flex-row gap-4 justify-start h-106">
-
-<div class="w-1/2 h-full">
-  <span class="text-sm pl-2">Agent</span>
-  <div class="fw-full h-full rounded bg-black p-2"  style="background-color: var(--slidev-code-background)">
+<h4 class="text-violet !text-md mb-3 w-full text-shadow-lg">Showing Our Progress</h4>
 
 
-```ts
-export class ConductorAgent extends Agent {
-  @callable()
-  async start(moodboard: Moodboard): Promise<string> {
-    const name = "IMAGE_GEN_WORKFLOW";
-    const id = await this.runWorkflow(name, {
-      moodboardId
-    });
-    return { id };
-  }
+```ts{|5,9-11|14-16}
+import { useAgent } from "agents/react";
+import type { MyAgent } from "./server";
+
+function App() {
+  const [placeholders, setPlaceholders] = useState(); 
+  const agent = useAgent<MyAgent, State>({
+    agent: "my-agent",
+    name: "user-123",
+    onStateChanged: (state) => {
+      setPlaceholders(state.placeholders);
+    }
+  });
+
+  return placeholders.map(workflowId => {
+    return <PlaceholderCard workflowId={workflowId} />
+  })
 }
 ```
 
-</div>
-</div>
+<img src="/assets/placeholder.png" class="absolute top-12 -right-75" >
 
-<div class="w-1/2 h-full relative">
-  <span class="text-sm pl-2">Worfklow</span>
-    <div class="w-full h-full rounded bg-black p-2 absolute"
-       style="background-color: var(--slidev-code-background)">
+<!--
+In real life we used a zustand store, but the pattern works well.
+-->
+
+
+---
 
 ```ts
 type TaskParams = { moodboardId: string };
@@ -1074,15 +1122,6 @@ export class ProcessingWorkflow extends AgentWorkflow<ConductorAgent, TaskParams
     // await step.do("");
 }
 ```
-
-</div>
-</div>
-</div>
-<!--
-Remembmer, Agents are built on-top of durable, so they have state, but the agents class makes it much easier to work with than durable objects.
-
--->
-
 
 
 ---
