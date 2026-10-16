@@ -1074,7 +1074,7 @@ export class MyAgent extends Agent {
 
 ---
 
-<h4 class="text-violet !text-md mb-3 w-full text-shadow-lg">Showing Our Progress</h4>
+<h4 class="text-violet !text-md mb-3 w-full text-shadow-lg">Showing Active Workflows</h4>
 
 
 ```ts{|5,9-11|14-16}
@@ -1097,7 +1097,7 @@ function App() {
 }
 ```
 
-<img src="/assets/placeholder.png" class="absolute top-12 -right-75" >
+<img src="/assets/placeholder.png" class="absolute top-12 -right-75" v-click >
 
 <!--
 In real life we used a zustand store, but the pattern works well.
@@ -1106,23 +1106,34 @@ In real life we used a zustand store, but the pattern works well.
 
 ---
 
-```ts
-type TaskParams = { moodboardId: string };
 
-export class ProcessingWorkflow extends AgentWorkflow<ConductorAgent, TaskParams> {
-  async run(event: AgentWorkflowEvent<TaskParams>, step: AgentWorkflowStep) {
-    const { moodboardId } = event.payload;
+```ts{|10-17}
+export class MyAgent extends Agent {
+	initialState: MyState = {
+		name: "",
+        activeWorkflows: []
+	};
 
-    const moodboard = await step.do("collect moodboard data", async () => {
-      const moodbard = await getMoodboardById(moodboardId);
-      return moodboard
-    }
-    // await step.do("");
-    // await step.do("");
-    // await step.do("");
-}
+    @callable()
+    async start(moodboardId: string): Promise<string> { /* ... */ }
+
+	async onWorkflowComplete(
+		workflowName: string,
+		instanceId: string,
+		result?: unknown,
+	) {
+        const activeWorkflows = activeWorkflows.filter(id => id === instanceId);
+		this.setState({ activeWorkflows })
+	}
+
+    async onWorkflowProgress(
+		workflowName: string,
+		instanceId: string,
+		progress: unknown,
+	) {
+		// ...
+	}
 ```
-
 
 ---
 
