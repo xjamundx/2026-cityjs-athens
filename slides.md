@@ -272,7 +272,7 @@ Trying to describe an image to a diffusion model is kind of like those police sk
   </figure>
   <figure>
   <div v-click.hide="1" class="absolute text-[2.5em] leading-[1.2] text-shadow-navy text-shadow-lg text-yellow">
-  If you were looking for someone specific, what would be the quickest way to convey that information?
+  If you were describing someone specific, what would be the quickest way to convey that information?
   </div>
     <img v-click="1" src="./assets/t2-have-you-seen.jpg" />
     <figcaption  v-click="1"  class="text-xs">Waynes World</figcaption>
