@@ -1106,6 +1106,43 @@ In real life we used a zustand store, but the pattern works well.
 
 ---
 
+<h4 class="text-violet !text-md mb-3 w-full text-shadow-lg">Removing Placeholders for Finished Workflows</h4>
+
+<div class="flex flex-row gap-4 justify-start h-106">
+
+<div class="w-1/2 h-full">
+  <span class="text-sm pl-2">Workflow Code</span>
+  <div class="flex flex-col w-full h-full rounded bg-black p-2"  style="background-color: var(--slidev-code-background)">
+
+
+```ts{|16-17}
+// step 1
+const moodboard = await step.do("collect moodboard data", async () => { /* ... */ });
+
+// step 2
+const newPrompt = await step.do("enhance prompt", () => { /* ... */ });
+
+// step 3
+const model = await step.do("select optimal model", () => { /* ... */ });
+
+// step 4
+const image = await step.do("generate image", () => { /* ... */ });
+
+// step 5
+await step.do("save to image library", () => { /* ... */ })
+
+// only runs once
+await step.reportComplete(image);
+
+```
+
+</div>
+</div>
+<div class="w-1/2 h-full">
+  <span class="text-sm pl-2">Agent Code</span>
+  <div class="flex flex-col w-full h-full rounded bg-black p-2"  style="background-color: var(--slidev-code-background)">
+
+
 
 ```ts{|10-17}
 export class MyAgent extends Agent {
@@ -1126,16 +1163,98 @@ export class MyAgent extends Agent {
 		this.setState({ activeWorkflows })
 	}
 
-    async onWorkflowProgress(
+    // ...
+}
+```
+
+</div>
+</div>
+</div>
+
+---
+
+### Monitoring Workflow Progress
+
+TODO: 
+1. Show the screenshot
+2. Show the code with v-click √
+
+<div class="flex flex-row gap-4 justify-start h-106">
+
+<div class="w-1/2 h-full">
+  <span class="text-sm pl-2">Workflow Code</span>
+  <div class="flex flex-col w-full h-full rounded bg-black p-2"  style="background-color: var(--slidev-code-background)">
+
+
+```ts
+await step.do("generate image", async (step) => {
+    await this.reportProgress({
+        step: step.name,
+        status: "starting"
+    });
+    
+    // the actual thing...
+    
+    await this.reportProgress({
+        step: step.name,
+        status: "complete"
+    });
+ });
+```
+
+</div>
+</div>
+<div class="w-1/2 h-full">
+  <span class="text-sm pl-2">Agent Code</span>
+  <div class="flex flex-col w-full h-full rounded bg-black p-2"  style="background-color: var(--slidev-code-background)">
+
+
+
+```ts{|10-17}
+export class MyAgent extends Agent {
+	initialState: MyState = {
+		name: "",
+        activeWorkflows: []
+	};
+
+    @callable()
+    async start(moodboardId: string): Promise<string> { /* ... */ }
+
+	async onWorkflowProgress(
 		workflowName: string,
 		instanceId: string,
 		progress: unknown,
 	) {
-		// ...
+        // ...
 	}
+
+    // ...
+}
 ```
 
+</div>
+</div>
+</div>
+
 ---
+layout: section
+---
+
+### Architecture
+
+---
+
+TODO: Add some diagrams
+
+
+---
+layout: section
+---
+
+### THE END FOR FOR NOW
+
+---
+
 
 ## Human decisions inside the workflow
 
