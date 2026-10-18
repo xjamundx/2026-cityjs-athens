@@ -581,25 +581,11 @@ transition: none
 
 # Let's Build The Thing
 
-Building an Agent is Fun (Sometimes)
+How hard can it be?
 
 <!--
 
 Now for the fun bit, how did we build it?
--->
-
----
-
-<div class="flex gap-20 justify-center">
-  <img
-    src="./assets/orly-cloudflare.png"
-    alt="Brand Studio workflow"
-    class="block w-85"
-  />
-</div>
-
-<!--
-Pretty much all the stuff that we're going to talk about today is built on top of Cloudflare, which is the service that we are already using for hosting our web stuff. There are tonnes of other agent frameworks that we could have used to have built this, but in our case this seemed like a good bet.
 -->
 
 ---
@@ -671,7 +657,9 @@ transition: none
 
 # Cloudflare Workflows
 
-Modeling and Durably Executing our AI Workflows
+Deterministically Executing our AI Workflows
+
+<img src="./assets/athens-metro.png" class="-z-1 absolute top-0"/>
 
 <!--
 Let's define this very quickly, and then we'll turn it into code.
@@ -724,7 +712,7 @@ transition: none
 ---
 
 ```ts {1-2,24-25|3-6|8-15|17-19|21-23}
-export class ImageProcessingWorkflow extends WorkflowEntrypoint {
+export class ImageProcessingWorkflow extends AgentWorkflow {
   async run(event: WorkflowEvent, step: WorkflowStep) {
     const imageData = await step.do("fetch image", async () => {
       const object = await this.env.BUCKET.get(event.payload.imageKey);
@@ -760,10 +748,8 @@ Sample Workflow Code
 transition: none
 ---
 
-
-```ts{|3-5|6,7|9-13|15,16|18,19|21,22|24-25}
+```ts{|1-3|4-6|8-13|14-15|17-18|20-21|23-24|25-27}
 type TaskParams = { moodboardId: string, userPrompt: string; };
-
 export class ImageProcessingWorkflow extends AgentWorkflow<MyAgent, TaskParams> {
   async run(event: AgentWorkflowEvent<TaskParams>, step: AgentWorkflowStep) {
   
@@ -774,7 +760,7 @@ export class ImageProcessingWorkflow extends AgentWorkflow<MyAgent, TaskParams> 
     const moodboard = await step.do("collect moodboard data", async () => {
       const moodbard = await getMoodboardById(moodboardId);
       return moodboard;
-    }
+    });
 
     // step 2
     const newPrompt = await step.do("enhance prompt", () => { /* ... */ });
@@ -785,15 +771,19 @@ export class ImageProcessingWorkflow extends AgentWorkflow<MyAgent, TaskParams> 
     // step 4
     const image = await step.do("generate image", () => { /* ... */ });
 
-    // step 5
+    // step 5: product insertion...
+    
+    // step 6
     await step.do("save to image library", () => { /* ... */ })
-}
 ```
+
+---
+transition: none
 ---
 
-## Enhance Prompt Step Example
+<h4 class="text-violet !text-md mb-3 w-full text-shadow-lg">Enhance Prompt Example</h4>
 
-```ts
+```ts{|1,13}
 await step.do("enhance prompt", () => {
     const messages = [{
         role: "system",
@@ -811,6 +801,40 @@ await step.do("enhance prompt", () => {
 });
 ```
 ---
+transition: none
+---
+
+<h4 class="text-violet !text-md mb-3 w-full text-shadow-lg">Product Insertion Loop Example</h4>
+
+```ts{|1-3|4-13|14-21}
+let baseImage = image;
+// loop over each category in the moodboard
+for (const category in moodboard.categories) {
+    // generate an image by replacing an item in the image with the moodboard image
+    const activeImage = await step.do(`product insertion (${category.name})`, () => {
+        const prompt = `We are in the process of making an image with the following description:
+            ${enhancedPrompt}
+            Replace the attached picture (2nd attachment) into the base image (1st attachment),
+            replacing the ai generated version of this ${category.name} with the provided image.`
+        const imageInput = [baseImage, category.image];
+        const image = await this.env.AI.run("@google/nano-banana-2", { prompt, image_input });
+        return image;
+    });
+    // evaluate for realism and override the base image if it passes
+    const thing = await step.do(`evaluate image (${category.name})`, () => {
+        const messages = ["Evalate this picture for realism on a scale of 0-1"];
+        const result = await this.env.AI.run("@google/gemini-3.1-lite", { messages, attachments: [activeImage] });
+        if (result.quality > .8) {
+            baseImage = activeImage;
+        } // else skip, log, ask for human input, etc...
+        return result;
+    });
+}
+
+```
+
+
+---
 layout: none
 ---
 <div class="absolute inset-0 flex flex-col">
@@ -827,6 +851,29 @@ layout: none
 </div>
 
 ---
+
+<h4 class="text-violet !text-md mb-3 w-full text-shadow-lg">Think of workflows as pre-determined places your AI can go.</h4>
+
+<img src="./assets/athens-metro.png" class="h-100">
+
+---
+
+<h4 class="text-violet !text-md mb-3 w-full text-shadow-lg">Agents are Tour Guides</h4>
+
+<div class="flex flex-row gap-8">
+    <img src="./assets/athens-tour-guide-cf.jpg" class="h-100">
+    <div v-click class="bg-black/10 p-4 rounded-xl relative">
+        <ul>    
+            <li>Know about all the routes you could take</li>
+            <li>Recommend the correct one for each person</li>
+            <li>Constantly in communication with everyone</li>
+        </ul>
+        <span v-click="2" class="absolute bottom-4 text-sm left-4"><span class="text-violet">*</span> There's an ongoing discussion about deterministic vs probabalistic AI workflows and what makes one "agentic".<br><span class="text-violet">I mostly don't care. I just want to build things.</span></span>
+    </div>
+</div>
+
+
+---
 layout: section
 transition: none
 ---
@@ -839,13 +886,13 @@ Coordinate the work and keep us in sync
 Let's define this very quickly, and then we'll turn it into code.
 -->
 
----
+<!-- ---
 transition: none
 ---
 
 <center>
    <img src="./assets/cloudflare-agents.png" class="h-120" />
-</center>
+</center> -->
 
 <!--
 Cloudflare has got this entire choose your own adventure series of Agent-related infastructure we're only going taking advantage of a very small part of it.
@@ -948,7 +995,7 @@ export class MyAgent extends Agent {
   <span class="text-sm pl-2">Client Code</span>
   <div class="flex flex-col w-full h-full rounded bg-black p-2"  style="background-color: var(--slidev-code-background)">
 
-```ts{|10|12}
+```ts{|10|14}
 import { useAgent } from "agents/react";
 import type { MyAgent } from "./server";
 
@@ -959,6 +1006,8 @@ function App() {
   });
 
   agent.stub.setName("Jamund");
+
+  // sometime later...
 
   agent.stub.greet(); // "Hello, Jamund"
 }
@@ -977,7 +1026,7 @@ Remembmer, Agents are built on-top of durable, so they have state, but the agent
 ---
 
 
-<h4 class="text-violet !text-md mb-3 w-full text-shadow-lg">State automatically flows between client and server</h4>
+<h4 class="text-violet !text-md mb-3 w-full text-shadow-lg">Agent state automatically syncs between client and server</h4>
 
 <div class="flex flex-row gap-4 justify-start h-106">
 
@@ -1059,9 +1108,9 @@ export class MyAgent extends Agent {
 	};
 
     @callable()
-    async start(moodboardId: string): Promise<string> {
+    async start(moodboardId: string, prompt: string): Promise<string> {
         const id = await this.runWorkflow("IMAGE_GEN_WORKFLOW", {
-            moodboardId
+            moodboardId, prompt
         });
         const activeWorkflows = this.state.activeWorkflows.concat(id);
         this.setState({ activeWorkflows })
@@ -1087,7 +1136,7 @@ function App() {
     agent: "my-agent",
     name: "user-123",
     onStateChanged: (state) => {
-      setPlaceholders(state.placeholders);
+      setPlaceholders(state.activeWorkflows);
     }
   });
 
@@ -1173,20 +1222,12 @@ export class MyAgent extends Agent {
 </div>
 
 
----
-transition: none
+<img src="/assets/placeholder.png" class="absolute top-12 -right-75" v-click v-click.hide>
+
 
 ---
 
-### Monitoring Workflow Progress
-
-<div class="flex flex-row justify-center items-center">
-    <img src="./assets/fishing-1.png" class="h100" />
-</div>
-
----
-
-<h4 class="text-violet !text-md mb-3 w-full text-shadow-lg">Step-By Step Prorgress Updates</h4>
+<h4 class="text-violet !text-md mb-3 w-full text-shadow-lg">Step-By Step Progress Updates</h4>
 
 <div class="flex flex-row gap-4 justify-start h-106">
 
@@ -1195,9 +1236,9 @@ transition: none
   <div class="flex flex-col w-full h-full rounded bg-black p-2"  style="background-color: var(--slidev-code-background)">
 
 ```ts{|2-5|2-5,12-15}
-await step.do("enhance prompt"", async () => {
+await step.do("enhance prompt", async ({ step: { name }}) => {
     await this.reportProgress({
-        step: step.name,
+        step: name,
         status: "active"
     });
    
@@ -1207,7 +1248,7 @@ await step.do("enhance prompt"", async () => {
     );
     
     await this.reportProgress({
-        step: step.name,
+        step: name,
         status: "completed"
     });
 
@@ -1224,14 +1265,13 @@ await step.do("enhance prompt"", async () => {
 
 
 
-```ts{|1-4,7|10-14,20|15-19}
+```ts{|1-3,6|9-13,19|14-17|18-21}
 type StepStatus = Record<StepName, "pending" | "active" | "completed">;
-type MyState = {
-    activeWorkflows: Record<WorkflowId, StepStatus>
-}
+// { "enhance prompt": "completed", "generating image": "pending" }
+type MyState = { activeWorkflows: Record<WorkflowId, StepStatus> }
 export class MyAgent extends Agent {
 	initialState: MyState = {
-        activeWorkflows: {}
+        activeWorkflows: {} 
 	};
 
 	async onWorkflowProgress(
@@ -1239,11 +1279,14 @@ export class MyAgent extends Agent {
 		instanceId: string,
 		progress: MyState["activeWorkflows"],
 	) {
-        const activeWorkflows = {
-            ...this.state.activeWorkflow,
+        const steps = {
+            ...this.state.activeWorkflows[instanceId],
             [progress.step]: progress.status,
         };
-        this.setState({ activeWorkflows });
+        this.setState({
+            ...this.state.activeWorkflows,
+            [instanceId]: steps
+        });
 	}
 }
 ```
@@ -1253,23 +1296,54 @@ export class MyAgent extends Agent {
 </div>
 
 ---
+
+<center>
+
+### Monitoring Workflow Progress
+
+<div class="flex flex-row justify-center items-center">
+    <img src="./assets/fishing-1.png" class="h100" />
+</div>
+
+</center>
+
+---
 layout: section
 transition: none
 ---
 
-## IT'S REALLY NOT THAT COMPLICATED
+# Halloween is coming up...</br> 
 
+<p>But building agents does not have to be scary</p>
+
+---
+
+<div class="flex gap-20 justify-center">
+  <img
+    src="./assets/orly-cloudflare.png"
+    alt="Brand Studio workflow"
+    class="block w-85"
+  />
+</div>
+
+<!--
+Pretty much all the stuff that we're going to talk about today is built on top of Cloudflare, which is the service that we are already using for hosting our web stuff. There are tonnes of other agent frameworks that we could have used to have built this, but in our case this seemed like a good bet.
+-->
 
 ---
 transition: none
 ---
 
-## Architecture
+<SystemArchitecture />
+
+
+---
+layout: section
 
 ---
 
-TODO: Add some diagrams
-
+## A FEW LAST THOUGHTS
+#### We built an innovative workflow for image generation...and you can too.
 
 ---
 layout: section
@@ -1278,133 +1352,3 @@ layout: section
 ### THE END
 
 ---
-
-
-## Human decisions inside the workflow
-
-- Accept
-- Skip
-- Retry
-
-<!--
-Accept and skip were straightforward. Retry required more creative modelling. Add the real code example and expand the retry path when ready.
-
--->
-
----
-
-## Deterministic and probabilistic workflows
-
-Does an agent need to choose every model, tool, and argument?
-
----
-
-## Deterministic where possible
-
-- Cheaper because a model does not decide every turn
-- Easier to test because the possible paths are known
-- A practical way to encode human taste
-- Humans do not need to cede all control yet
-
----
-
-## What the happy path leaves out
-
-- Frontend state modelling
-- Mapping workflow state into the UI
-- Creative mistakes and edge cases
-- Observability and failure modes
-
-<!--
-The happy-path agent code was roughly 100 lines for complex capabilities. Offer to discuss the omitted engineering details offline.
-
--->
-
----
-
-# Part 4
-
-## What happened next
-
----
-
-## The product problem
-
-One-shot prompts could not reliably create the marketing images users needed.
-
-<!--
-The team augmented human abilities with agentic ones while keeping final decisions with people.
-
--->
-
----
-
-## We built something we were proud of
-
-> **Image placeholder:** Beautiful Producer Mode marketing images
-
----
-
-## We shipped it
-
-🎉
-
----
-
-## Two weeks later, the team shut down
-
-New sign-ups stopped. We never learned whether we had solved the UX.
-
----
-
-## Build something you can be proud of
-
-Even if nobody ever sees it.
-
-Build a feature worth talking about after you leave.
-
----
-
-# Thank you, Athens 🇬🇷
-
----
-
-## Appendix: problems and evals
-
-1. The workflow cannot arbitrarily restart at earlier steps
-2. Failed-step output is hidden; only the retry is visible
-3. Combining image generation and evaluation weakens observability
-
-<!--
-These points appeared after the main ending in the original notes. Keep them for Q&A or a deeper technical version.
--->
-
----
-
-![x](./assets/explainer-noise.png)
-![x](./assets/explainer-clear.png)
-
-<center>
-<strong>Source:</strong> <a href="https://poloclub.github.io/diffusion-explainer/">https://poloclub.github.io/diffusion-explainer/</a>
-</center>
-
-<!--
-Diffusion models learn by replacing pixels with static noise and learning to reverse that process while associating the image with its description. Starting with noise and text, the model guesses the missing pixels. The book analogy is crossing out words and characters, then asking someone to reconstruct the text.
-
--->
-
----
-
-## Prompt detail matters
-
-![x](./assets/explainer-diff2.png)
-
-<center>
-<strong>Source:</strong> <a href="https://poloclub.github.io/diffusion-explainer/">https://poloclub.github.io/diffusion-explainer/</a>
-</center>
-
-<!--
-Here's another graphic from the same site demonstrating how important it is to layer details into the prompt. Slight changes in the wording or in the text can end up creating drastically different images.
--->
-
--->
