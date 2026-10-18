@@ -334,7 +334,7 @@ So if you combine all those together (prompt enhancement, auto model, and auto m
 
 ---
 
-<p v-click class="!mb-4 text-sm font-bold tracking-[0.16em] uppercase">OUR CUSTOMERS DON'T WANT TO SELL MY AI-GENERATED BOOTS</p>
+<p class="!mb-4 text-sm font-bold tracking-[0.16em] uppercase">OUR CUSTOMERS DON'T WANT TO SELL MY AI-GENERATED BOOTS</p>
 
 <div class="mt-4 gap-4 flex justify-evenly items-center">
   <img src="./assets/boots-glacier.png" class="h-100" />
@@ -1052,7 +1052,7 @@ export class MyAgent extends Agent {
 </div>
 
 
-<img src="/assets/placeholder.png" class="absolute top-12 -right-75" v-click v-click.hide>
+<img src="/assets/placeholder.png" class="absolute top-12 -right-75" v-click>
 
 
 ---
@@ -1165,7 +1165,7 @@ transition: none
 </div>
 
 <!--
-Pretty much all the stuff that we're going to talk about today is built on top of Cloudflare, which is the service that we are already using for hosting our web stuff. There are tonnes of other agent frameworks that we could have used to have built this, but in our case this seemed like a good bet.
+It's great to build on cloudflare
 -->
 
 
@@ -1175,13 +1175,19 @@ layout: section
 
 ---
 
-## A FEW LAST THOUGHTS
-#### We built an innovative workflow for image generation...and you can too.
+# A FEW LAST THOUGHTS ABOUT THE AGENTIC WEB
+
+<!--
+The web is changing. The last big era we entered was the mobile web. almost 20 years ago.
+We don't know what this new era is going to look like, but it's up to US as web developers
+to figure it out. We don't have to stick with chat. We can invent new and better things.
+So I urge each and every one of you to get creative, have fun, and build the future....
+-->
 
 ---
 layout: section
 ---
 
-### THE END
+### BUILD THE FUTURE
 
 ---

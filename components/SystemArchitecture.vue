@@ -36,6 +36,7 @@
 
     <div class="message message-run forward">
       <span class="message-label"><code>runWorkflow()</code></span>
+      <span class="message-note">starts AI workflow</span>
     </div>
 
     <div class="message message-progress backward">
@@ -188,7 +189,7 @@
 }
 
 .message-run {
-  top: 16.7rem;
+  top: 15.45rem;
   left: 50%;
   width: 34%;
   color: var(--agent);
@@ -202,14 +203,14 @@
 }
 
 .message-approve {
-  top:14.1rem;
+  top:14.9rem;
   left: 16%;
   width: 34%;
   color: #fbbf24;
 }
 
 .message-generate {
-  top: 9rem;
+  top: 10rem;
   left: 16%;
   width: 34%;
   color: #fbbf24;
@@ -219,7 +220,7 @@
   top: 28rem;
   left: 16%;
   width: 34%;
-  color: #fbbf24;
+  color: violet;
 }
 
 .message-complete {
