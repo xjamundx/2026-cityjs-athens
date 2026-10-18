@@ -1188,6 +1188,26 @@ So I urge each and every one of you to get creative, have fun, and build the fut
 layout: section
 ---
 
+<div v-click>
+
+### GET CREATIVE
+
+</div>
+<div v-click>
+
+### HAVE FUN
+
+</div>
+<div v-click class="!text-cyan">
+
 ### BUILD THE FUTURE
+
+</div>
+
+<div v-click class="!text-cyan">
+
+### THE END
+
+</div>
 
 ---
