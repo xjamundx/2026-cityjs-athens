@@ -6,7 +6,7 @@ info: |
   Organized from the preserved source notes in source-notes-verbatim.txt.
 drawings:
   persist: false
-transition: slide-left
+transition: none
 mdc: true
 themeConfig:
   baseColor: lavender
@@ -64,26 +64,6 @@ As you can see here we throw up a big text box in front of people and asks them 
 
 ---
 
-<h2><span class="text-white text-shadow-lg">4 UX Challenges</span></h2>
-
-<div class="grid grid-cols-2 h-100 gap-4 text-black font-bold" style="font-size: 1.5em; line-height: 1.28">
-  <div class="bg-red p-4 text-shadow-xl shadow-sm shadow-black text-white">
-    1. It's really hard to write a good prompt
-  </div>
-  <div class="bg-orange p-4 text-shadow-xl shadow-black shadow-lg text-white">
-    2. There are a tonne of different image models to choose from
-  </div>
-  <div class="bg-yellow p-4 text-shadow-lg shadow-lg shadow-black text-white">
-    3. People want to see their brand, or in some cases themselves, represented in the output
-    </div>
-  <div class="bg-blue p-4 text-shadow-lg shadow-black text-white">
-    4. An overall lack of creative control over the image generation process
-  </div>
-</div>
-
-
----
-
 <h1><span class="text-yellow text-shadow-lg">HAVE YOU SEEN THIS MAN?</span></h1>
 
 <!--
@@ -121,7 +101,7 @@ Humans in general are fairly bad at describing people in great detail.
 
 <img
   v-click="1"
-  src="./assets/prompt-shoe.png"
+  src="./assets/prompt-shoe-2.png"
   alt="People trying to chat with an image-generation prompt"
   class="absolute inset-0 m-auto block max-h-full max-w-[90%] rounded-xl object-contain transition-opacity duration-500"
 />
@@ -152,9 +132,9 @@ On the opposite end of the spectrum, people write these really tiny prompts with
 
 ---
 
-<center>
+<div class="flex flex-row justify-center">
   <img src="./assets/dont-make-me-think.jpg" class="h-120" />
-</center>
+</div>
 
 <!--
 We're breaking the golden rule of UX
@@ -162,12 +142,11 @@ We're breaking the golden rule of UX
 
 ---
 
-<center>
+<div class="flex flex-col items-center">
   <h2 class="uppercase text-shadow-lg"><span class="text-violet-200">People Want To Sell Their Own Stuff</span></h2>
   <img src="./assets/ai-slop-chocolate.jpg" class="h-80" />
-<p class="!mb-4 text-sm font-bold tracking-[0.16em] text-green uppercase">Not your AI slop chocolate</p>
-
-</center>
+  <p class="!mb-4 text-sm font-bold tracking-[0.16em] text-green uppercase">Not your AI slop chocolate</p>    
+</div>
 <!-- They don't want to sell your AI slop chocolate bars with random typos -->
 
 ---
@@ -177,12 +156,12 @@ layout: section
 
 # Image Models are a Black Box
 
-<center>
-  <p class="text-green font-semibold w-180 !leading-tight p-0">People don't really understand how they work and have really no idea how to steer them in one direction or another.</p>
+<div class="flex flex-col items-center">
+  <p class="text-green font-light w-180 !leading-tight p-0 text-shadow-sm text-shadow-black">People generally don't understand what they're doing or how to improve their output</p>
 
   <img src="./assets/dune-pain-box.avif" class="h-90" />
   <sub class="relative -top-6 !text-xs !p-0 text-slate-600">Image: Warner Bros. Pictures</sub>
-</center>
+</div>
 ---
 layout: section
 
@@ -259,7 +238,7 @@ As you can see from this very long dropdown, there are a tonne of model choices 
 
 ---
 
-# CAN WE DO BETTER THAN TEXT?
+# DON'T MAKE ME TYPE
 
 <!--
 Trying to describe an image to a diffusion model is kind of like those police sketches where you have to describe the features that you want them to draw and they do their best to interpret it
@@ -280,10 +259,9 @@ Trying to describe an image to a diffusion model is kind of like those police sk
 </div>
 ---
 
-<center>
-<img v-click="1" src="./assets/categories-urban.png" class="absolute h-120"/>
-<img src="./assets/board-urban.png" class="h-120"/>
-</center>
+<div class="flex flex-row justify-center">
+    <img src="./assets/board-urban.png" class="h-120"/>
+</div>
 
 <ModelBadge
   v-click="2"
@@ -346,21 +324,13 @@ So if you combine all those together (prompt enhancement, auto model, and auto m
 <div class="mt-4 flex justify-center items-center">
   <img src="./assets/prompt-boots.png" v-click.hide="1" class="absolute" />
   <img src="./assets/boots-urban.png" v-click="1" class="h-100"/>
+  <img src="./assets/boots-glacier.png" v-click="2" class="h-100" />
 </div>
 
 <!--
  You can see here, even with a very simple prompt like a boot, you get a really detailed image of a pair of boots in a really dystopian urban scene.
 -->
 
----
-
-<div class="flex justify-evenly items-center">
-  <img src="./assets/board-glacier.png" class="h-120" />
-</div>
-
-<!--
-Here's another example of creative guidance. I put a couple of pictures of a glacier in the moodboard, and I got this really cool picture of boots hanging out by a frozen lake.
--->
 
 ---
 
@@ -379,87 +349,57 @@ They don'tw want to sell my AI generated boots, they want to sell their own prod
 
 ---
 
-<center>
+<div class="flex flex-row justify-center">
 <img src="./assets/board-fishing.png" class="h-120"/>
-</center>
+</div>
 
 <!--
 So we added some new capabilities to our moodboard.
 -->
 
----
-
+<!--
 <center>
   <img src="./assets/board-categories.png" class="absolute h-120 left-24" />
 </center>
 
+-->
 ---
 
-<div v-click.hide="1" class="absolute  right-4 p-4 pl-8 gap-4 flex flex-col text-right w-100">
+  
+<div class="absolute right-4 p-4 pl-8 gap-4 flex flex-col text-right w-100">
     <p class="!mb-3text-sm font-bold tracking-[0.2em] text-green uppercase">Product Insertion Loop</p>
     <p class="pl-4 mt-6 max-w-md text-xl leading-relaxed text-slate-300">
       Replace items in your base image with people and products from your moodboard.
     </p>
 </div>
 
-<center class="flex flex-row gap-4">
-  <img src="./assets/prompt-fishing.png" class="absolute h-100 mt-4" />
-  <img v-click="1" src="./assets/base-fishing.jpg" class="left-36 absolute h-120" />  
-  <img
-    v-click="2"
-    v-click.hide="4"
-    v-motion
-    :initial="{ x: 0, y: 0, scale: 1 }"
-    :click-3="{ x: 435, y: 65, scale: .25 }"
-    src="./assets/item-me.png"
-    class="absolute h70 z-20"
-  />
-  <img 
-    v-click="4" src="./assets/fishing-me.jpg" class="left-36 absolute h-120" />  
-  <img v-click="5" 
-      v-motion
-      :initial="{ x: 0, y: 0, scale: 1 }"
-      :click-6="{ x: 330, y: 175, scale: 2 }"
-      v-click.hide="7"
-      src="./assets/item-canoe.png"
-      class="left-36 absolute z-20 h-50" />
-  <img v-click="7" src="./assets/fishing-all.png" class="left-36 absolute h-120" />
-  <ModelBadge
-  v-click="8"
-  class="absolute right-7 bottom-6 z-20 w-88"
+<img src="./assets/prompt-fishing.png" class="absolute h-100 mt-4" />
+
+---
+
+<div class="relative -top-20">
+<img src="./assets/canoe-me-1.png" class="absolute" />
+<img src="./assets/canoe-me-2.png" v-click class="absolute"/>
+<img src="./assets/canoe-me-3.png" v-click class="absolute"/>
+<img src="./assets/canoe-me-4-fail.png" v-click class="absolute" />
+<ModelBadge
+  v-click
+  class="absolute right-7 top-20 z-50 w-88"
   :step="4"
   title="Insert Product(s)"
   model-type="Inpaint Model"
   model="Nano Banana Pro"
 />
-</center>
-
-<!--
-For each image that was added, you could categorise it as either an inspiration image to impact the style of the OUTPUT or a product image to be INSERTED into the ouput.
-
-So here i added a canoe, and I also have a picture of myself.
-
-Along with a INSPIRATION image of loch ness
--->
-
----
-transition: none
-
----
-
-<div class="flex justify-center">
-  <img src="./assets/fishing-fail.jpg" class="h-120 "/>
-   <span class="absolute top-60 z-20" style="font-size: 138px;">❌</span>
-</div>
-
 <ModelBadge
   v-click
-  class="absolute right-7 top-6 z-20 w-88"
+  class="absolute right-7 top-42 z-50 w-88"
   :step="5"
   title="Evaluate Realism"
   model-type="Multi-Modal LLM"
   model="Gemini Flash 3.8"
-/>
+/><img src="./assets/canoe-me-4-ok.png" v-click class="absolute" />
+
+</div>
 
 ---
 
@@ -468,8 +408,9 @@ transition: none
     <p class="!mb-3 text-sm font-bold tracking-[0.2em] text-green uppercase">Our Full AI Workflow</p>
     <h1 class="!m-0 text-6xl leading-tight text-blue">Producer<br/>Mode</h1>
     <p class="mt-6 max-w-md text-xl leading-relaxed text-slate-300">
-      Use moodboard images to enhance the users image prompt and then pick
-      the best model
+      Use moodboard images to enhance the users prompt. Pick
+      the best model. Loop through product images and replace
+      AI versions with the real thing. Evaluate for realism.
     </p>
   </div>
 
@@ -518,59 +459,6 @@ transition: none
 So if you combine all those together (prompt enhancement, auto model, and auto model routing with the mood board), you get this feature that we call creative guidance.
 -->
 
----
-
-# PUTTING THE USER IN CONTROL
-
-<center class="flex flex-row gap-4">
-  <img src="./assets/prompt-fishing.png" class="h80"/>
-  <img v-click src="./assets/approve.png" class="h-100"/>
-</center>
-
-<!--
-And finally to get rid of the black box, the first thing we're going to do is show the
-customers the image generation plan before we even start (and potentially allow them to change it) and secondly as the the images are generating,
-
--->
-
----
-transition: none
----
-
-<center>
-  <img v-click  src="./assets/fishing-1.png" class="left-36 absolute h-120"/>  
-  <img v-click src="./assets/fishing-2.png" class="left-36 absolute h-120"/>  
-  <img v-click src="./assets/fishing-3.png" class="left-36 absolute h-120"/>
-  <img src="./assets/placeholder.png" class="h-120"/>
-</center>
-
----
-transition: none
----
-
-  <img src="./assets/fishing-bad.png" class="left-36 absolute h-120"/>
-
-<!--
-
----
-
-### We finally nailed the UX (more or less)
-
-<div class="mt-8 p-4">
-
-<ol>
-  <li class="!list-decimal">Create a moodboard (style & product images)</li>
-  <li class="!list-decimal">Type a simple prompt</li>
-  <li class="!list-decimal">We generate the image for them:
-      <p class="pl-4 !m-0">• Building the base image</p>
-      <p class="pl-4 !m-0">• Inserting any product images</p>
-      <p class="pl-4 !m-0">• Evaluating for realism</p>
-  </li>
-  <li class="!list-decimal">Users can see and modify steps in real-time</li>
-</ol>
-
-</div>
--->
 
 ---
 layout: section
@@ -748,62 +636,6 @@ Sample Workflow Code
 transition: none
 ---
 
-```ts{|1-3|4-6|8-13|14-15|17-18|20-21|23-24|25-27}
-type TaskParams = { moodboardId: string, userPrompt: string; };
-export class ImageProcessingWorkflow extends AgentWorkflow<MyAgent, TaskParams> {
-  async run(event: AgentWorkflowEvent<TaskParams>, step: AgentWorkflowStep) {
-  
-    // grab user input
-    const { moodboardId, userPrompt } = event.payload;
-
-    // step 1
-    const moodboard = await step.do("collect moodboard data", async () => {
-      const moodbard = await getMoodboardById(moodboardId);
-      return moodboard;
-    });
-
-    // step 2
-    const newPrompt = await step.do("enhance prompt", () => { /* ... */ });
-
-    // step 3
-    const model = await step.do("select optimal model", () => { /* ... */ });
-
-    // step 4
-    const image = await step.do("generate image", () => { /* ... */ });
-
-    // step 5: product insertion...
-    
-    // step 6
-    await step.do("save to image library", () => { /* ... */ })
-```
-
----
-transition: none
----
-
-<h4 class="text-violet !text-md mb-3 w-full text-shadow-lg">Enhance Prompt Example</h4>
-
-```ts{|1,13}
-await step.do("enhance prompt", () => {
-    const messages = [{
-        role: "system",
-        content: "You are an expert at writing prompts for diffusion image generation..." +
-            "Be extremely clear and descriptive about the feautres of the image..." +
-            "Please extend the users prompt to include details similar to the following examples:"
-            moodboard.map(item =>  item.category + ":" + item.description) +
-    },
-    {
-        role: "user",
-        content: userPrompt, // <--- send in the users prompt as well
-    }];
-    const response = await this.env.AI.run("@cf/mistralai/mistral-small-3.1-24b-instruct", { messages });
-    return response;
-});
-```
----
-transition: none
----
-
 <h4 class="text-violet !text-md mb-3 w-full text-shadow-lg">Product Insertion Loop Example</h4>
 
 ```ts{|1-3|4-13|14-21}
@@ -865,7 +697,7 @@ layout: none
     <div v-click class="bg-black/10 p-4 rounded-xl relative">
         <ul>    
             <li>Know about all the routes you could take</li>
-            <li>Recommend the correct one for each person</li>
+            <li>Recommend correct route for each person</li>
             <li>Constantly in communication with everyone</li>
         </ul>
         <span v-click="2" class="absolute bottom-4 text-sm left-4"><span class="text-violet">*</span> There's an ongoing discussion about deterministic vs probabalistic AI workflows and what makes one "agentic".<br><span class="text-violet">I mostly don't care. I just want to build things.</span></span>
@@ -938,7 +770,7 @@ function App() {
   });
 
   // Call methods on the agent
-  const greeting = agent.stub.greet();
+  const greeting = await agent.stub.greet();
 }
 ```
   </div>
@@ -995,7 +827,7 @@ export class MyAgent extends Agent {
   <span class="text-sm pl-2">Client Code</span>
   <div class="flex flex-col w-full h-full rounded bg-black p-2"  style="background-color: var(--slidev-code-background)">
 
-```ts{|10|14}
+```ts{|10|12}
 import { useAgent } from "agents/react";
 import type { MyAgent } from "./server";
 
@@ -1005,11 +837,9 @@ function App() {
     name: "user-123",
   });
 
-  agent.stub.setName("Jamund");
+  await agent.stub.setName("Jamund");
 
-  // sometime later...
-
-  agent.stub.greet(); // "Hello, Jamund"
+  await agent.stub.greet(); // "Hello, Jamund"
 }
 ```
 
@@ -1077,9 +907,9 @@ function App() {
     }
   });
 
-  agent.stub.setName("Jamund");
+  await agent.stub.setName("Jamund");
 
-  agent.stub.greet(); // "Hello, Jamund"
+  await agent.stub.greet(); // "Hello, Jamund"
 }
 ```
 
@@ -1093,7 +923,7 @@ Remembmer, Agents are built on-top of durable, so they have state, but the agent
 
 ---
 
-<h4 class="text-violet !text-md mb-3 w-full text-shadow-lg">Firing off a workflow</h4>
+<h4 class="text-violet !text-md mb-3 w-full text-shadow-lg">Firing off a workflow and keeping it in state</h4>
 
 
 ```ts{|9-15,18|1,3,8,16-17}
@@ -1109,7 +939,7 @@ export class MyAgent extends Agent {
 
     @callable()
     async start(moodboardId: string, prompt: string): Promise<string> {
-        const id = await this.runWorkflow("IMAGE_GEN_WORKFLOW", {
+        const id = await this.runWorkflow("CREATIVE_GUIDANCE", {
             moodboardId, prompt
         });
         const activeWorkflows = this.state.activeWorkflows.concat(id);
@@ -1164,7 +994,7 @@ In real life we used a zustand store, but the pattern works well.
   <div class="flex flex-col w-full h-full rounded bg-black p-2"  style="background-color: var(--slidev-code-background)">
 
 
-```ts{|16-17}
+```ts{16-17}
 // step 1
 const moodboard = await step.do("collect moodboard data", async () => { /* ... */ });
 
@@ -1227,6 +1057,20 @@ export class MyAgent extends Agent {
 
 ---
 
+<div class="flex flex-row justify-center">
+
+<div class="flex flex-col  items-center">
+        
+### Monitoring Workflow Progress
+
+<img src="./assets/fishing-1.png" class="h100" />
+
+</div>
+
+</div>
+
+---
+
 <h4 class="text-violet !text-md mb-3 w-full text-shadow-lg">Step-By Step Progress Updates</h4>
 
 <div class="flex flex-row gap-4 justify-start h-106">
@@ -1265,7 +1109,7 @@ await step.do("enhance prompt", async ({ step: { name }}) => {
 
 
 
-```ts{|1-3,6|9-13,19|14-17|18-21}
+```ts{|1-3,6|9-13|14-17|18-21}
 type StepStatus = Record<StepName, "pending" | "active" | "completed">;
 // { "enhance prompt": "completed", "generating image": "pending" }
 type MyState = { activeWorkflows: Record<WorkflowId, StepStatus> }
@@ -1296,16 +1140,10 @@ export class MyAgent extends Agent {
 </div>
 
 ---
+transition: none
+---
 
-<center>
-
-### Monitoring Workflow Progress
-
-<div class="flex flex-row justify-center items-center">
-    <img src="./assets/fishing-1.png" class="h100" />
-</div>
-
-</center>
+<SystemArchitecture />
 
 ---
 layout: section
@@ -1330,11 +1168,6 @@ transition: none
 Pretty much all the stuff that we're going to talk about today is built on top of Cloudflare, which is the service that we are already using for hosting our web stuff. There are tonnes of other agent frameworks that we could have used to have built this, but in our case this seemed like a good bet.
 -->
 
----
-transition: none
----
-
-<SystemArchitecture />
 
 
 ---
