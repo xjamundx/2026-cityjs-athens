@@ -1,8 +1,11 @@
 <template>
-  <div class="system-architecture" aria-label="Browser, Agent, and Workflow system architecture">
+  <div
+    class="system-architecture"
+    aria-label="Browser, Agent, and Workflow system architecture"
+  >
     <div class="actor actor-browser">
       <strong>Browser</strong>
-      <span class="actor-kicker">Client</span>
+      <span class="actor-kicker">React</span>
     </div>
 
     <div class="actor actor-agent">
@@ -12,55 +15,62 @@
 
     <div class="actor actor-workflow">
       <strong>Workflow</strong>
-      <span class="actor-kicker">Workflows</span>
+      <span class="actor-kicker">Workflow</span>
     </div>
 
     <div class="lifeline lifeline-browser" />
     <div class="lifeline lifeline-agent" />
     <div class="lifeline lifeline-workflow" />
 
-    <div class="message message-use-agent bidirectional">
+    <div class="message message-use-agent bidirectional" v-click>
       <span class="message-label"><code>useAgent()</code></span>
       <span class="message-note">live state + RPC</span>
     </div>
 
-      <div class="message message-generate bidirectional">
-      <span class="message-label"><code>agent.stub.generateImage(id, prompt)</code></span>
+    <div class="message message-generate bidirectional" v-click>
+      <span class="message-label"
+        ><code>agent.stub.createPlan(moodboard, prompt)</code></span
+      >
       <span class="message-note">generation request, returns a plan</span>
     </div>
 
-    <div class="message message-approve forward">
-      <span class="message-label"><code>agent.stub.approve()</code></span>
+    <div class="message message-approve forward" v-click>
+      <span class="message-label"><code>agent.stub.approve(planId)</code></span>
       <span class="message-note">human decision</span>
     </div>
 
-    <div class="message message-run forward">
+    <div class="message message-run forward" v-click>
       <span class="message-label"><code>runWorkflow()</code></span>
       <span class="message-note">starts AI workflow</span>
     </div>
 
-    <div class="message message-progress backward">
+    <div
+      class="absolute right-4 rounded bg-orange top-68 text-xs text-black p-2"
+      v-click
+    >
+      Runs each step...
+    </div>
+
+    <div class="message message-progress backward" v-click>
       <span class="message-label"><code>reportProgress()</code></span>
       <span class="message-note">update agent state</span>
     </div>
 
+    <div class="message message-broadcast backward" v-click>
+      <span class="message-label"><code>broadcast()</code></span>
+      <span class="message-note"
+        >🎉 Tell the customer their image is ready</span
+      >
+    </div>
 
-    <div class="message message-complete backward">
+    <div class="message message-complete backward" v-click>
       <span class="message-label"><code>reportComplete()</code></span>
       <span class="message-note">finish + final result</span>
     </div>
-
-
-    <div class="message message-broadcast backward">
-      <span class="message-label"><code>broadcast()</code></span>
-      <span class="message-note">🎉 Tell the customer a picture has arrived</span>
-    </div>
-
   </div>
 </template>
 
 <style scoped>
-
 .actor {
   position: absolute;
   top: 0.35rem;
@@ -78,9 +88,18 @@
   transform: translateX(-50%);
 }
 
-.actor-browser { left: 16%; color: var(--browser); }
-.actor-agent { left: 50%; color: var(--agent); }
-.actor-workflow { left: 84%; color: var(--workflow); }
+.actor-browser {
+  left: 16%;
+  color: var(--browser);
+}
+.actor-agent {
+  left: 50%;
+  color: var(--agent);
+}
+.actor-workflow {
+  left: 84%;
+  color: var(--workflow);
+}
 
 .actor-kicker {
   margin-bottom: 0.1rem;
@@ -114,9 +133,15 @@
   border-left: 1px dashed rgba(226, 232, 240, 0.22);
 }
 
-.lifeline-browser { left: 16%; }
-.lifeline-agent { left: 50%; }
-.lifeline-workflow { left: 84%; }
+.lifeline-browser {
+  left: 16%;
+}
+.lifeline-agent {
+  left: 50%;
+}
+.lifeline-workflow {
+  left: 84%;
+}
 
 .message {
   position: absolute;
@@ -185,7 +210,7 @@
   top: 5.5rem;
   left: 16%;
   width: 34%;
-  color: var(--browser);
+  color: violet;
 }
 
 .message-run {
@@ -203,7 +228,7 @@
 }
 
 .message-approve {
-  top:14.9rem;
+  top: 14.9rem;
   left: 16%;
   width: 34%;
   color: #fbbf24;

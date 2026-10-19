@@ -476,6 +476,38 @@ How hard can it be?
 Now for the fun bit, how did we build it?
 -->
 
+
+---
+
+<div class="absolute inset-10 flex flex-col">
+  <p class="!mb-2 text-sm font-bold tracking-[0.2em] text-green uppercase">The architecture</p>
+  <h1 class="!m-0 text-5xl text-blue">Our Two Challenges</h1>
+  <div class="mt-7 grid h-[19.5rem] grid-cols-2 gap-7">
+    <div class="flex flex-col overflow-hidden rounded-3xl border border-teal/60 bg-[#15172a] shadow-xl shadow-black/30">
+      <div class="flex min-h-0 flex-1 flex-col p-5">
+        <div class="mb-3 flex h-10 w-10 items-center justify-center rounded-xl bg-teal/15 text-base font-bold !text-green">01</div>
+        <p class="!m-0 text-xs font-bold tracking-[0.14em] text-slate-400 uppercase">Orchestration</p>
+        <h2 class="!m-0 text-[1.6rem] leading-tight text-white">Model and durably execute our AI workflows</h2>
+        <p class="!mb-0 !mt-2 text-sm leading-snug text-slate-300">Long-running steps, retries, and observability.</p>
+      </div>
+      <div v-click class="border-t border-teal/40 py-3 px-6">
+        <span class="text-sm font-bold tracking-[0.16em] text-green uppercase">Cloudflare Workflows</span>
+      </div>
+    </div>
+    <div class="flex flex-col overflow-hidden rounded-3xl border border-purple/70 bg-[#17152b] shadow-xl shadow-black/30">
+      <div class="flex min-h-0 flex-1 flex-col p-5">
+        <div class="mb-3 flex h-10 w-10 items-center justify-center rounded-xl bg-purple/20 text-base font-bold text-purple">02</div>
+        <p class="!m-0 text-xs font-bold tracking-[0.14em] text-slate-400 uppercase">Coordination</p>
+        <h2 class="!m-0 text-[1.6rem] leading-tight text-white">Execute AI workflows and keep the users in sync</h2>
+        <div class="!mb-0 !mt-2 text-sm leading-snug text-slate-300">Help us pick the right AI tools to use. Run them and keep the client aware of progress and problems.</div>
+      </div>
+      <div v-click class="border-t border-purple/50 py-3 px-6">
+        <span class="text-sm font-bold tracking-[0.16em] text-purple uppercase">Cloudflare Agents SDK</span>
+      </div>
+    </div>
+  </div>
+</div>
+
 ---
 
 # Cloudflare Concepts
@@ -509,91 +541,34 @@ Durability means being able to recover after a crash or for example if the insta
 
 ---
 
-<div class="absolute inset-10 flex flex-col">
-  <p class="!mb-2 text-sm font-bold tracking-[0.2em] text-green uppercase">The architecture</p>
-  <h1 class="!m-0 text-5xl text-blue">Our Two Challenges</h1>
-  <div class="mt-7 grid h-[19.5rem] grid-cols-2 gap-7">
-    <div class="flex flex-col overflow-hidden rounded-3xl border border-teal/60 bg-[#15172a] shadow-xl shadow-black/30">
-      <div class="flex min-h-0 flex-1 flex-col p-5">
-        <div class="mb-3 flex h-10 w-10 items-center justify-center rounded-xl bg-teal/15 text-base font-bold !text-green">01</div>
-        <p class="!m-0 text-xs font-bold tracking-[0.14em] text-slate-400 uppercase">Orchestration</p>
-        <h2 class="!m-0 text-[1.6rem] leading-tight text-white">Model and durably execute our AI workflows</h2>
-        <p class="!mb-0 !mt-2 text-sm leading-snug text-slate-300">Long-running steps, retries, and observability.</p>
-      </div>
-      <div v-click class="border-t border-teal/40 py-3 px-6">
-        <span class="text-sm font-bold tracking-[0.16em] text-green uppercase">Cloudflare Workflows</span>
-      </div>
-    </div>
-    <div class="flex flex-col overflow-hidden rounded-3xl border border-purple/70 bg-[#17152b] shadow-xl shadow-black/30">
-      <div class="flex min-h-0 flex-1 flex-col p-5">
-        <div class="mb-3 flex h-10 w-10 items-center justify-center rounded-xl bg-purple/20 text-base font-bold text-purple">02</div>
-        <p class="!m-0 text-xs font-bold tracking-[0.14em] text-slate-400 uppercase">Communication</p>
-        <h2 class="!m-0 text-[1.6rem] leading-tight text-white">Sync the workflow state with the browser</h2>
-        <div class="!mb-0 !mt-2 text-sm leading-snug text-slate-300">The UI should always show the latest progress. Clients needs to be able to direct the workflow.</div>
-      </div>
-      <div v-click class="border-t border-purple/50 py-3 px-6">
-        <span class="text-sm font-bold tracking-[0.16em] text-purple uppercase">Cloudflare Agents SDK</span>
-      </div>
-    </div>
-  </div>
+<div class="flex flex-row gap-4 items-end">
+<div>
+  <h4 class="text-violet !text-md mb-3 w-full text-shadow-lg">Think of workflows as pre-determined <br/>places your AI can go.</h4>
+  <img src="./assets/athens-metro-cropped.png" class="h-100">
+</div>
+<div  v-click="1" class="w-1/2">
+    <h4 class="text-violet !text-md mb-3 w-full text-shadow-lg " v-click="1">And Agents are Tour Guides</h4>
+    <img src="./assets/athens-tour-guide-cf.jpg" class="h-100">
+</div>
 </div>
 
----
-layout: section
-transition: none
----
-
-# Cloudflare Workflows
-
-Deterministically Executing our AI Workflows
-
-<img src="./assets/athens-metro.png" class="-z-1 absolute top-0"/>
-
 <!--
-Let's define this very quickly, and then we'll turn it into code.
+  <li>Know about all the routes you could take</li>
+  <li>Recommend correct route for each person</li>
+  <li>Constantly in communication with everyone</li>            
 -->
 
 ---
+
+Here's some files
+
+
+---
 transition: none
 ---
 
-<div class="flex flex-row gap-4">
-    <img src="./assets/docs-workflows.png" class="h-120" />
-    <div class="flex flex-col gap-4">
-    <ModelBadge
-        v-click
-        class="z-20 w-72"
-        :step="1"
-        title="Fetch Image"
-        model-type="Service"
-        model="R2"
-        />
-    <ModelBadge
-        v-click
-        class="z-20 w-72"
-        :step="2"
-        title="Generate Description"
-        model-type="VLM"
-        model="LLaVA 1.5 7B"
-    />
-    <ModelBadge
-        v-click
-        class="z-20 w-72"
-        :step="3"
-        title="Await Human Approval"
-        model-type="Interface"
-        model="Dashboard"
-    />
-    <ModelBadge
-        v-click
-        class="z-20 w-72"
-        :step="4"
-        title="Publish Description"
-        model-type="Service"
-        model="R2"
-    />
-    </div>
-</div>
+<SystemArchitecture />
+
 
 ---
 transition: none
@@ -633,12 +608,45 @@ Sample Workflow Code
 -->
 
 ---
+
+
+<h4 class="text-violet !text-md mb-3 w-full text-shadow-lg">Step-By-Step Progress Updates (Workflow)</h4>
+
+```ts{|2-5|2-5,12-15|22-23}
+await step.do("enhance prompt", async ({ step: { name }}) => {
+    await this.reportProgress({
+        step: name,
+        status: "active"
+    });
+   
+    const response = await this.env.AI.run(
+        "@cf/mistralai/mistral-small-3.1-24b-instruct",
+        { messages }
+    );
+    
+    await this.reportProgress({
+        step: name,
+        status: "completed"
+    });
+
+    return response;
+
+ });
+
+
+// only runs once
+await step.reportComplete(image);
+
+```
+
+
+---
 transition: none
 ---
 
 <h4 class="text-violet !text-md mb-3 w-full text-shadow-lg">Product Insertion Loop Example</h4>
 
-```ts{|1-3|4-13|14-21}
+```ts{|3,23|5,13|15,22}
 let baseImage = image;
 // loop over each category in the moodboard
 for (const category in moodboard.categories) {
@@ -669,6 +677,7 @@ for (const category in moodboard.categories) {
 ---
 layout: none
 ---
+
 <div class="absolute inset-0 flex flex-col">
   <div class="relative mt-3 min-h-0 flex-1">
   <div class="absolute inset-0 overflow-hidden">
@@ -682,178 +691,11 @@ layout: none
   </div>
 </div>
 
----
-
-<h4 class="text-violet !text-md mb-3 w-full text-shadow-lg">Think of workflows as pre-determined places your AI can go.</h4>
-
-<img src="./assets/athens-metro.png" class="h-100">
-
----
-
-<h4 class="text-violet !text-md mb-3 w-full text-shadow-lg">Agents are Tour Guides</h4>
-
-<div class="flex flex-row gap-8">
-    <img src="./assets/athens-tour-guide-cf.jpg" class="h-100">
-    <div v-click class="bg-black/10 p-4 rounded-xl relative">
-        <ul>    
-            <li>Know about all the routes you could take</li>
-            <li>Recommend correct route for each person</li>
-            <li>Constantly in communication with everyone</li>
-        </ul>
-        <span v-click="2" class="absolute bottom-4 text-sm left-4"><span class="text-violet">*</span> There's an ongoing discussion about deterministic vs probabalistic AI workflows and what makes one "agentic".<br><span class="text-violet">I mostly don't care. I just want to build things.</span></span>
-    </div>
-</div>
-
-
----
-layout: section
-transition: none
----
-
-# Cloudflare Agents SDK
-
-Coordinate the work and keep us in sync
-
-<!--
-Let's define this very quickly, and then we'll turn it into code.
--->
-
-<!-- ---
-transition: none
----
-
-<center>
-   <img src="./assets/cloudflare-agents.png" class="h-120" />
-</center> -->
-
-<!--
-Cloudflare has got this entire choose your own adventure series of Agent-related infastructure we're only going taking advantage of a very small part of it.
--->
 
 ---
 transition: none
 ---
 
-<h4 class="text-violet !text-md mb-3 w-full text-shadow-lg">Agents SDK Basics</h4>
-
-<div class="flex flex-row gap-4 justify-start h-106">
-
-<div class="w-1/2 h-full">
-  <span class="text-sm pl-2">Agent Code</span>
-  <div class="flex flex-col w-full h-full rounded bg-black p-2"  style="background-color: var(--slidev-code-background)">
-
-```ts{|3,8|4-7}
-import { Agent, callable } from "agents";
-
-export class MyAgent extends Agent {
-  @callable()
-  async greet(name: string): Promise<string> {
-    return `Hello, ${name}!`;
-  }
-}
-```
-  </div>
-</div>
-
-<div class="w-1/2 h-full">
-  <span class="text-sm pl-2">Client Code</span>
-  <div class="flex flex-col w-full h-full rounded bg-black p-2"  style="background-color: var(--slidev-code-background)">
-
-```ts {|5-7|9-11}
-import { useAgent } from "agents/react";
-import type { MyAgent } from "./server";
-
-function App() {
-  const agent = useAgent<MyAgent, State>({
-    agent: "my-agent",
-    name: "user-123",
-  });
-
-  // Call methods on the agent
-  const greeting = await agent.stub.greet();
-}
-```
-  </div>
-</div>
-
-</div>
-
-<!--
-The Agents SDK is used across the frontend and backend.
-
-The hook itself is going to setup a web socket connection to the agent with
-this particular name
-
-You can make RPC calls by adding this decorator to your agent methods
--->
-
----
-
-<h4 class="text-violet !text-md mb-3 w-full text-shadow-lg">Managing Agent State</h4>
-
-<div class="flex flex-row gap-4 justify-start h-106">
-
-<div class="w-1/2 h-full">
-  <span class="text-sm pl-2">Agent Code</span>
-  <div class="flex flex-col w-full h-full rounded bg-black p-2"  style="background-color: var(--slidev-code-background)">
-
-
-```ts{|3-5,7-10|11-19|13,18|}
-import { Agent, callable } from "agents";
-
-type MyState = {
-    name: string;
-}
-export class MyAgent extends Agent {
-	initialState: MyState = {
-		name: "",
-	};
-
-	@callable()
-    async setName(name: string): Promise<string> {
-        this.setState({ name: name });
-    }
-
-	@callable()
-	async greet(): Promise<string> {
-		return `Hello, ${this.state.name}!`;
-	}
-}
-```
-
-</div>
-</div>
-<div class="w-1/2 h-full">
-  <span class="text-sm pl-2">Client Code</span>
-  <div class="flex flex-col w-full h-full rounded bg-black p-2"  style="background-color: var(--slidev-code-background)">
-
-```ts{|10|12}
-import { useAgent } from "agents/react";
-import type { MyAgent } from "./server";
-
-function App() {
-  const agent = useAgent<MyAgent, State>({
-    agent: "my-agent",
-    name: "user-123",
-  });
-
-  await agent.stub.setName("Jamund");
-
-  await agent.stub.greet(); // "Hello, Jamund"
-}
-```
-
-</div>
-</div>
-</div>
-<!--
-Remembmer, Agents are built on-top of durable, so they have state, but the agents class makes it much easier to work with than durable objects.
-
--->
-
-
-
----
 
 
 <h4 class="text-violet !text-md mb-3 w-full text-shadow-lg">Agent state automatically syncs between client and server</h4>
@@ -983,133 +825,12 @@ In real life we used a zustand store, but the pattern works well.
 -->
 
 
----
-
-<h4 class="text-violet !text-md mb-3 w-full text-shadow-lg">Removing Placeholders for Finished Workflows</h4>
-
-<div class="flex flex-row gap-4 justify-start h-106">
-
-<div class="w-1/2 h-full">
-  <span class="text-sm pl-2">Workflow Code</span>
-  <div class="flex flex-col w-full h-full rounded bg-black p-2"  style="background-color: var(--slidev-code-background)">
-
-
-```ts{16-17}
-// step 1
-const moodboard = await step.do("collect moodboard data", async () => { /* ... */ });
-
-// step 2
-const newPrompt = await step.do("enhance prompt", () => { /* ... */ });
-
-// step 3
-const model = await step.do("select optimal model", () => { /* ... */ });
-
-// step 4
-const image = await step.do("generate image", () => { /* ... */ });
-
-// step 5
-await step.do("save to image library", () => { /* ... */ })
-
-// only runs once
-await step.reportComplete(image);
-
-```
-
-</div>
-</div>
-<div class="w-1/2 h-full">
-  <span class="text-sm pl-2">Agent Code</span>
-  <div class="flex flex-col w-full h-full rounded bg-black p-2"  style="background-color: var(--slidev-code-background)">
-
-
-
-```ts{|10-13,18|14-17}
-export class MyAgent extends Agent {
-	initialState: MyState = {
-		name: "",
-        activeWorkflows: []
-	};
-
-    @callable()
-    async start(moodboardId: string): Promise<string> { /* ... */ }
-
-	async onWorkflowComplete(
-		workflowName: string,
-		instanceId: string,
-		result?: GeneratedImage,
-	) {
-        const activeWorkflows = activeWorkflows
-            .filter(id => id === instanceId);
-		this.setState({ activeWorkflows })
-	}
-
-    // ...
-}
-```
-
-</div>
-</div>
-</div>
-
-
-<img src="/assets/placeholder.png" class="absolute top-12 -right-75" v-click>
-
 
 ---
 
-<div class="flex flex-row justify-center">
+<h4 class="text-violet !text-md mb-3 w-full text-shadow-lg">Step-By-Step Progress Updates (Agent)</h4>
 
-<div class="flex flex-col  items-center">
-        
-### Monitoring Workflow Progress
-
-<img src="./assets/fishing-1.png" class="h100" />
-
-</div>
-
-</div>
-
----
-
-<h4 class="text-violet !text-md mb-3 w-full text-shadow-lg">Step-By Step Progress Updates</h4>
-
-<div class="flex flex-row gap-4 justify-start h-106">
-
-<div class="w-1/2 h-full">
-  <span class="text-sm pl-2">Workflow Code</span>
-  <div class="flex flex-col w-full h-full rounded bg-black p-2"  style="background-color: var(--slidev-code-background)">
-
-```ts{|2-5|2-5,12-15}
-await step.do("enhance prompt", async ({ step: { name }}) => {
-    await this.reportProgress({
-        step: name,
-        status: "active"
-    });
-   
-    const response = await this.env.AI.run(
-        "@cf/mistralai/mistral-small-3.1-24b-instruct",
-        { messages }
-    );
-    
-    await this.reportProgress({
-        step: name,
-        status: "completed"
-    });
-
-    return response;
-
- });
-```
-
-</div>
-</div>
-<div class="w-1/2 h-full">
-  <span class="text-sm pl-2">Agent Code</span>
-  <div class="flex flex-col w-full h-full rounded bg-black p-2"  style="background-color: var(--slidev-code-background)">
-
-
-
-```ts{|1-3,6|9-13|14-17|18-21}
+```ts{|1-3,6|9,18|10-13|14-17|19,23|20-22}
 type StepStatus = Record<StepName, "pending" | "active" | "completed">;
 // { "enhance prompt": "completed", "generating image": "pending" }
 type MyState = { activeWorkflows: Record<WorkflowId, StepStatus> }
@@ -1118,32 +839,31 @@ export class MyAgent extends Agent {
         activeWorkflows: {} 
 	};
 
-	async onWorkflowProgress(
-		workflowName: string,
-		instanceId: string,
-		progress: MyState["activeWorkflows"],
-	) {
-        const steps = {
-            ...this.state.activeWorkflows[instanceId],
-            [progress.step]: progress.status,
-        };
-        this.setState({
-            ...this.state.activeWorkflows,
-            [instanceId]: steps
-        });
-	}
+  async onWorkflowProgress(workflowName: string, instanceId: string, progress: MyState["activeWorkflows"]) {
+    const steps = {
+        ...this.state.activeWorkflows[instanceId],
+        [progress.step]: progress.status,
+    };
+    this.setState({
+        ...this.state.activeWorkflows,
+        [instanceId]: steps
+    });
+  }
+  async onWorkflowComplete(workflowName: string, instanceId: string, result?: GeneratedImage) {
+    const activeWorkflows = activeWorkflows
+      .filter(id => id === instanceId);
+    this.setState({ activeWorkflows })
+  }
 }
 ```
-
-</div>
-</div>
-</div>
-
 ---
-transition: none
+layout: center
 ---
 
-<SystemArchitecture />
+### Monitoring Workflow Progress
+
+<img src="./assets/fishing-1.png" class="h100" />
+
 
 ---
 layout: section
@@ -1175,39 +895,20 @@ layout: section
 
 ---
 
-# A FEW LAST THOUGHTS ABOUT THE AGENTIC WEB
+<h1 v-click.hide="1" class="absolute top-50">A FEW LAST THOUGHTS ABOUT THE AGENTIC WEB</h1>
+
+
+<h1 v-click>BE CREATIVE</h1>
+<h1 v-click>HAVE FUN</h1>
+<h1 v-click>BUILD THE FUTURE</h1>
+
+<h3 v-click><span class="!text-violet">THE END</span></h3>
 
 <!--
 The web is changing. The last big era we entered was the mobile web. almost 20 years ago.
 We don't know what this new era is going to look like, but it's up to US as web developers
-to figure it out. We don't have to stick with chat. We can invent new and better things.
-So I urge each and every one of you to get creative, have fun, and build the future....
+to figure it out. We don't have to stick with chat. We can invent new and better models for interacting with agents..
 -->
 
----
-layout: section
----
-
-<div v-click>
-
-### GET CREATIVE
-
-</div>
-<div v-click>
-
-### HAVE FUN
-
-</div>
-<div v-click class="!text-cyan">
-
-### BUILD THE FUTURE
-
-</div>
-
-<div v-click class="!text-cyan">
-
-### THE END
-
-</div>
 
 ---
