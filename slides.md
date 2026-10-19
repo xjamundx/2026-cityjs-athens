@@ -560,14 +560,47 @@ Durability means being able to recover after a crash or for example if the insta
 
 ---
 
-Here's some files
+<h2><span class="!text-violet">WE CAN BUILD THIS WITH JUST A FEW FILES</span></h2>
 
+<div class="flex flex-row w-full gap-8">
+
+  <div class="flex-1 bg-black/10 h-full rounded-lg p-2">
+
+  ### Client Code
+  App.tsx
+
+  </div>
+
+  <div class="flex-1 bg-black/10 h-full rounded-lg p-2">
+
+  ### Agent Code
+  producer-agent.ts
+
+  </div>
+
+  <div class="flex-1 bg-black/10 h-full rounded-lg p-2">
+
+  ### Workflow Code
+  creative-guidance.ts
+  producer-mode.ts
+
+  </div>
+
+  <div class="flex-1 bg-black/10 h-full rounded-lg p-2">
+
+  ### Config
+  wrangler.toml
+
+  </div>
+
+</div>
 
 ---
 transition: none
 ---
 
 <SystemArchitecture />
+
 
 
 ---
@@ -604,7 +637,12 @@ export class ImageProcessingWorkflow extends AgentWorkflow {
 ```
 
 <!--
-Sample Workflow Code
+
+Transition: So how do you define a workflow? It's basically infrastructure as code.
+
+Here's a sample from the cloudflare docs that relates pretty heavily to what we're trying to do with producer.
+
+Simple. Series of steps.
 -->
 
 ---
@@ -638,6 +676,12 @@ await step.do("enhance prompt", async ({ step: { name }}) => {
 await step.reportComplete(image);
 
 ```
+
+<!--
+
+If you want to add progress updates, that's easy too.
+
+-->
 
 
 ---
@@ -673,6 +717,10 @@ for (const category in moodboard.categories) {
 
 ```
 
+<!--
+
+Setting up loops is easy as well.
+-->
 
 ---
 layout: none
@@ -680,10 +728,7 @@ layout: none
 
 <div class="absolute inset-0 flex flex-col">
   <div class="relative mt-3 min-h-0 flex-1">
-  <div class="absolute inset-0 overflow-hidden">
-    <img src="/assets/cf-workflows-dash.png" class="h-full w-full rounded-xl object-contain" />
-  </div>
-  <div v-click class="absolute inset-0 overflow-hidden">
+  <div  class="absolute inset-0 overflow-hidden">
     <img src="/assets/cf-workflows-dash-2.png" class="h-full w-full rounded-xl object-contain" />  </div>
   <div v-click class="absolute inset-0 overflow-hidden">
     <img src="/assets/cf-worfklows-dash-3.png" class="h-full w-full rounded-xl object-contain" />
@@ -691,75 +736,17 @@ layout: none
   </div>
 </div>
 
-
----
-transition: none
 ---
 
+### Critical Things About Agents
 
+1. They have persistent state backed by SQL storage
+2. They're always connected to the client via a websocket
+3. They can run AI workflows, sub-agents, or run any kind of compute needed (codemode, chat, etc.)
+3. Any state changes made by the agent are automatically sent down to the client
 
-<h4 class="text-violet !text-md mb-3 w-full text-shadow-lg">Agent state automatically syncs between client and server</h4>
-
-<div class="flex flex-row gap-4 justify-start h-106">
-
-<div class="w-1/2 h-full">
-  <span class="text-sm pl-2">Agent Code</span>
-  <div class="flex flex-col w-full h-full rounded bg-black p-2"  style="background-color: var(--slidev-code-background)">
-
-
-```ts{10-14}
-import { Agent, callable } from "agents";
-
-type MyState = {
-    name: string;
-}
-export class MyAgent extends Agent {
-	initialState: MyState = {
-		name: "",
-	};
-
-	@callable()
-    async setName(name: string): Promise<string> {
-        this.setState({ name: name });
-    }
-
-	@callable()
-	async greet(): Promise<string> {
-		return `Hello, ${this.state.name}!`;
-	}
-}
-```
-
-</div>
-</div>
-<div class="w-1/2 h-full">
-  <span class="text-sm pl-2">Client Code</span>
-  <div class="flex flex-col w-full h-full rounded bg-black p-2"  style="background-color: var(--slidev-code-background)">
-
-```ts{|8-10|13|9-10}
-import { useAgent } from "agents/react";
-import type { MyAgent } from "./server";
-
-function App() {
-  const agent = useAgent<MyAgent, State>({
-    agent: "my-agent",
-    name: "user-123",
-    onStateChanged: (state) => {
-      console.log("New state:", state);
-    }
-  });
-
-  await agent.stub.setName("Jamund");
-
-  await agent.stub.greet(); // "Hello, Jamund"
-}
-```
-
-</div>
-</div>
-</div>
 <!--
-Remembmer, Agents are built on-top of durable, so they have state, but the agents class makes it much easier to work with than durable objects.
+Remembmer, Agents are built on-top of durable, so they have state, but the agents SDK makes it a lot easier to work with than durable objects.
 
 -->
 
@@ -792,36 +779,47 @@ export class MyAgent extends Agent {
 	// ...
 }
 ```
+<!--
+
+creative guidance workflow (As defined in our config file)
+And then we can use the setState function to send the in progress workflows down to the client
+-->
 
 ---
 
 <h4 class="text-violet !text-md mb-3 w-full text-shadow-lg">Showing Active Workflows</h4>
 
 
-```ts{|5,9-11|14-16}
+```ts{|6-8,12|14,17|5,9-11|5,9-11,18-20}
 import { useAgent } from "agents/react";
 import type { MyAgent } from "./server";
 
 function App() {
   const [placeholders, setPlaceholders] = useState(); 
   const agent = useAgent<MyAgent, State>({
-    agent: "my-agent",
-    name: "user-123",
+    agent: "my-agent", // /agents/my-agent
+    name: "user-123", // channel name
     onStateChanged: (state) => {
       setPlaceholders(state.activeWorkflows);
     }
   });
 
-  return placeholders.map(workflowId => {
-    return <PlaceholderCard workflowId={workflowId} />
-  })
+  const start = async () => await agent.stub.start();
+
+  return (<>
+    <button onClick={start}>Start Generation</button>
+    {placeholders.map(workflowId => {
+     return <PlaceholderCard workflowId={workflowId} />
+    })}
+  </>);
 }
 ```
 
 <img src="/assets/placeholder.png" class="absolute top-12 -right-75" v-click >
 
 <!--
-In real life we used a zustand store, but the pattern works well.
+So first we setup a persistent weboscket connection here with the useAgent() hook and then secondly we listen for
+any state chang events on teh server...
 -->
 
 
@@ -830,7 +828,7 @@ In real life we used a zustand store, but the pattern works well.
 
 <h4 class="text-violet !text-md mb-3 w-full text-shadow-lg">Step-By-Step Progress Updates (Agent)</h4>
 
-```ts{|1-3,6|9,18|10-13|14-17|19,23|20-22}
+```ts{|1-3,6|9,18-19,23|10-13|14-17|20-22}
 type StepStatus = Record<StepName, "pending" | "active" | "completed">;
 // { "enhance prompt": "completed", "generating image": "pending" }
 type MyState = { activeWorkflows: Record<WorkflowId, StepStatus> }
@@ -857,7 +855,7 @@ export class MyAgent extends Agent {
 }
 ```
 ---
-layout: center
+layout: outline
 ---
 
 ### Monitoring Workflow Progress
@@ -876,16 +874,26 @@ transition: none
 
 ---
 
-<div class="flex gap-20 justify-center">
+<div class="flex gap-20 justify-evenly">
   <img
     src="./assets/orly-cloudflare.png"
     alt="Brand Studio workflow"
     class="block w-85"
   />
+  <div class="flex-1">
+    <h2>Cloudflare is a Great Place to your Build Agents</h2>
+    <ul>
+      <li>Durable objects are a great primitive<br/>for building agents</li>
+      <li>The Agents SDK cleans a lot of the rough edges (scheduling, state management, routing, etc.)</li>
+      <li>Cloudflare also provides frameworks for building chat-based app with tool-calling, code-mode nad MCP</li>
+      <li>Oher providers and frameworks exist (Vercel, Mastra, Flue, Eve, etc.) that may suit your use case</li>
+      <li class="text-violet">The main thing is learn one and build something</li>
+    </ul>
+  </div>
 </div>
 
 <!--
-It's great to build on cloudflare
+If you're already using cloudflare these tools make it really easy to build and experiment with agentic experiences such as these, but otherwise there are a ton of other tool and frameworks to choose from.
 -->
 
 
@@ -895,19 +903,32 @@ layout: section
 
 ---
 
-<h1 v-click.hide="1" class="absolute top-50">A FEW LAST THOUGHTS ABOUT THE AGENTIC WEB</h1>
+<h1 v-click.hide="1" class="absolute top-50">Some final thoughts...</h1>
 
 
 <h1 v-click>BE CREATIVE</h1>
 <h1 v-click>HAVE FUN</h1>
-<h1 v-click>BUILD THE FUTURE</h1>
+<h1 v-click>INVENT THE FUTURE</h1>
 
 <h3 v-click><span class="!text-violet">THE END</span></h3>
 
 <!--
-The web is changing. The last big era we entered was the mobile web. almost 20 years ago.
-We don't know what this new era is going to look like, but it's up to US as web developers
-to figure it out. We don't have to stick with chat. We can invent new and better models for interacting with agents..
+
+We didn't realy solve agentic UX for image generation here. But we took a stab at it. And I had a lot of fun.
+
+The web is changing. Alright.
+
+ The last big era we entered was the mobile web. almost 20 years ago.
+
+We don't know yet what this new era is going to look like.
+
+But it's up to US as developers to figure it out!
+
+So my advice to you for building agents:
+1. Be creative
+2. Have fun
+3. Invent the future
+
 -->
 
 
