@@ -886,7 +886,7 @@ transition: none
       <li>Durable objects are a great primitive<br/>for building agents</li>
       <li>The Agents SDK cleans a lot of the rough edges (scheduling, state management, routing, etc.)</li>
       <li>Cloudflare also provides frameworks for building chat-based app with tool-calling, code-mode nad MCP</li>
-      <li>Oher providers and frameworks exist (Vercel, Mastra, Flue, Eve, etc.) that may suit your use case</li>
+      <li>Other providers and frameworks exist (Vercel, Mastra, Flue, Eve, etc.) that may suit your use case</li>
       <li class="text-violet">The main thing is learn one and build something</li>
     </ul>
   </div>
@@ -903,7 +903,7 @@ layout: section
 
 ---
 
-<h1 v-click.hide="1" class="absolute top-50">Some final thoughts...</h1>
+<h1 v-click.hide="1" class="absolute top-50">Building for the agenetic web</h1>
 
 
 <h1 v-click>BE CREATIVE</h1>
