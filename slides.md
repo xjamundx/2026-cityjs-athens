@@ -902,7 +902,7 @@ And then we can use the setState function to send the in progress workflows down
 <h4 class="text-violet !text-md mb-3 w-full text-shadow-lg">Showing Active Workflows</h4>
 
 
-```ts{|6-8,12|14,17|5,9-11|5,9-11,18-20}
+```tsx{|6-8,12|14,17|5,9-11|5,9-11,18-20}
 import { useAgent } from "agents/react";
 import type { MyAgent } from "./server";
 
