@@ -955,6 +955,7 @@ any state chang events on teh server...
 ---
 
 <h4 class="text-violet !text-md mb-3 w-full text-shadow-lg">Step-By-Step Progress Updates (Agent)</h4>
+<img src="./assets/planner.jpg" class="absolute right-4 top-24 z-20 w-40" />
 
 ```ts{|1-3,6|9,18-19,23|10-13|14-17|20-22}
 type StepStatus = Record<StepName, "pending" | "active" | "completed">;
@@ -982,6 +983,7 @@ export class MyAgent extends Agent {
   }
 }
 ```
+
 
 
 
