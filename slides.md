@@ -154,7 +154,7 @@ layout: section
 
 ---
 
-# Image Models are a Black Box
+# AI MODELS ARE A BLACK BOX
 
 <div class="flex flex-col items-center">
   <p class="text-green font-light w-180 !leading-tight p-0 text-shadow-sm text-shadow-black">People generally don't understand what they're doing or how to improve their output</p>
@@ -162,9 +162,36 @@ layout: section
   <img src="./assets/dune-pain-box.avif" class="h-90" />
   <sub class="relative -top-6 !text-xs !p-0 text-slate-600">Image: Warner Bros. Pictures</sub>
 </div>
+
 ---
 layout: section
 
+---
+
+## Ask the Audience
+How do we fix this?
+
+<!--
+Repeat it back to them, thank them and move on...
+-->
+
+---
+
+### Some of our ideas
+
+- Train a better model
+- Build a ComfyUI workflow
+- Add tutorials and onboarding instructions
+- Add an MCP server and let Claude figure it out
+- What about MCP UI?
+- Or a chat-based UI?
+
+
+<p v-click class="text-violet relative top-8">What was it!?</p>
+
+
+---
+layout: section
 ---
 
 <p class="!mb-4 text-sm font-bold tracking-[0.16em] text-violet-300 uppercase">Part 2 · Thinking outside the prompt</p>
@@ -280,7 +307,8 @@ Trying to describe an image to a diffusion model is kind of like those police sk
 
 ---
 
-<div class="absolute inset-10 grid grid-cols-[1fr_28rem] items-center gap-14">
+<div class="absolute inset-10 flex flex-row justify-between items-center">
+  
   <div>
     <p class="!mb-3 text-sm font-bold tracking-[0.2em] text-green uppercase">A Partial AI Workflow</p>
     <h1 class="!m-0 text-6xl leading-tight text-blue">Creative<br/>Guidance</h1>
@@ -290,7 +318,7 @@ Trying to describe an image to a diffusion model is kind of like those police sk
     </p>
   </div>
 
-  <div class="flex flex-col gap-4">
+  <div class="flex flex-col gap-4 w-86">
     <ModelBadge
       class="w-full"
       :step="1"
@@ -322,36 +350,54 @@ So if you combine all those together (prompt enhancement, auto model, and auto m
 ---
 
 <div class="mt-4 flex justify-center items-center">
-  <img src="./assets/prompt-boots.png" v-click.hide="1" class="absolute" />
-  <img src="./assets/boots-urban.png" v-click="1" class="h-100"/>
-  <img src="./assets/boots-glacier.png" v-click="2" class="h-100" />
+  <img src="./assets/prompt-boots.png" v-click.hide="1" class="absolute top-30 w-200" />
+  <img src="./assets/board-urban.png" v-click v-click.hide="2" class=" h-100" />
+  <img src="./assets/boots-urban.png" v-click="2" class="absolute h-100"/>
 </div>
 
 <!--
  You can see here, even with a very simple prompt like a boot, you get a really detailed image of a pair of boots in a really dystopian urban scene.
 -->
 
+---
+transition: none
+---
+
+<div class="mt-4 flex justify-center items-center gap-4">
+  <img src="./assets/board-glacier.png" class=" h-100"/>
+  <img src="./assets/boots-glacier.png" v-click class=" h-100" />
+</div>
+
 
 ---
 
-<p class="!mb-4 text-sm font-bold tracking-[0.16em] uppercase">OUR CUSTOMERS DON'T WANT TO SELL MY AI-GENERATED BOOTS</p>
+<p class="!mb-4 text-sm font-bold tracking-[0.16em] uppercase">MOODDBOARDS SOLVE A LOT OF PROBLEMS <span class="text-right text-violet" v-click="1">BUT THEY DONT SHOW US THE USERS PRODUCTS</span>
+</p>
 
 <div class="mt-4 gap-4 flex justify-evenly items-center">
-  <img src="./assets/boots-glacier.png" class="h-100" />
-  <img src="./assets/chocolate-glacier.jpeg" v-click class="h-100" />
+  <div>
+    <img src="./assets/boots-glacier.png" class="h-100" />
+  </div>
+  <div>
+    <img src="./assets/chocolate-glacier.jpeg" v-click="1" class="h-100" />
+  </div>
 </div>
 
 <!--
 Prompt: Replace the boots in this image with a stack ION chocolate bars
 
 They don'tw want to sell my AI generated boots, they want to sell their own products...
+
+YET
 -->
 
 ---
 
 <div class="flex flex-row justify-center">
-<img src="./assets/board-fishing.png" class="h-120"/>
+  <img src="./assets/board-products.png" class="absolute h-125"/>
+  <img src="./assets/board-guidance.png" v-click class="absolute z-20 top-25 h-80"/>
 </div>
+
 
 <!--
 So we added some new capabilities to our moodboard.
@@ -377,11 +423,58 @@ So we added some new capabilities to our moodboard.
 
 ---
 
+In order to make it work well we also added
+
+<div class="flex flex-row justify-between">
+  <div v-click class="text-green text-sm">An Approval Screen
+  <img src="./assets/approve.png" class="h-75" /></div>
+  <div v-click class="text-green text-sm">A Progress Screen
+  <img src="./assets/plan-image.png" class="h-75" /></div>
+  <div v-click class="text-green text-sm">A Built-in Eval
+  <img src="./assets/planner.jpg" class="h-75" /></div>
+</div>
+
+---
+
+<div v-click.hide class="absolute -top-4">
+  <h3>So basically took mooboards, which everyone knows well...</h3>
+</div>
+
+<div v-click="1" class="absolute -top-4">
+  
+  ### And Combined it with this Plan and Execute UI Pattern
+
+<div class="grid grid-cols-2 grid-rows-2 gap-3">
+  <img src="./assets/ui-plan-claude.png"  class="w-80" />
+  <img src="./assets/ui-plan-copilot-kit.png"  class="w-80" />
+  <img src="./assets/ui-plan-generic.png" class="w-60 relative -top-20" />
+  <img src="./assets/ui-plan-claude.png"  class="w-80" />
+</div>
+
+</div>
+
+<img src="./assets/board-urban.png" class="h-100 mt-12" v-click.hide="1" />
+
+<!--
+
+READ WORDs thEN:
+that is becoming more common with agentic experiences
+
+
+WHAT WE DIDNT bUILt WAS CHAT
+-->
+
+
+---
+
 <div class="relative -top-20">
 <img src="./assets/canoe-me-1.png" class="absolute" />
+<img src="./assets/item-me.png" v-click class="absolute h-40 top-50 z-10" />
 <img src="./assets/canoe-me-2.png" v-click class="absolute"/>
 <img src="./assets/canoe-me-3.png" v-click class="absolute"/>
+<img src="./assets/item-canoe.png" v-click class="absolute h-40 top-50 z-20" />
 <img src="./assets/canoe-me-4-fail.png" v-click class="absolute" />
+<img src="./assets/canoe-me-4-ok.png" v-click class="absolute z-20" />
 <ModelBadge
   v-click
   class="absolute right-7 top-20 z-50 w-88"
@@ -397,7 +490,8 @@ So we added some new capabilities to our moodboard.
   title="Evaluate Realism"
   model-type="Multi-Modal LLM"
   model="Gemini Flash 3.8"
-/><img src="./assets/canoe-me-4-ok.png" v-click class="absolute" />
+/>
+
 
 </div>
 
@@ -855,7 +949,7 @@ export class MyAgent extends Agent {
 }
 ```
 ---
-layout: outline
+layout: none
 ---
 
 ### Monitoring Workflow Progress
