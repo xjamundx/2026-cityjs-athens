@@ -187,7 +187,7 @@ Repeat it back to them, thank them and move on...
 - Or a chat-based UI?
 
 
-<p v-click class="text-violet relative top-8">What was it!?</p>
+<h1 v-click class="text-violet relative top-8"><span class="text-violet">What was it!?</span></h1>
 
 
 ---
@@ -657,34 +657,45 @@ Durability means being able to recover after a crash or for example if the insta
 
 <h2><span class="!text-violet">WE CAN BUILD THIS WITH JUST A FEW FILES</span></h2>
 
-<div class="flex flex-row w-full gap-8">
+<div class="flex flex-row w-full gap-2">
 
   <div class="flex-1 bg-black/10 h-full rounded-lg p-2">
 
   ### Client Code
-  App.tsx
+  
+  <ul>
+    <li><span class="text-green">App.tsx</span></li>
+  </ul>
 
   </div>
 
   <div class="flex-1 bg-black/10 h-full rounded-lg p-2">
 
   ### Agent Code
-  producer-agent.ts
+
+  <ul>
+    <li><span class="text-green">producer-agent.ts</span></li>
+  </ul>
 
   </div>
 
   <div class="flex-1 bg-black/10 h-full rounded-lg p-2">
 
   ### Workflow Code
-  creative-guidance.ts
-  producer-mode.ts
+
+  <ul>
+    <li><span class="text-green">creative-guidance.ts</span></li>
+    <li><span class="text-green">product-insertion.ts</span></li>
+  </ul>
 
   </div>
 
   <div class="flex-1 bg-black/10 h-full rounded-lg p-2">
 
   ### Config
-  wrangler.toml
+  <ul>
+    <li><span class="text-green">wrangler.toml</span></li> 
+  </ul>
 
   </div>
 
@@ -695,32 +706,6 @@ transition: none
 ---
 
 <SystemArchitecture />
-
-
----
-
-<h3 class="relative -top-9">The Full Agent Experience</h3>
-
-<div class="flex flex-row justify-between relative -top-9">
-  <div  class="flex flex-col gap-3">
-    <div>
-      <code class="text-green">agent.stub.createPlan()</code>
-      <img src="./assets/prompt-fishing.png" class="h-50" />
-    </div>
-    <div>
-      <code class="text-green">agent.stub.approvePlan()</code>
-      <img src="./assets/approve.png" class="h-75" />
-    </div>
-  </div>
-  <div>
-     <code class="text-green">onStateUpdate()</code>
-    <img src="./assets/plan-image.png" class="h-75" />
-  </div>
-  <div>
-    <code class="text-green absolute right-0 -top-1">agent.stub.approveStep()</code>
-    <img src="./assets/planner.jpg" class="h-75 mt-8" />
-  </div>
-</div>
 
 ---
 transition: none
@@ -743,8 +728,7 @@ export class ImageProcessingWorkflow extends AgentWorkflow {
       });
     });
 
-    await step.waitForEvent("await approval", {
-      event: "approved",
+    const result = await this.waitForApproval<{ approvedBy: string }>(step, {
       timeout: "24 hours",
     });
 
@@ -984,6 +968,63 @@ export class MyAgent extends Agent {
 }
 ```
 
+---
+
+
+<h4 class="text-violet !text-md mb-3 w-full text-shadow-lg">Eval Decision Workflow</h4>
+<img src="./assets/planner.jpg" class="absolute right-4 top-24 z-20 w-40" />
+
+
+```ts{|1,4-6}
+type EvalDecision = "skip" | "continue" | "retry";
+class MyAgent extends Agent {
+  @callable()
+  async makeDecision(workflowId: string, decision: EvalDecision): Promise<void> {
+    await this.approveWorkflow(workflowId, { decision });
+  }
+}
+```
+Workflow
+```ts{|2-4|5-12}
+  if (result.realism < .8) { // called with the eval step in the insertion loop
+    const result = await this.waitForApproval<{ decision: EvalDecision }>(step, {
+      timeout: "24 hours",
+    });
+    switch (result.decision) {
+      case "continue":
+        baseImage = activeimage;
+      case "skip";
+        continue;
+      case "retry":
+        throw new Error("Results were not good enough. Retrying.")
+    }
+  }
+```
+
+---
+
+<h3 class="relative -top-9">Producer Mode: <span class="text-white !text-lg">Powered by Agents</span></h3>
+
+<div class="flex flex-row justify-between relative -top-9">
+  <div  class="flex flex-col gap-3">
+    <div>
+      <code class="text-green">agent.stub.createPlan()</code>
+      <img src="./assets/prompt-fishing.png" class="h-50" />
+    </div>
+    <div>
+      <code class="text-green">agent.stub.approve()</code>
+      <img src="./assets/approve.png" class="h-75" />
+    </div>
+  </div>
+  <div>
+     <code class="text-green">onStateUpdate()</code>
+    <img src="./assets/plan-image.png" class="h-75" />
+  </div>
+  <div>
+    <code class="text-green absolute right-0 -top-1">agent.stub.makeDecision()</code>
+    <img src="./assets/planner.jpg" class="h-75 mt-8" />
+  </div>
+</div>
 
 
 

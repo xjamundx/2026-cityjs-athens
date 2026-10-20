@@ -35,7 +35,7 @@
     </div>
 
     <div class="message message-approve forward" v-click>
-      <span class="message-label"><code>agent.stub.approvePlan(planId)</code></span>
+      <span class="message-label"><code>agent.stub.approve(planId)</code></span>
       <span class="message-note">human decision</span>
     </div>
 
@@ -57,7 +57,7 @@
     </div>
 
       <div class="message message-step forward" v-click>
-      <span class="message-label"><code>agent.stub.approveStep(stepId)</code></span>
+      <span class="message-label"><code>agent.stub.makeDecision(workflowId, decision)</code></span>
       <span class="message-note">human decision</span>
     </div>
 
