@@ -265,7 +265,7 @@ As you can see from this very long dropdown, there are a tonne of model choices 
 
 ---
 
-# DON'T MAKE ME TYPE
+# DON'T MAKE ME PROMPT
 
 <!--
 Trying to describe an image to a diffusion model is kind of like those police sketches where you have to describe the features that you want them to draw and they do their best to interpret it
@@ -411,19 +411,6 @@ So we added some new capabilities to our moodboard.
 -->
 
 ---
-
-## In order to make it work well we also added
-
-<div class="flex flex-row justify-between">
-  <div v-click class="text-green text-sm">An Approval Screen
-  <img src="./assets/approve.png" class="h-75" /></div>
-  <div v-click class="text-green text-sm">A Progress Screen
-  <img src="./assets/plan-image.png" class="h-75" /></div>
-  <div v-click class="text-green text-sm">A Built-in Eval
-  <img src="./assets/planner.jpg" class="h-75" /></div>
-</div>
----
-
   
 <div class="absolute right-4 p-4 pl-8 gap-4 flex flex-col text-right w-100">
     <p class="!mb-3text-sm font-bold tracking-[0.2em] text-green uppercase">Product Insertion Loop</p>
@@ -433,38 +420,6 @@ So we added some new capabilities to our moodboard.
 </div>
 
 <img src="./assets/prompt-fishing.png" class="absolute h-100 mt-4" />
-
-
-
----
-
-<div v-click.hide class="absolute -top-4">
-  <h3>So basically took mooboards, which everyone knows well...</h3>
-</div>
-
-<div v-click="1" class="absolute -top-4">
-  
-  ### And combined it with this plan and execute UI pattern
-
-<div class="grid grid-cols-2 grid-rows-2 gap-3">
-  <img src="./assets/ui-plan-claude.png"  class="w-80" />
-  <img src="./assets/ui-plan-copilot-kit.png"  class="w-80 let-30" />
-  <img src="./assets/ui-plan-generic.png" class="w-60 relative -top-26" />
-  <img src="./assets/ui-plan-cursor.png"  class="w-80 -top-40 left-60" />
-</div>
-
-</div>
-
-<img src="./assets/board-urban.png" class="h-100 mt-12" v-click.hide="1" />
-
-<!--
-
-READ WORDs thEN:
-that is becoming more common with agentic experiences
-
-
-WHAT WE DIDNT bUILt WAS CHAT
--->
 
 
 ---
@@ -555,6 +510,50 @@ WHAT WE DIDNT bUILt WAS CHAT
 So if you combine all those together (prompt enhancement, auto model, and auto model routing with the mood board), you get this feature that we call creative guidance.
 -->
 
+---
+
+
+
+<div v-click.hide class="absolute -top-4">
+  <h3>So basically took mooboards, which everyone knows well...</h3>
+</div>
+
+<div v-click="1" class="absolute -top-4">
+  
+  ### And combined it with this plan and execute UI pattern
+
+<div class="grid grid-cols-2 grid-rows-2 gap-3">
+  <img src="./assets/ui-plan-claude.png"  class="w-80" />
+  <img src="./assets/ui-plan-copilot-kit.png"  class="w-80 let-30" />
+  <img src="./assets/ui-plan-generic.png" class="w-60 relative -top-26" />
+  <img src="./assets/ui-plan-cursor.png"  class="w-80 -top-40 left-60" />
+</div>
+
+</div>
+
+<img src="./assets/board-urban.png" class="h-100 mt-12" v-click.hide="1" />
+
+<!--
+
+READ WORDs thEN:
+that is becoming more common with agentic experiences
+
+
+WHAT WE DIDNT bUILt WAS CHAT
+-->
+
+---
+
+## Featuring:
+
+<div class="flex flex-row justify-between">
+  <div class="text-green text-sm">An Approval Screen
+  <img src="./assets/approve.png" class="h-75" /></div>
+  <div class="text-green text-sm">A Progress Screen
+  <img src="./assets/plan-image.png" class="h-75" /></div>
+  <div class="text-green text-sm">A Built-in Eval
+  <img src="./assets/planner.jpg" class="h-75" /></div>
+</div>
 
 ---
 layout: section
@@ -639,11 +638,11 @@ Durability means being able to recover after a crash or for example if the insta
 
 <div class="flex flex-row gap-4 items-end">
 <div>
-  <h4 class="text-violet !text-md mb-3 w-full text-shadow-lg">Think of workflows as pre-determined <br/>places your AI can go.</h4>
+  <h4 class="text-violet !text-md mb-3 w-full text-shadow-lg">Workflows let you specify pre-determined <br/>places your AI can go.</h4>
   <img src="./assets/athens-metro-cropped.png" class="h-100">
 </div>
 <div  v-click="1" class="w-1/2">
-    <h4 class="text-violet !text-md mb-3 w-full text-shadow-lg " v-click="1">And Agents are Tour Guides</h4>
+    <h4 class="text-violet !text-md mb-3 w-full text-shadow-lg " v-click="1">Agents are tour guides</h4>
     <img src="./assets/athens-tour-guide-cf.jpg" class="h-100">
 </div>
 </div>
@@ -698,6 +697,30 @@ transition: none
 <SystemArchitecture />
 
 
+---
+
+<h3 class="relative -top-9">The Full Agent Experience</h3>
+
+<div class="flex flex-row justify-between relative -top-9">
+  <div  class="flex flex-col gap-3">
+    <div>
+      <code class="text-green">agent.stub.createPlan()</code>
+      <img src="./assets/prompt-fishing.png" class="h-50" />
+    </div>
+    <div>
+      <code class="text-green">agent.stub.approvePlan()</code>
+      <img src="./assets/approve.png" class="h-75" />
+    </div>
+  </div>
+  <div>
+     <code class="text-green">onStateUpdate()</code>
+    <img src="./assets/plan-image.png" class="h-75" />
+  </div>
+  <div>
+    <code class="text-green absolute right-0 -top-1">agent.stub.approveStep()</code>
+    <img src="./assets/planner.jpg" class="h-75 mt-8" />
+  </div>
+</div>
 
 ---
 transition: none
@@ -834,13 +857,22 @@ layout: none
 
 ---
 
-### Critical Things About Agents
+### Critical Things About Agents on Cloudflare
 
-1. They have persistent state backed by SQL storage
-2. They're always connected to the client via a websocket
-3. They can run AI workflows, sub-agents, or run any kind of compute needed (codemode, chat, etc.)
-3. Any state changes made by the agent are automatically sent down to the client
+<div class="flex flex-row">
 
+<div class="w-1/2">
+    <img src="./assets/athens-tour-guide-cf.jpg" class="h-100">
+</div>
+  <div class="w-1/2 rounded-xl p-4 bg-black/20">
+    <ul class="text-white/80">
+      <li>Clients can connect to them directly via websocket</li>
+      <li>They help run AI workflows, workers, sub-agents, codemode, chat, etc.</li>
+      <li>They have persistent state backed by SQL storage</li>
+      <li>Any state changes made in the agent are also sent to the client</li>
+    </ul>
+</div>
+</div>
 <!--
 Remembmer, Agents are built on-top of durable, so they have state, but the agents SDK makes it a lot easier to work with than durable objects.
 
@@ -950,58 +982,22 @@ export class MyAgent extends Agent {
   }
 }
 ```
----
-layout: none
----
-
-### Monitoring Workflow Progress
-
-<img src="./assets/fishing-1.png" class="h100" />
-
 
 ---
 layout: section
 transition: none
 ---
 
-# Halloween is coming up...</br> 
+<h1><span class="text-orange">Halloween is coming up...</span></h1></br> 
 
-<p>But building agents does not have to be scary</p>
+<p class="text-shadow-xl">But building agents does not have to be scary</p>
+
+---
+layout: center
 
 ---
 
-<div class="flex gap-20 justify-evenly">
-  <img
-    src="./assets/orly-cloudflare.png"
-    alt="Brand Studio workflow"
-    class="block w-85"
-  />
-  <div class="flex-1">
-    <h2>Cloudflare is a Great Place to your Build Agents</h2>
-    <ul>
-      <li>Durable objects are a great primitive<br/>for building agents</li>
-      <li>The Agents SDK cleans a lot of the rough edges (scheduling, state management, routing, etc.)</li>
-      <li>Cloudflare also provides frameworks for building chat-based app with tool-calling, code-mode nad MCP</li>
-      <li>Other providers and frameworks exist (Vercel, Mastra, Flue, Eve, etc.) that may suit your use case</li>
-      <li class="text-violet">The main thing is learn one and build something</li>
-    </ul>
-  </div>
-</div>
-
-<!--
-If you're already using cloudflare these tools make it really easy to build and experiment with agentic experiences such as these, but otherwise there are a ton of other tool and frameworks to choose from.
--->
-
-
-
----
-layout: section
-
----
-
-<h1 v-click.hide="1" class="absolute top-50">Building for the agenetic web</h1>
-
-
+<h1 v-click><span class="text-green">PICK A TOOL</span></h1>
 <h1 v-click>BE CREATIVE</h1>
 <h1 v-click>HAVE FUN</h1>
 <h1 v-click>INVENT THE FUTURE</h1>
@@ -1029,3 +1025,37 @@ So my advice to you for building agents:
 
 
 ---
+
+
+
+---
+
+EXTRAS
+
+---
+
+Rant about evals
+
+
+---
+<div class="flex gap-20 justify-evenly">
+  <img
+    src="./assets/orly-cloudflare.png"
+    alt="Brand Studio workflow"
+    class="block w-85"
+  />
+  <div class="flex-1">
+    <h2>Cloudflare is a Great Place to your Build Agents</h2>
+    <ul>
+      <li>Durable objects are a great primitive<br/>for building agents</li>
+      <li>The Agents SDK cleans a lot of the rough edges (scheduling, state management, routing, etc.)</li>
+      <li>Cloudflare also provides frameworks for building chat-based app with tool-calling, code-mode nad MCP</li>
+      <li>Other providers and frameworks exist (Vercel, Mastra, Flue, Eve, etc.) that may suit your use case</li>
+      <li class="text-violet">The main thing is learn one and build something</li>
+    </ul>
+  </div>
+</div>
+
+<!--
+If you're already using cloudflare these tools make it really easy to build and experiment with agentic experiences such as these, but otherwise there are a ton of other tool and frameworks to choose from.
+-->

@@ -35,7 +35,7 @@
     </div>
 
     <div class="message message-approve forward" v-click>
-      <span class="message-label"><code>agent.stub.approve(planId)</code></span>
+      <span class="message-label"><code>agent.stub.approvePlan(planId)</code></span>
       <span class="message-note">human decision</span>
     </div>
 
@@ -45,7 +45,7 @@
     </div>
 
     <div
-      class="absolute right-4 rounded bg-orange top-68 text-xs text-black p-2"
+      class="absolute right-4 rounded bg-teal/40 shadow-black shadow-sm top-68 text-xs text-black p-2"
       v-click
     >
       Runs each step...
@@ -56,6 +56,17 @@
       <span class="message-note">update agent state</span>
     </div>
 
+      <div class="message message-step forward" v-click>
+      <span class="message-label"><code>agent.stub.approveStep(stepId)</code></span>
+      <span class="message-note">human decision</span>
+    </div>
+
+
+    <div class="message message-complete backward" v-click>
+      <span class="message-label"><code>reportComplete()</code></span>
+      <span class="message-note">finish + final result</span>
+    </div>
+
     <div class="message message-broadcast backward" v-click>
       <span class="message-label"><code>broadcast()</code></span>
       <span class="message-note"
@@ -63,10 +74,6 @@
       >
     </div>
 
-    <div class="message message-complete backward" v-click>
-      <span class="message-label"><code>reportComplete()</code></span>
-      <span class="message-note">finish + final result</span>
-    </div>
   </div>
 </template>
 
@@ -229,6 +236,12 @@
 
 .message-approve {
   top: 14.9rem;
+  left: 16%;
+  width: 34%;
+  color: #fbbf24;
+}
+.message-step {
+  top: 23rem;
   left: 16%;
   width: 34%;
   color: #fbbf24;
