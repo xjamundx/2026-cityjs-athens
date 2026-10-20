@@ -409,6 +409,19 @@ So we added some new capabilities to our moodboard.
 </center>
 
 -->
+
+---
+
+## In order to make it work well we also added
+
+<div class="flex flex-row justify-between">
+  <div v-click class="text-green text-sm">An Approval Screen
+  <img src="./assets/approve.png" class="h-75" /></div>
+  <div v-click class="text-green text-sm">A Progress Screen
+  <img src="./assets/plan-image.png" class="h-75" /></div>
+  <div v-click class="text-green text-sm">A Built-in Eval
+  <img src="./assets/planner.jpg" class="h-75" /></div>
+</div>
 ---
 
   
@@ -421,18 +434,7 @@ So we added some new capabilities to our moodboard.
 
 <img src="./assets/prompt-fishing.png" class="absolute h-100 mt-4" />
 
----
 
-In order to make it work well we also added
-
-<div class="flex flex-row justify-between">
-  <div v-click class="text-green text-sm">An Approval Screen
-  <img src="./assets/approve.png" class="h-75" /></div>
-  <div v-click class="text-green text-sm">A Progress Screen
-  <img src="./assets/plan-image.png" class="h-75" /></div>
-  <div v-click class="text-green text-sm">A Built-in Eval
-  <img src="./assets/planner.jpg" class="h-75" /></div>
-</div>
 
 ---
 
@@ -442,13 +444,13 @@ In order to make it work well we also added
 
 <div v-click="1" class="absolute -top-4">
   
-  ### And Combined it with this Plan and Execute UI Pattern
+  ### And combined it with this plan and execute UI pattern
 
 <div class="grid grid-cols-2 grid-rows-2 gap-3">
   <img src="./assets/ui-plan-claude.png"  class="w-80" />
-  <img src="./assets/ui-plan-copilot-kit.png"  class="w-80" />
-  <img src="./assets/ui-plan-generic.png" class="w-60 relative -top-20" />
-  <img src="./assets/ui-plan-claude.png"  class="w-80" />
+  <img src="./assets/ui-plan-copilot-kit.png"  class="w-80 let-30" />
+  <img src="./assets/ui-plan-generic.png" class="w-60 relative -top-26" />
+  <img src="./assets/ui-plan-cursor.png"  class="w-80 -top-40 left-60" />
 </div>
 
 </div>
