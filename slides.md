@@ -936,9 +936,9 @@ function App() {
 
   return (<>
     <button onClick={start}>Start Generation</button>
-    {placeholders.map(workflowId => {
-     return <PlaceholderCard workflowId={workflowId} />
-    })}
+    {placeholders.map(workflowId => (
+        <PlaceholderCard workflowId={workflowId} />
+    ))}
   </>);
 }
 ```
@@ -983,21 +983,20 @@ export class MyAgent extends Agent {
 }
 ```
 
+
+
 ---
-layout: section
-transition: none
+layout: center
 ---
 
-<h1><span class="text-orange">Halloween is coming up...</span></h1></br> 
-
-<p class="text-shadow-xl">But building agents does not have to be scary</p>
+<h1 class="uppercase bg-white"><span class="text-black font-bold text-shadow-red text-shadow-lg">🕷️ Building agents does not have to be scary 👻</span></h1>
 
 ---
 layout: center
 
 ---
 
-<h1 v-click><span class="text-green">PICK A TOOL</span></h1>
+<h1><span class="text-green">PICK A TOOL</span></h1>
 <h1 v-click>BE CREATIVE</h1>
 <h1 v-click>HAVE FUN</h1>
 <h1 v-click>INVENT THE FUTURE</h1>
