@@ -636,21 +636,23 @@ Durability means being able to recover after a crash or for example if the insta
 
 ---
 
-<div class="flex flex-row gap-4 items-end">
+<div class="flex flex-row gap-4 items-end justify-between">
 <div>
-  <h4 class="text-violet !text-md mb-3 w-full text-shadow-lg">Workflows let you specify pre-determined <br/>places your AI can go.</h4>
+  <h4 class="text-violet !text-md mb-3 w-full text-shadow-lg">Each wokflow is like a metro line</h4>
   <img src="./assets/athens-metro-cropped.png" class="h-100">
 </div>
 <div  v-click="1" class="w-1/2">
-    <h4 class="text-violet !text-md mb-3 w-full text-shadow-lg " v-click="1">Agents are tour guides</h4>
+    <h4 class="text-violet !text-md mb-3 w-full text-shadow-lg " v-click="1">An agent like a personal tour guide</h4>
     <img src="./assets/athens-tour-guide-cf.jpg" class="h-100">
 </div>
 </div>
 
 <!--
+Workflow: It's a pre-determined set of steps with hopefully very consistent results. 
+Agent:
   <li>Know about all the routes you could take</li>
   <li>Recommend correct route for each person</li>
-  <li>Constantly in communication with everyone</li>            
+  <li>Constantly in communication with everyone in the party</li>            
 -->
 
 ---
@@ -793,7 +795,7 @@ transition: none
 
 <h4 class="text-violet !text-md mb-3 w-full text-shadow-lg">Product Insertion Loop Example</h4>
 
-```ts{|3,23|5,13|15,22}
+```ts{|3,23|5,13|10-12|15,17,22|17-22}
 let baseImage = image;
 // loop over each category in the moodboard
 for (const category in moodboard.categories) {
@@ -808,10 +810,10 @@ for (const category in moodboard.categories) {
         return image;
     });
     // evaluate for realism and override the base image if it passes
-    const thing = await step.do(`evaluate image (${category.name})`, () => {
+    await step.do(`evaluate image (${category.name})`, () => {
         const messages = ["Evalate this picture for realism on a scale of 0-1"];
         const result = await this.env.AI.run("@google/gemini-3.1-lite", { messages, attachments: [activeImage] });
-        if (result.quality > .8) {
+        if (result.realism > .8) {
             baseImage = activeImage;
         } // else skip, log, ask for human input, etc...
         return result;
@@ -850,10 +852,11 @@ layout: none
 </div>
   <div class="w-1/2 rounded-xl p-4 bg-black/20">
     <ul class="text-white/80">
-      <li>Clients can connect to them directly via websocket</li>
-      <li>They help run AI workflows, workers, sub-agents, codemode, chat, etc.</li>
-      <li>They have persistent state backed by SQL storage</li>
-      <li>Any state changes made in the agent are also sent to the client</li>
+      <li>Built on-top of durable objects</li>
+      <li>Clients can connect to them directly over a websocket connection</li>
+      <li>They can run AI workflows, workers, sub-agents, codemode, chat, etc.</li>
+      <li>They have persistent state backed by SQLite</li>
+      <li>State changes in the agent are automatically sent to any connected clients</li>
     </ul>
 </div>
 </div>
@@ -985,7 +988,7 @@ class MyAgent extends Agent {
 }
 ```
 Workflow
-```ts{|2-4|5-12}
+```ts{|2-4|5-12|6,7|8,9|10,11}
   if (result.realism < .8) { // called with the eval step in the insertion loop
     const result = await this.waitForApproval<{ decision: EvalDecision }>(step, {
       timeout: "24 hours",
@@ -993,7 +996,7 @@ Workflow
     switch (result.decision) {
       case "continue":
         baseImage = activeimage;
-      case "skip";
+      case "skip":
         continue;
       case "retry":
         throw new Error("Results were not good enough. Retrying.")
