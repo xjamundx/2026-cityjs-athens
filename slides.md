@@ -169,8 +169,8 @@ layout: center
 
 ---
 
-<h1><span class="uppercase tdext-green">How do we fix this?</span></h1>
-<h3 v-click><span class="text-green">How would <span class="underline">you</span> fix this?</span></h3>
+<h1><span class="text-green">How do we fix this?</span></h1>
+<h3 v-click><span class="text-violet">How would <span class="underline">you</span> fix this?</span></h3>
 
 <!--
 - Train a better model
@@ -406,7 +406,7 @@ So we added some new capabilities to our moodboard.
   
 <div class="absolute right-4 p-4 pl-8 gap-4 flex flex-col text-right w-100">
     <p class="!mb-3text-sm font-bold tracking-[0.2em] text-green uppercase">Product Insertion Loop</p>
-    <p class="pl-4 mt-6 max-w-md text-xl leading-relaxed text-slate-300">
+    <p class="pl-4 mt-6 max-w-md text-xl !leading-[.9em] text-slate-300">
       Replace items in your base image with people and products from your moodboard.
     </p>
 </div>
@@ -449,7 +449,7 @@ So we added some new capabilities to our moodboard.
 <div class="absolute pr-4 grid grid-cols-[1fr_28rem] items-center gap-14">
   <div>
     <p class="!mb-3 text-sm font-bold tracking-[0.2em] text-green uppercase">Our Full AI Workflow</p>
-    <h1 class="!m-0 text-6xl !leading-tight text-blue  ">Product<br/>Insertion</h1>
+    <h1 class="!m-0 text-6xl !leading-tight text-blue  ">Producer<br/>Mode</h1>
     <p class="mt-6 max-w-md text-xl leading-relaxed text-slate-300">
       Use moodboard images to enhance the user's prompt. Pick
       the best model. Loop through product images and replace
@@ -514,7 +514,7 @@ tranistion: none
 
 ---
 
-<h2 class="absolute -top-4">We combined moodboards <span>with this <span class="text-violet">plan and execute</span> UI pattern</span></h2>
+<h2 class="absolute -top-4"><span class="text-yellow">We combined moodboards <span>with this <span class="text-violet">Plan and Execute</span> UI pattern</span></span></h2>
 
 <div class="grid grid-cols-2 grid-rows-2 gap-3 top-16 relative">
   <img src="./assets/ui-plan-claude.png"  class="w-80 -top-4 left-2 shadow-md shadow-black" />
@@ -537,7 +537,7 @@ WHAT WE DIDNT bUILt WAS CHAT
 ---
 
 <div class="absolute -top-4">
-  <h2 class="!mb-6"><span class="text-yellow">Ending up with something like this:</span></h2>
+  <h2 class="!mb-6"><span class="text-blue">Giving us <span class="text-blue">Producer Mode</span></span></h2>
 </div>
 
 <div class="flex flex-row justify-between relative top-18">
@@ -563,51 +563,42 @@ transition: none
 
 # Let's Build The Thing
 
-How hard can it be?
+Now for the fun part
 
 <!--
 
 Now for the fun bit, how did we build it?
 -->
 
-
 ---
 
 <div class="absolute inset-10 flex flex-col">
-  <p class="!mb-2 text-sm font-bold tracking-[0.2em] text-green uppercase">The architecture</p>
-  <h1 class="!m-0 text-5xl text-blue">Our Two Challenges</h1>
-  <div class="mt-7 grid h-[19.5rem] grid-cols-2 gap-7">
+  <h2 class="" ><span class="text-yellow/80">Building Blocks For Agentic Experiences</span></h2>
+  <!-- <h1 class="!m-0 text-5xl text-yellow">The Architecture</h1> -->
+  <div class="mt-14 grid h-[16.5rem] grid-cols-2 gap-7">
     <div class="flex flex-col overflow-hidden rounded-3xl border border-teal/60 bg-[#15172a] shadow-xl shadow-black/30">
       <div class="flex min-h-0 flex-1 flex-col p-5">
-        <div class="mb-3 flex h-10 w-10 items-center justify-center rounded-xl bg-teal/15 text-base font-bold !text-green">01</div>
-        <p class="!m-0 text-xs font-bold tracking-[0.14em] text-slate-400 uppercase">Orchestration</p>
-        <h2 class="!m-0 text-[1.6rem] leading-tight text-white">Model and durably execute our AI workflows</h2>
-        <p class="!mb-0 !mt-2 text-sm leading-snug text-slate-300">Long-running steps, retries, and observability.</p>
-      </div>
-      <div v-click class="border-t border-teal/40 py-3 px-6">
-        <span class="text-sm font-bold tracking-[0.16em] text-green uppercase">Cloudflare Workflows</span>
+        <span class="mb-3 text-sm font-bold tracking-[0.16em] bg-green/20 p-2 w-fit rounded-lg text-green uppercase">Workflows</span>
+        <h2 class="!m-0 text-[1.6rem] leading-tight text-white">Run a pre-defined multi-step AI process</h2>
+        <p class="!mb-2 !mt-4 !text-sm !leading-snug text-slate-300">Long-running steps, retries, and observability.</p>
+        <p v-click class="!mb-0 !mt-2 !text-sm !leading-snug text-slate-400">Cloudflare Workflows, AWS Step Functions, Inngest, Temporal, Vercel Workflows.</p>
       </div>
     </div>
     <div class="flex flex-col overflow-hidden rounded-3xl border border-purple/70 bg-[#17152b] shadow-xl shadow-black/30">
       <div class="flex min-h-0 flex-1 flex-col p-5">
-        <div class="mb-3 flex h-10 w-10 items-center justify-center rounded-xl bg-purple/20 text-base font-bold text-purple">02</div>
-        <p class="!m-0 text-xs font-bold tracking-[0.14em] text-slate-400 uppercase">Coordination</p>
-        <h2 class="!m-0 text-[1.6rem] leading-tight text-white">Execute AI workflows and keep the users in sync</h2>
-        <div class="!mb-0 !mt-2 text-sm leading-snug text-slate-300">Help us pick the right AI tools to use. Run them and keep the client aware of progress and problems.</div>
-      </div>
-      <div v-click class="border-t border-purple/50 py-3 px-6">
-        <span class="text-sm font-bold tracking-[0.16em] text-purple uppercase">Cloudflare Agents SDK</span>
+        <span class="mb-3 text-sm !inline-block font-bold tracking-[0.16em] w-fit bg-purple/20 rounded-lg p-2 text-purple uppercase">Agents</span>
+        <div class="relative">
+          <h2 class="!m-0 text-[1.6rem] leading-tight text-white">Plan and execute tasks on behalf of a user</h2>
+          <p class="!mb-2 !mt-4 !text-sm !leading-snug text-slate-300">Can run "tools" autonomously. Usually keep sessions or a memory. Can communicate progress or ask for help.</p>
+          <p v-click class="!mb-0 !mt-2 !text-sm !leading-snug text-slate-400">Cloudflare Agents SDK, Eve, Mastra, Flue, Vercel AI SDK, LangChain, etc.</p>
+          </div>
       </div>
     </div>
   </div>
 </div>
 
-
-<!--
-Really overwhelming so many different agent platforms and tools out there
--->
-
 ---
+
 
 # Cloudflare Concepts
 
@@ -647,11 +638,11 @@ Durability means being able to recover after a crash or for example if the insta
 
 <div class="flex flex-row gap-4 items-end justify-between">
 <div>
-  <h4 class="text-violet !text-md mb-3 w-full text-shadow-lg">Each wokflow is like a metro line</h4>
+  <h4 class="text-white mb-3 w-full text-shadow-lg">Each wokflow is like a metro line</h4>
   <img src="./assets/athens-metro-cropped.png" class="h-100">
 </div>
 <div  v-click="1" class="w-1/2">
-    <h4 class="text-violet !text-md mb-3 w-full text-shadow-lg " v-click="1">An agent is like a personal tour guide</h4>
+    <h4 class="text-white !text-md mb-3 w-full text-shadow-lg " v-click="1">An agent is like a personal tour guide</h4>
     <img src="./assets/athens-tour-guide-cf.jpg" class="h-100">
 </div>
 </div>
@@ -665,13 +656,13 @@ Agent:
 
 ---
 
-<h2><span class="!text-violet">WE CAN BUILD THIS WITH JUST A FEW FILES</span></h2>
+<h2 class="!mb-12"><span class="text-white">WE CAN BUILD THIS WITH JUST A FEW FILES!</span></h2>
 
 <div class="flex flex-row w-full gap-2">
 
-  <div class="flex-1 bg-black/10 h-full rounded-lg p-2">
+  <div class="flex-1 bg-black/10 h-full rounded-lg p-3">
 
-  ### Client Code
+  <h3 class="!m-0"><span class="text-blue">Client Code</span></h3>
   
   <ul>
     <li><span class="text-green">App.tsx</span></li>
@@ -679,9 +670,9 @@ Agent:
 
   </div>
 
-  <div class="flex-1 bg-black/10 h-full rounded-lg p-2">
+  <div class="flex-1 bg-black/10 h-full rounded-lg p-3">
 
-  ### Agent Code
+  <h3 class="!m-0"><span class="text-blue">Agent Code</span></h3>
 
   <ul>
     <li><span class="text-green">producer-agent.ts</span></li>
@@ -689,9 +680,9 @@ Agent:
 
   </div>
 
-  <div class="flex-1 bg-black/10 h-full rounded-lg p-2">
+  <div class="flex-1 bg-black/10 h-full rounded-lg p-3">
 
-  ### Workflow Code
+  <h3 class="!m-0"><span class="text-blue">Workflow Code</span></h3>
 
   <ul>
     <li><span class="text-green">creative-guidance.ts</span></li>
@@ -700,9 +691,9 @@ Agent:
 
   </div>
 
-  <div class="flex-1 bg-black/10 h-full rounded-lg p-2">
+  <div class="flex-1 bg-black/10 h-full rounded-lg p-3">
 
-  ### Config
+  <h3 class="!m-0"><span class="text-blue">Config</span></h3>
   <ul>
     <li><span class="text-green">wrangler.toml</span></li> 
   </ul>
