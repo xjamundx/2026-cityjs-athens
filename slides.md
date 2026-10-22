@@ -51,7 +51,8 @@ Hi, I'm Jamund Ferguson. I'm currently at Axle Energy, but I spent the last two 
   </div>
   <div class="pl-2">
     <h2 class="!mt-0 !mb-4">Brand Studio</h2>
-    <p>Generates marketing images <br/> from a text prompt box</p>
+    <p>Generates marketing images <br/> from a text prompt</p>
+    <p v-click class="text-violet">But the results weren't good enough for our customers</p>
   </div>
 </div>
 
@@ -76,9 +77,9 @@ Trying to describe an image to a diffusion model is kind of like those police sk
   </a></figcaption>
   </figure>
   <div>
-  <div class="absolute text-[2.5em] leading-[.75] text-shadow-sm">
-Humans in general are fairly bad at describing people in great detail.
-  <br/><br/>But the details really matter.
+  <div class="absolute text-[2.5em] leading-[1.1] text-shadow-sm">
+Humans in general are fairly bad at describing other people in great detail.
+  <br/><br/><span class="text-violet" v-click>But the details really matter.</span>
   </div>
   </div>
 </div>
@@ -116,7 +117,7 @@ On the opposite end of the spectrum, people write these really tiny prompts with
 ---
 ---
 
-<h2 className="!m-0 !p-0 uppercase">Too Many Models</h2>
+<h2 className="!m-0 !p-0 ">Too many models</h2>
 
 <div class="flex flex-row gap-4">
 
@@ -143,7 +144,7 @@ We're breaking the golden rule of UX
 ---
 
 <div class="flex flex-col items-center">
-  <h2 class="uppercase text-shadow-lg"><span class="text-violet-200">People Want To Sell Their Own Stuff</span></h2>
+  <h1 class="text-shadow-lg"><span class="text-violet-200">People want to sell their own stuff</span></h1>
   <img src="./assets/ai-slop-chocolate.jpg" class="h-80" />
   <p class="!mb-4 text-sm font-bold tracking-[0.16em] text-green uppercase">Not your AI slop chocolate</p>    
 </div>
@@ -157,37 +158,29 @@ layout: section
 # AI MODELS ARE A BLACK BOX
 
 <div class="flex flex-col items-center">
-  <p class="text-green font-light w-180 !leading-tight p-0 text-shadow-sm text-shadow-black">People generally don't understand what they're doing or how to improve their output</p>
+  <p class="text-green  w-180 !leading-tight p-0 text-shadow-sm text-shadow-black">People generally don't understand what models are doing or how to improve their output</p>
 
   <img src="./assets/dune-pain-box.avif" class="h-90" />
   <sub class="relative -top-6 !text-xs !p-0 text-slate-600">Image: Warner Bros. Pictures</sub>
 </div>
 
 ---
-layout: section
+layout: center
 
 ---
 
-## Ask the Audience
-How do we fix this?
+<h1><span class="uppercase tdext-green">How do we fix this?</span></h1>
+<h3 v-click><span class="text-green">How would <span class="underline">you</span> fix this?</span></h3>
 
 <!--
-Repeat it back to them, thank them and move on...
--->
-
----
-
-### Some of our ideas
-
 - Train a better model
 - Build a ComfyUI workflow
 - Add tutorials and onboarding instructions
 - Add an MCP server and let Claude figure it out
 - What about MCP UI?
 - Or a chat-based UI?
+-->
 
-
-<h1 v-click class="text-violet relative top-8"><span class="text-violet">What was it!?</span></h1>
 
 
 ---
@@ -313,8 +306,7 @@ Trying to describe an image to a diffusion model is kind of like those police sk
     <p class="!mb-3 text-sm font-bold tracking-[0.2em] text-green uppercase">A Partial AI Workflow</p>
     <h1 class="!m-0 text-6xl leading-tight text-blue">Creative<br/>Guidance</h1>
     <p class="mt-6 max-w-md text-xl leading-relaxed text-slate-300">
-      Use moodboard images to enhance the users image prompt and then pick
-      the best model
+      Use moodboard images to enhance the user's prompt. Pick the best model. 
     </p>
   </div>
 
@@ -351,7 +343,7 @@ So if you combine all those together (prompt enhancement, auto model, and auto m
 
 <div class="mt-4 flex justify-center items-center">
   <img src="./assets/prompt-boots.png" v-click.hide="1" class="absolute top-30 w-200" />
-  <img src="./assets/board-urban.png" v-click v-click.hide="2" class=" h-100" />
+  <img src="./assets/board-urban.png" v-click class=" h-100" />
   <img src="./assets/boots-urban.png" v-click="2" class="absolute h-100"/>
 </div>
 
@@ -371,7 +363,7 @@ transition: none
 
 ---
 
-<p class="!mb-4 text-sm font-bold tracking-[0.16em] uppercase">MOODDBOARDS SOLVE A LOT OF PROBLEMS <span class="text-right text-violet" v-click="1">BUT THEY DONT SHOW US THE USERS PRODUCTS</span>
+<p class="!mb-4 text-md font-bold tracking-[0.16em] uppercase absolute bottom-0">MOODDBOARDS SOLVE A LOT OF PROBLEMS <span class="text-right text-violet" v-click="1">BUT THEY DONT SHOW US THE USER'S PRODUCTS</span>
 </p>
 
 <div class="mt-4 gap-4 flex justify-evenly items-center">
@@ -457,9 +449,9 @@ So we added some new capabilities to our moodboard.
 <div class="absolute pr-4 grid grid-cols-[1fr_28rem] items-center gap-14">
   <div>
     <p class="!mb-3 text-sm font-bold tracking-[0.2em] text-green uppercase">Our Full AI Workflow</p>
-    <h1 class="!m-0 text-6xl leading-tight text-blue">Producer<br/>Mode</h1>
+    <h1 class="!m-0 text-6xl !leading-tight text-blue  ">Product<br/>Insertion</h1>
     <p class="mt-6 max-w-md text-xl leading-relaxed text-slate-300">
-      Use moodboard images to enhance the users prompt. Pick
+      Use moodboard images to enhance the user's prompt. Pick
       the best model. Loop through product images and replace
       AI versions with the real thing. Evaluate for realism.
     </p>
@@ -512,26 +504,26 @@ So if you combine all those together (prompt enhancement, auto model, and auto m
 
 ---
 
+<h2 class="absolute -top-4">We combined moodboards...</h2>
+
+<img src="./assets/board-urban.png" class="top-6 h-100 mt-12" />
 
 
-<div v-click.hide class="absolute -top-4">
-  <h3>So basically took mooboards, which everyone knows well...</h3>
+---
+tranistion: none
+
+---
+
+<h2 class="absolute -top-4">We combined moodboards <span>with this <span class="text-violet">plan and execute</span> UI pattern</span></h2>
+
+<div class="grid grid-cols-2 grid-rows-2 gap-3 top-16 relative">
+  <img src="./assets/ui-plan-claude.png"  class="w-80 -top-4 left-2 shadow-md shadow-black" />
+  <img src="./assets/ui-plan-copilot-kit.png"  class="w-80 left-29 top-6 shadow-md shadow-black" />
+  <img src="./assets/ui-plan-generic.png" class="w-60 relative bottom-32 shadow-md shadow-black" />
+  <img src="./assets/ui-plan-cursor.png"  class="w-80 bottom-48 right-50 shadow-md shadow-black"  />
 </div>
 
-<div v-click="1" class="absolute -top-4">
-  
-  ### And combined it with this plan and execute UI pattern
 
-<div class="grid grid-cols-2 grid-rows-2 gap-3">
-  <img src="./assets/ui-plan-claude.png"  class="w-80" />
-  <img src="./assets/ui-plan-copilot-kit.png"  class="w-80 let-30" />
-  <img src="./assets/ui-plan-generic.png" class="w-60 relative -top-26" />
-  <img src="./assets/ui-plan-cursor.png"  class="w-80 -top-40 left-60" />
-</div>
-
-</div>
-
-<img src="./assets/board-urban.png" class="h-100 mt-12" v-click.hide="1" />
 
 <!--
 
@@ -544,15 +536,22 @@ WHAT WE DIDNT bUILt WAS CHAT
 
 ---
 
-## Featuring:
+<div class="absolute -top-4">
+  <h2 class="!mb-6"><span class="text-yellow">Ending up with something like this:</span></h2>
+</div>
 
-<div class="flex flex-row justify-between">
-  <div class="text-green text-sm">An Approval Screen
-  <img src="./assets/approve.png" class="h-75" /></div>
-  <div class="text-green text-sm">A Progress Screen
-  <img src="./assets/plan-image.png" class="h-75" /></div>
-  <div class="text-green text-sm">A Built-in Eval
-  <img src="./assets/planner.jpg" class="h-75" /></div>
+<div class="flex flex-row justify-between relative top-18">
+  <div>
+    <h4 class="text-green text-md">An Approval Screen</h4>
+    <img src="./assets/approve.png" class="h-75" /></div>
+  <div>
+    <h4 class="text-green text-md">A Progress Screen</h4>
+    <img src="./assets/plan-image.png" class="h-75" />
+  </div>
+  <div class="text-green text-md">
+    <h4 class="text-green text-md">A Built-in Eval</h4>
+    <img src="./assets/planner.jpg" class="h-75" />
+  </div>
 </div>
 
 ---
@@ -603,6 +602,11 @@ Now for the fun bit, how did we build it?
   </div>
 </div>
 
+
+<!--
+Really overwhelming so many different agent platforms and tools out there
+-->
+
 ---
 
 # Cloudflare Concepts
@@ -610,6 +614,11 @@ Now for the fun bit, how did we build it?
 <CloudflareRings />
 
 <!--
+
+How many of you have built stuff on cloudflare before?
+
+That will determine how much I go into depths here.
+
 This is a conceptual product stack, not a literal inheritance diagram.
 Cloudflare Agents build on Durable Objects. Workflows provide durable execution for applications on Workers, and the Agents SDK can be used with Workflows. The CDN represents the global Cloudflare network beneath the application runtime.
 
@@ -642,7 +651,7 @@ Durability means being able to recover after a crash or for example if the insta
   <img src="./assets/athens-metro-cropped.png" class="h-100">
 </div>
 <div  v-click="1" class="w-1/2">
-    <h4 class="text-violet !text-md mb-3 w-full text-shadow-lg " v-click="1">An agent like a personal tour guide</h4>
+    <h4 class="text-violet !text-md mb-3 w-full text-shadow-lg " v-click="1">An agent is like a personal tour guide</h4>
     <img src="./assets/athens-tour-guide-cf.jpg" class="h-100">
 </div>
 </div>
@@ -650,9 +659,8 @@ Durability means being able to recover after a crash or for example if the insta
 <!--
 Workflow: It's a pre-determined set of steps with hopefully very consistent results. 
 Agent:
-  <li>Know about all the routes you could take</li>
-  <li>Recommend correct route for each person</li>
-  <li>Constantly in communication with everyone in the party</li>            
+  They're planning the trip. Thye're deciding which routes you need to take.
+  Which workflow to execute when.
 -->
 
 ---
