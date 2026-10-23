@@ -702,42 +702,72 @@ Durability means being able to recover after a crash or for example if the insta
 </div>
 
 ---
-transition: none
----
 
-<SystemArchitecture />
 
----
-transition: none
----
-
-```ts {1-2,24-25|3-6|8-15|17-19|21-23}
-export class ImageProcessingWorkflow extends AgentWorkflow {
+```ts {|1-4|6-9|10-20|17-19|22|24}
+export class CreativeGuidanceWorkflow extends AgentWorkflow {
   async run(event: WorkflowEvent, step: WorkflowStep) {
-    const imageData = await step.do("fetch image", async () => {
-      const object = await this.env.BUCKET.get(event.payload.imageKey);
-      return await object.arrayBuffer();
+    
+    const { moodboardId, prompt } = event.payload;
+
+    const moodboard = await step.do("get mooodboard descriptions", async () => {
+      const results = await getMoodbardDescriptions(moodboardId);
+      return results;
     });
 
-    const description = await step.do("generate description", async () => {
-      const imageArray = Array.from(new Uint8Array(imageData));
-      return await this.env.AI.run("@cf/llava-hf/llava-1.5-7b-hf", {
-        image: imageArray,
-        prompt: "Describe this image in one sentence",
-        max_tokens: 50,
+    const prompt = await step.do("enhance prompt", async () => {
+      const messsages = [
+        { role: "system", content: "You are an an expert at writing diffusion image generation prompts,"
+          + "given the following prompt, you will add details to ensure ..." },
+        { role: "user", content: userPrompt },
+      ];
+      return await this.env.AI.run("@cf/mistralai/mistral-small-3.1-24b-instruct", {
+        messages,
       });
     });
 
-    const result = await this.waitForApproval<{ approvedBy: string }>(step, {
-      timeout: "24 hours",
-    });
+    const model = await step.do("auto-model selection", async () => { /* ... */ });
 
-    await step.do("publish", async () => {
-      await this.env.BUCKET.put(`public/${event.payload.imageKey}`, imageData);
-    });
+    await step.do("generate image...", async () => { /* ... */});
   }
 }
 ```
+
+  <div class="flex flex-col gap-4 w-86 absolute right-0 top-0">
+    <ModelBadge
+      class="w-full"
+      :step="1"
+      title="Describe Moodboard Images"
+      model-type="Vision LM (VLM)"
+      model="Gemini 3.1 Flash-Lite"
+    />
+    <ModelBadge
+      class="w-full"
+      :step="2"
+      title="Enhance prompt"
+      model-type="LLM"
+      model="Mistral Small 4"
+    />
+    <ModelBadge
+      class="w-full"
+      :step="3"
+      title="Auto Model Selection"
+      model-type="Decision Model"
+      model="Jev, Clef or Decisions API"
+    />
+    <ModelBadge
+      class="w-full"
+      :step="4"
+      title="Generate Image"
+      model-type="Image Model"
+      model="(Result of above)"
+    />
+  </div>
+
+<!--
+
+Infrastructure as Code
+-->
 
 <!--
 
@@ -748,81 +778,28 @@ Here's a sample from the cloudflare docs that relates pretty heavily to what we'
 Simple. Series of steps.
 -->
 
----
-
-
-<h4 class="text-violet !text-md mb-3 w-full text-shadow-lg">Step-By-Step Progress Updates (Workflow)</h4>
-
-```ts{|2-5|2-5,12-15|22-23}
-await step.do("enhance prompt", async ({ step: { name }}) => {
-    await this.reportProgress({
-        step: name,
-        status: "active"
-    });
-   
-    const response = await this.env.AI.run(
-        "@cf/mistralai/mistral-small-3.1-24b-instruct",
-        { messages }
-    );
-    
-    await this.reportProgress({
-        step: name,
-        status: "completed"
-    });
-
-    return response;
-
- });
-
-
-// only runs once
-await step.reportComplete(image);
-
-```
-
 <!--
-
-If you want to add progress updates, that's easy too.
-
--->
-
-
----
-transition: none
 ---
 
-<h4 class="text-violet !text-md mb-3 w-full text-shadow-lg">Product Insertion Loop Example</h4>
-
-```ts{|3,23|5,13|10-12|15,17,22|17-22}
-let baseImage = image;
-// loop over each category in the moodboard
-for (const category in moodboard.categories) {
-    // generate an image by replacing an item in the image with the moodboard image
-    const activeImage = await step.do(`product insertion (${category.name})`, () => {
-        const prompt = `We are in the process of making an image with the following description:
-            ${enhancedPrompt}
-            Replace the attached picture (2nd attachment) into the base image (1st attachment),
-            replacing the ai generated version of this ${category.name} with the provided image.`
-        const imageInput = [baseImage, category.image];
-        const image = await this.env.AI.run("@google/nano-banana-2", { prompt, image_input });
-        return image;
-    });
-    // evaluate for realism and override the base image if it passes
-    await step.do(`evaluate image (${category.name})`, () => {
-        const messages = ["Evalate this picture for realism on a scale of 0-1"];
-        const result = await this.env.AI.run("@google/gemini-3.1-lite", { messages, attachments: [activeImage] });
-        if (result.realism > .8) {
-            baseImage = activeImage;
-        } // else skip, log, ask for human input, etc...
-        return result;
-    });
+```ts
+const model = await step.do("auto-model selection", async () => {
+  return await this.env.AI.run("typesafe/jev", {
+    state: `A user wants to generate an image with the following prompt: ${userPrompt}`,
+    questions: {
+      type: "choice",
+      instructions: "Which generation model will return the best image for the prompt?",
+      model: {
+        "stable-image-ultra": "Best for pure art and aesthetics, hero images, fine art, etc.",
+        "stable-image-core": "Best for experimenting with ideas. Quick and affordable.",
+        "stable-diffusion-3.5-large": "High quality images with lots of details and realism",
+        "gpt-image-1.5": "Best for text layouts and graphic design",
+        // ..
+      }
+    }
+  });
 }
-
 ```
 
-<!--
-
-Setting up loops is easy as well.
 -->
 
 ---
@@ -841,7 +818,7 @@ layout: none
 
 ---
 
-### Critical Things About Agents on Cloudflare
+### Critical Things About Cloudflare Agents SDK
 
 <div class="flex flex-row">
 
@@ -851,10 +828,11 @@ layout: none
   <div class="w-1/2 rounded-xl p-4 bg-black/20">
     <ul class="text-white/80">
       <li>Built on-top of durable objects</li>
-      <li>Clients can connect to them directly over a websocket connection</li>
-      <li>They can run AI workflows, workers, sub-agents, codemode, chat, etc.</li>
+      <li>Provides both infrastructure and libraries for client and server</li>
       <li>They have persistent state backed by SQLite</li>
-      <li>State changes in the agent are automatically sent to any connected clients</li>
+      <li>State changes in the agent are automatically sent to connected clients (over WebSockets)</li>
+      <li>They can run AI workflows, workers, sub-agents, codemode, chat, etc.</li>
+      <li>BYOB: Bring your own (AI or not) 🧠 </li>
     </ul>
 </div>
 </div>
@@ -865,42 +843,34 @@ Remembmer, Agents are built on-top of durable, so they have state, but the agent
 
 ---
 
-<h4 class="text-violet !text-md mb-3 w-full text-shadow-lg">Firing off a workflow and keeping it in state</h4>
+<h4 class="text-violet !text-md mb-3 w-full text-shadow-lg">Example Agent Code</h4>
 
 
-```ts{|9-15,18|1,3,8,16-17}
+```ts{|1-3,5-7|9-20|12-17}
 type MyState = {
-    name: string;
-    activeWorkflows: string[]
+    plans: Record<string, Plan>;
 }
 export class MyAgent extends Agent {
 	initialState: MyState = {
-		name: "",
-        activeWorkflows: []
+		plans: {}
 	};
 
-    @callable()
-    async start(moodboardId: string, prompt: string): Promise<string> {
-        const id = await this.runWorkflow("CREATIVE_GUIDANCE", {
-            moodboardId, prompt
-        });
-        const activeWorkflows = this.state.activeWorkflows.concat(id);
-        this.setState({ activeWorkflows })
-        return { id };
-    }
-
-	// ...
+  // TODO: probably replace this with a smart brain at some point
+  @callable()
+  async createPlan(moodboardId: string, prompt: string): Promise<string> {
+    const planId = crypto.randomUUID();
+    const moodboard = await getMoodboardById();
+    const planType = moodboard.products.length > 0 ? "PRODUCT_INSERTION" : "CREATIVE_GUIDANCE";
+    // ...
+    this.setState({ plans })
+    return planId;
+  }
 }
 ```
-<!--
-
-creative guidance workflow (As defined in our config file)
-And then we can use the setState function to send the in progress workflows down to the client
--->
 
 ---
 
-<h4 class="text-violet !text-md mb-3 w-full text-shadow-lg">Showing Active Workflows</h4>
+<h4 class="text-violet !text-md mb-3 w-full text-shadow-lg">Example Client Code</h4>
 
 
 ```tsx{|6-8,12|14,17|5,9-11|5,9-11,18-20}
@@ -908,21 +878,21 @@ import { useAgent } from "agents/react";
 import type { MyAgent } from "./server";
 
 function App() {
-  const [placeholders, setPlaceholders] = useState(); 
+  const [plans, setPlans] = useState(); 
   const agent = useAgent<MyAgent, State>({
     agent: "my-agent", // /agents/my-agent
     name: "user-123", // channel name
     onStateChanged: (state) => {
-      setPlaceholders(state.activeWorkflows);
+      setPlans(state.plans);
     }
   });
 
-  const start = async () => await agent.stub.start();
+  const start = async () => await agent.stub.createPlan(moodboardId, prompt);
 
   return (<>
-    <button onClick={start}>Start Generation</button>
-    {placeholders.map(workflowId => (
-        <PlaceholderCard workflowId={workflowId} />
+    <button onClick={start}>Generate Plan</button>
+    {Object.keys(plans).map(workflowId => (
+        <PlaceholderCard planId={planId} />
     ))}
   </>);
 }
@@ -935,72 +905,12 @@ So first we setup a persistent weboscket connection here with the useAgent() hoo
 any state chang events on teh server...
 -->
 
-
-
+---
+transition: none
 ---
 
-<h4 class="text-violet !text-md mb-3 w-full text-shadow-lg">Step-By-Step Progress Updates (Agent)</h4>
-<img src="./assets/planner.jpg" class="absolute right-4 top-24 z-20 w-40" />
+<SystemArchitecture />
 
-```ts{|1-3,6|9,18-19,23|10-13|14-17|20-22}
-type StepStatus = Record<StepName, "pending" | "active" | "completed">;
-// { "enhance prompt": "completed", "generating image": "pending" }
-type MyState = { activeWorkflows: Record<WorkflowId, StepStatus> }
-export class MyAgent extends Agent {
-	initialState: MyState = {
-        activeWorkflows: {} 
-	};
-
-  async onWorkflowProgress(workflowName: string, instanceId: string, progress: MyState["activeWorkflows"]) {
-    const steps = {
-        ...this.state.activeWorkflows[instanceId],
-        [progress.step]: progress.status,
-    };
-    this.setState({
-        ...this.state.activeWorkflows,
-        [instanceId]: steps
-    });
-  }
-  async onWorkflowComplete(workflowName: string, instanceId: string, result?: GeneratedImage) {
-    const activeWorkflows = activeWorkflows
-      .filter(id => id === instanceId);
-    this.setState({ activeWorkflows })
-  }
-}
-```
-
----
-
-
-<h4 class="text-violet !text-md mb-3 w-full text-shadow-lg">Eval Decision Workflow</h4>
-<img src="./assets/planner.jpg" class="absolute right-4 top-24 z-20 w-40" />
-
-
-```ts{|1,4-6}
-type EvalDecision = "skip" | "continue" | "retry";
-class MyAgent extends Agent {
-  @callable()
-  async makeDecision(workflowId: string, decision: EvalDecision): Promise<void> {
-    await this.approveWorkflow(workflowId, { decision });
-  }
-}
-```
-Workflow
-```ts{|2-4|5-12|6,7|8,9|10,11}
-  if (result.realism < .8) { // called with the eval step in the insertion loop
-    const result = await this.waitForApproval<{ decision: EvalDecision }>(step, {
-      timeout: "24 hours",
-    });
-    switch (result.decision) {
-      case "continue":
-        baseImage = activeimage;
-      case "skip":
-        continue;
-      case "retry":
-        throw new Error("Results were not good enough. Retrying.")
-    }
-  }
-```
 
 ---
 
@@ -1102,3 +1012,73 @@ Rant about evals
 <!--
 If you're already using cloudflare these tools make it really easy to build and experiment with agentic experiences such as these, but otherwise there are a ton of other tool and frameworks to choose from.
 -->
+
+
+
+---
+
+
+---
+
+<h4 class="text-violet !text-md mb-3 w-full text-shadow-lg">Step-By-Step Progress Updates (Agent)</h4>
+<img src="./assets/planner.jpg" class="absolute right-4 top-24 z-20 w-40" />
+
+```ts{|1-3,6|9,18-19,23|10-13|14-17|20-22}
+type StepStatus = Record<StepName, "pending" | "active" | "completed">;
+// { "enhance prompt": "completed", "generating image": "pending" }
+type MyState = { activeWorkflows: Record<WorkflowId, StepStatus> }
+export class MyAgent extends Agent {
+	initialState: MyState = {
+        activeWorkflows: {} 
+	};
+
+  async onWorkflowProgress(workflowName: string, instanceId: string, progress: MyState["activeWorkflows"]) {
+    const steps = {
+        ...this.state.activeWorkflows[instanceId],
+        [progress.step]: progress.status,
+    };
+    this.setState({
+        ...this.state.activeWorkflows,
+        [instanceId]: steps
+    });
+  }
+  async onWorkflowComplete(workflowName: string, instanceId: string, result?: GeneratedImage) {
+    const activeWorkflows = activeWorkflows
+      .filter(id => id === instanceId);
+    this.setState({ activeWorkflows })
+  }
+}
+```
+
+---
+
+
+<h4 class="text-violet !text-md mb-3 w-full text-shadow-lg">Eval Decision Workflow</h4>
+<img src="./assets/planner.jpg" class="absolute right-4 top-24 z-20 w-40" />
+
+
+```ts{|1,4-6}
+type EvalDecision = "skip" | "continue" | "retry";
+class MyAgent extends Agent {
+  @callable()
+  async makeDecision(workflowId: string, decision: EvalDecision): Promise<void> {
+    await this.approveWorkflow(workflowId, { decision });
+  }
+}
+```
+Workflow
+```ts{|2-4|5-12|6,7|8,9|10,11}
+  if (result.realism < .8) { // called with the eval step in the insertion loop
+    const result = await this.waitForApproval<{ decision: EvalDecision }>(step, {
+      timeout: "24 hours",
+    });
+    switch (result.decision) {
+      case "continue":
+        baseImage = activeimage;
+      case "skip":
+        continue;
+      case "retry":
+        throw new Error("Results were not good enough. Retrying.")
+    }
+  }
+```
