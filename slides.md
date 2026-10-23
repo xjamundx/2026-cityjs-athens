@@ -589,14 +589,33 @@ Now for the fun bit, how did we build it?
         <span class="mb-3 text-sm !inline-block font-bold tracking-[0.16em] w-fit bg-purple/20 rounded-lg p-2 text-purple uppercase">Agents</span>
         <div class="relative">
           <h2 class="!m-0 text-[1.6rem] leading-tight text-white">Plan and execute tasks on behalf of a user</h2>
-          <p class="!mb-2 !mt-4 !text-sm !leading-snug text-slate-300">Can run "tools" autonomously. Usually keep sessions or a memory. Can communicate progress or ask for help.</p>
-          <p v-click class="!mb-0 !mt-2 !text-sm !leading-snug text-slate-400">Cloudflare Agents SDK, Eve, Mastra, Flue, Vercel AI SDK, LangChain, etc.</p>
+          <p class="!mb-2 !mt-4 !text-sm !leading-snug text-slate-300">Can run "tools" autonomously. Usually keeps sessions or a memory. Can communicate progress or ask for help.</p>
+          <p v-click class="!mb-0 !mt-2 !text-sm !leading-snug text-slate-400">Cloudflare Agents SDK, Eve, Mastra, Flue, Vercel AI SDK</p>
           </div>
       </div>
     </div>
   </div>
 </div>
 
+---
+
+<div class="flex flex-row gap-4 items-end justify-between">
+<div>
+  <h4 class="text-white mb-3 w-full text-shadow-lg">Each workflow is like a metro line <br/>which you get to define</h4>
+  <img src="./assets/athens-metro-cropped.png" class="h-100">
+</div>
+<div  v-click="1" class="w-1/2">
+    <h4 class="text-white !text-md mb-3 w-full text-shadow-lg ">An agent is like a personal tour guide<br/>planning the best routes for your trip</h4>
+    <img src="./assets/athens-tour-guide-cf.jpg" class="h-100">
+</div>
+</div>
+
+<!--
+Workflow: It's a pre-determined set of steps with hopefully very consistent results. 
+Agent:
+  They're planning the trip. Thye're deciding which routes you need to take.
+  Which workflow to execute when.
+-->
 ---
 
 
@@ -632,26 +651,6 @@ Whereas Workers are a sort of a generic serverless compute platform, with durabl
 
 
 Durability means being able to recover after a crash or for example if the instance gets "evicted" because the data is stored in database, not in the workers memory.
--->
-
----
-
-<div class="flex flex-row gap-4 items-end justify-between">
-<div>
-  <h4 class="text-white mb-3 w-full text-shadow-lg">Each wokflow is like a metro line</h4>
-  <img src="./assets/athens-metro-cropped.png" class="h-100">
-</div>
-<div  v-click="1" class="w-1/2">
-    <h4 class="text-white !text-md mb-3 w-full text-shadow-lg " v-click="1">An agent is like a personal tour guide</h4>
-    <img src="./assets/athens-tour-guide-cf.jpg" class="h-100">
-</div>
-</div>
-
-<!--
-Workflow: It's a pre-determined set of steps with hopefully very consistent results. 
-Agent:
-  They're planning the trip. Thye're deciding which routes you need to take.
-  Which workflow to execute when.
 -->
 
 ---
