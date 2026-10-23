@@ -769,39 +769,6 @@ export class CreativeGuidanceWorkflow extends AgentWorkflow {
 Infrastructure as Code
 -->
 
-<!--
-
-Transition: So how do you define a workflow? It's basically infrastructure as code.
-
-Here's a sample from the cloudflare docs that relates pretty heavily to what we're trying to do with producer.
-
-Simple. Series of steps.
--->
-
-<!--
----
-
-```ts
-const model = await step.do("auto-model selection", async () => {
-  return await this.env.AI.run("typesafe/jev", {
-    state: `A user wants to generate an image with the following prompt: ${userPrompt}`,
-    questions: {
-      type: "choice",
-      instructions: "Which generation model will return the best image for the prompt?",
-      model: {
-        "stable-image-ultra": "Best for pure art and aesthetics, hero images, fine art, etc.",
-        "stable-image-core": "Best for experimenting with ideas. Quick and affordable.",
-        "stable-diffusion-3.5-large": "High quality images with lots of details and realism",
-        "gpt-image-1.5": "Best for text layouts and graphic design",
-        // ..
-      }
-    }
-  });
-}
-```
-
--->
-
 ---
 layout: none
 ---
@@ -818,24 +785,31 @@ layout: none
 
 ---
 
+<div class="-mt-5">
+
 ### Critical Things About Cloudflare Agents SDK
+
+</div>
 
 <div class="flex flex-row">
 
-<div class="w-1/2">
-    <img src="./assets/athens-tour-guide-cf.jpg" class="h-100">
-</div>
+  <div class="w-1/2">
+      <img src="./assets/athens-tour-guide-cf.jpg" class="h-100">
+  </div>
+
   <div class="w-1/2 rounded-xl p-4 bg-black/20">
     <ul class="text-white/80">
-      <li>Built on-top of durable objects</li>
-      <li>Provides both infrastructure and libraries for client and server</li>
-      <li>They have persistent state backed by SQLite</li>
-      <li>State changes in the agent are automatically sent to connected clients (over WebSockets)</li>
+      <li>Light wrapper around durable objects</li>
+      <li>Simplifies scheduling, state management, routing, communciation, etc.</li>
       <li>They can run AI workflows, workers, sub-agents, codemode, chat, etc.</li>
+      <li>Simple front-end integration, automatically syncs state with the agent over WebSockets</li>
       <li>BYOB: Bring your own (AI or not) 🧠 </li>
+      <li v-click class="text-violet">Not really agentic on its own!!!</li>
+      <li v-click class="text-yellow">Other providers and frameworks exist (Vercel, Mastra, Flue, Eve, LangChain/Graph, etc.)</li>
     </ul>
+  </div>
 </div>
-</div>
+
 <!--
 Remembmer, Agents are built on-top of durable, so they have state, but the agents SDK makes it a lot easier to work with than durable objects.
 
@@ -988,9 +962,13 @@ EXTRAS
 ---
 
 Rant about evals
+---
+
+Workflows vs Agents
 
 
 ---
+
 <div class="flex gap-20 justify-evenly">
   <img
     src="./assets/orly-cloudflare.png"
@@ -998,13 +976,13 @@ Rant about evals
     class="block w-85"
   />
   <div class="flex-1">
-    <h2>Cloudflare is a Great Place to your Build Agents</h2>
+    <h2>Cloudflare is a great place to build your agents</h2>
     <ul>
-      <li>Durable objects are a great primitive<br/>for building agents</li>
+      <li>Durable objects are a great primitive for building agents (id, storage, communication)</li>
       <li>The Agents SDK cleans a lot of the rough edges (scheduling, state management, routing, etc.)</li>
-      <li>Cloudflare also provides frameworks for building chat-based app with tool-calling, code-mode nad MCP</li>
+      <li>Provided libraries can add-on chat, tool-calling, code-mode, workflows and MCP</li>
       <li>Other providers and frameworks exist (Vercel, Mastra, Flue, Eve, etc.) that may suit your use case</li>
-      <li class="text-violet">The main thing is learn one and build something</li>
+      <li v-click class="text-violet">The main thing is learn one and build something</li>
     </ul>
   </div>
 </div>
@@ -1016,6 +994,40 @@ If you're already using cloudflare these tools make it really easy to build and 
 
 
 ---
+
+
+<!--
+
+Transition: So how do you define a workflow? It's basically infrastructure as code.
+
+Here's a sample from the cloudflare docs that relates pretty heavily to what we're trying to do with producer.
+
+Simple. Series of steps.
+-->
+
+<!--
+---
+
+```ts
+const model = await step.do("auto-model selection", async () => {
+  return await this.env.AI.run("typesafe/jev", {
+    state: `A user wants to generate an image with the following prompt: ${userPrompt}`,
+    questions: {
+      type: "choice",
+      instructions: "Which generation model will return the best image for the prompt?",
+      model: {
+        "stable-image-ultra": "Best for pure art and aesthetics, hero images, fine art, etc.",
+        "stable-image-core": "Best for experimenting with ideas. Quick and affordable.",
+        "stable-diffusion-3.5-large": "High quality images with lots of details and realism",
+        "gpt-image-1.5": "Best for text layouts and graphic design",
+        // ..
+      }
+    }
+  });
+}
+```
+
+-->
 
 
 ---
