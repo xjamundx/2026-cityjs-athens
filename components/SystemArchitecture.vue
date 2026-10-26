@@ -45,7 +45,7 @@
     </div>
 
     <div
-      class="absolute right-4 rounded bg-teal/40 shadow-black shadow-sm top-68 text-xs text-black p-2"
+      class="absolute right-4 rounded bg-teal/10 shadow-black shadow-sm top-68 text-xs text-orange p-2"
       v-click
     >
       Runs each step...

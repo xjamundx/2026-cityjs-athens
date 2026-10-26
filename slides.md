@@ -804,8 +804,8 @@ layout: none
       <li>They can run AI workflows, workers, sub-agents, codemode, chat, etc.</li>
       <li>Simple front-end integration, automatically syncs state with the agent over WebSockets</li>
       <li>BYOB: Bring your own (AI or not) 🧠 </li>
-      <li v-click class="text-violet">Not really agentic on its own!!!</li>
-      <li v-click class="text-yellow">Other providers and frameworks exist (Vercel, Mastra, Flue, Eve, LangChain/Graph, etc.)</li>
+      <li v-click class="text-violet">Not a full agent framework!</li>
+      <li v-click class="text-yellow">Many other providers and frameworks exist (Vercel, Mastra, Flue, Eve, LangChain/Graph)</li>
     </ul>
   </div>
 </div>
